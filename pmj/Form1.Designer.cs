@@ -29,12 +29,73 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.serialPort = new System.IO.Ports.SerialPort(this.components);
+            this.comboBoxPmj = new System.Windows.Forms.ComboBox();
+            this.btnOpenPortPmj = new System.Windows.Forms.Button();
+            this.tbSend = new System.Windows.Forms.TextBox();
+            this.btnSend = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // comboBoxPmj
+            // 
+            this.comboBoxPmj.FormattingEnabled = true;
+            this.comboBoxPmj.Location = new System.Drawing.Point(22, 22);
+            this.comboBoxPmj.Name = "comboBoxPmj";
+            this.comboBoxPmj.Size = new System.Drawing.Size(121, 20);
+            this.comboBoxPmj.TabIndex = 0;
+            // 
+            // btnOpenPortPmj
+            // 
+            this.btnOpenPortPmj.Location = new System.Drawing.Point(175, 22);
+            this.btnOpenPortPmj.Name = "btnOpenPortPmj";
+            this.btnOpenPortPmj.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenPortPmj.TabIndex = 1;
+            this.btnOpenPortPmj.Text = "打开串口";
+            this.btnOpenPortPmj.UseVisualStyleBackColor = true;
+            this.btnOpenPortPmj.Click += new System.EventHandler(this.btnOpenPortPmj_Click);
+            // 
+            // tbSend
+            // 
+            this.tbSend.Location = new System.Drawing.Point(22, 77);
+            this.tbSend.Name = "tbSend";
+            this.tbSend.Size = new System.Drawing.Size(100, 21);
+            this.tbSend.TabIndex = 2;
+            // 
+            // btnSend
+            // 
+            this.btnSend.Location = new System.Drawing.Point(175, 77);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(75, 23);
+            this.btnSend.TabIndex = 3;
+            this.btnSend.Text = "发送";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnSend);
+            this.Controls.Add(this.tbSend);
+            this.Controls.Add(this.btnOpenPortPmj);
+            this.Controls.Add(this.comboBoxPmj);
+            this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.IO.Ports.SerialPort serialPort;
+        private System.Windows.Forms.ComboBox comboBoxPmj;
+        private System.Windows.Forms.Button btnOpenPortPmj;
+        private System.Windows.Forms.TextBox tbSend;
+        private System.Windows.Forms.Button btnSend;
     }
 }
 

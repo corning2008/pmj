@@ -23,6 +23,12 @@ namespace pmj
             }
         }
 
+
+        public static byte[] CRC16Ex(byte[] data)
+        {
+            return new byte[]{0xAA,0xAA};
+        }
+
         #region  CRC16
         public static byte[] CRC16(byte[] data)
         {
