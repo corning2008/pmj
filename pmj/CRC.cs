@@ -8,6 +8,10 @@ namespace pmj
 {
     public class CRC
     {
+        public void Test1()
+        {
+
+        }
 
         public void Test()
         {
