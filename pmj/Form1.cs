@@ -79,12 +79,97 @@ namespace pmj
         {
             try
             {
-                _pmjSerialPort.Write(CommandFactory.GetDynamicInsert(EnumInsertMode.文本,"1234abc"));
+                _pmjSerialPort.Write(CommandFactory.GetCheckDeviceCommand());
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private Point _mousePoint;
+        private bool _mouseDown = false;
+
+        private void label1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                _mousePoint.X = e.X;
+                _mousePoint.Y = e.Y;
+                _mouseDown = true;
+            }
+        }
+
+        private void label1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_mouseDown)
+            {
+                int x = label1.Left + (e.X - _mousePoint.X);
+                int y = label1.Top + (e.Y - _mousePoint.Y);
+                label1.Location = new Point(x,y);
+            }
+        }
+
+        private void label1_MouseUp(object sender, MouseEventArgs e)
+        {
+            _mouseDown = false;
+        }
+
+        private void btnAddText_Click(object sender, EventArgs e)
+        {
+            Label label = new Label();
+            label.Text = "corningtest";
+            label.Font = new Font(FontFamily.GenericMonospace, 15);
+            label.BorderStyle = BorderStyle.Fixed3D;
+            SetItemEvent(label);
+            this.panelTest.Controls.Add(label);
+        }
+
+        private void SetItemEvent(Label label)
+        {
+            label.MouseDown += (sender, e) =>
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    _mousePoint.X = e.X;
+                    _mousePoint.Y = e.Y;
+                    _mouseDown = true;
+                }
+            };
+
+            label.MouseMove += (sender, e) =>
+            {
+                if (_mouseDown)
+                {
+                    int x = label.Left + (e.X - _mousePoint.X);
+                    int y = label.Top + (e.Y - _mousePoint.Y);
+                    var right = x + label.Size.Width;
+                    var bottom = y + label.Size.Height;
+                    //需要判断label的范围不能超出panel
+                    if (x >= 0 && y >= 0 && right <= panelTest.Width &&
+                        bottom <= panelTest.Height)
+                    {
+                        label.Location = new Point(x, y);
+                    }
+                }
+                
+            };
+
+            label.MouseUp += (sender, e) => { _mouseDown = false; };
+        }
+
+        private void panelTest_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics graphics = this.panelTest.CreateGraphics();
+            //绘制中线7a686964616fe58685e5aeb931333330353563
+            graphics.Clear(Color.LightYellow);
+            float x1 = this.panelTest.Width / 2;
+            float y1 = 0;
+            float x2 = this.panelTest.Width / 2;
+            float y2 = 10;
+            //注意坐标系的定义
+            graphics.DrawLine(new Pen(Color.Red, 2), x1, y1, x2, y2);
+           
         }
     }
 }

@@ -34,6 +34,9 @@
             this.btnOpenPortPmj = new System.Windows.Forms.Button();
             this.tbSend = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panelTest = new System.Windows.Forms.Panel();
+            this.btnAddText = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // comboBoxPmj
@@ -71,11 +74,47 @@
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(389, 77);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "label1";
+            this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label1_MouseDown);
+            this.label1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label1_MouseMove);
+            this.label1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.label1_MouseUp);
+            // 
+            // panelTest
+            // 
+            this.panelTest.AutoScroll = true;
+            this.panelTest.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panelTest.Location = new System.Drawing.Point(319, 147);
+            this.panelTest.Name = "panelTest";
+            this.panelTest.Size = new System.Drawing.Size(1378, 169);
+            this.panelTest.TabIndex = 5;
+            this.panelTest.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTest_Paint);
+            // 
+            // btnAddText
+            // 
+            this.btnAddText.Location = new System.Drawing.Point(682, 106);
+            this.btnAddText.Name = "btnAddText";
+            this.btnAddText.Size = new System.Drawing.Size(75, 23);
+            this.btnAddText.TabIndex = 6;
+            this.btnAddText.Text = "文本";
+            this.btnAddText.UseVisualStyleBackColor = true;
+            this.btnAddText.Click += new System.EventHandler(this.btnAddText_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnAddText);
+            this.Controls.Add(this.panelTest);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.tbSend);
             this.Controls.Add(this.btnOpenPortPmj);
@@ -96,6 +135,9 @@
         private System.Windows.Forms.Button btnOpenPortPmj;
         private System.Windows.Forms.TextBox tbSend;
         private System.Windows.Forms.Button btnSend;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panelTest;
+        private System.Windows.Forms.Button btnAddText;
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +11,8 @@ namespace pmj
         文本,
         二维码,
         Code128A,
-        Code128B
+        Code128B,
+        Code128C
     }
 
     public class CommandFactory
@@ -23,6 +25,15 @@ namespace pmj
             {
                 Console.Write("{0:X2} ",b);
             }
+        }
+
+        /// <summary>
+        /// 检测是否存在打印设备的命令
+        /// </summary>
+        /// <returns></returns>
+        public static byte[] GetCheckDeviceCommand()
+        {
+            return GetCommand(0x01, null);
         }
 
         /// <summary>
@@ -63,6 +74,11 @@ namespace pmj
             if (insertMode == EnumInsertMode.Code128B)
             {
                 return Encoding.ASCII.GetBytes("B");
+            }
+
+            if (insertMode == EnumInsertMode.Code128C)
+            {
+                return Encoding.ASCII.GetBytes("C");
             }
             throw new Exception("不存在输入模式");
         }
