@@ -171,5 +171,35 @@ namespace pmj
             graphics.DrawLine(new Pen(Color.Red, 2), x1, y1, x2, y2);
            
         }
+
+        private void btnFindDevice_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var result = _pmjSerialPort.WriteForResult(CommandFactory.GetCheckDeviceCommand(), 2000);
+                var data = result.GetData();
+                Console.WriteLine(data.Length);
+                
+                var pmjName = Encoding.ASCII.GetString(result.GetData());
+                lbPmjStatus.Text = $"{pmjName}--已连接";
+            }
+            catch (Exception ex)
+            {
+                lbPmjStatus.Text = "未连接";
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnPrintOnce_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                _pmjSerialPort.Write(CommandFactory.GetPrintOnceCommand());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

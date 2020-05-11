@@ -37,6 +37,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panelTest = new System.Windows.Forms.Panel();
             this.btnAddText = new System.Windows.Forms.Button();
+            this.btnFindDevice = new System.Windows.Forms.Button();
+            this.panelBottom = new System.Windows.Forms.Panel();
+            this.lbPmjStatus = new System.Windows.Forms.Label();
+            this.btnPrintOnce = new System.Windows.Forms.Button();
+            this.panelBottom.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBoxPmj
@@ -90,9 +95,9 @@
             // 
             this.panelTest.AutoScroll = true;
             this.panelTest.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.panelTest.Location = new System.Drawing.Point(319, 147);
+            this.panelTest.Location = new System.Drawing.Point(22, 138);
             this.panelTest.Name = "panelTest";
-            this.panelTest.Size = new System.Drawing.Size(1378, 169);
+            this.panelTest.Size = new System.Drawing.Size(556, 169);
             this.panelTest.TabIndex = 5;
             this.panelTest.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTest_Paint);
             // 
@@ -106,12 +111,54 @@
             this.btnAddText.UseVisualStyleBackColor = true;
             this.btnAddText.Click += new System.EventHandler(this.btnAddText_Click);
             // 
+            // btnFindDevice
+            // 
+            this.btnFindDevice.Location = new System.Drawing.Point(682, 173);
+            this.btnFindDevice.Name = "btnFindDevice";
+            this.btnFindDevice.Size = new System.Drawing.Size(75, 23);
+            this.btnFindDevice.TabIndex = 7;
+            this.btnFindDevice.Text = "扫描打印机";
+            this.btnFindDevice.UseVisualStyleBackColor = true;
+            this.btnFindDevice.Click += new System.EventHandler(this.btnFindDevice_Click);
+            // 
+            // panelBottom
+            // 
+            this.panelBottom.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panelBottom.Controls.Add(this.lbPmjStatus);
+            this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelBottom.Location = new System.Drawing.Point(0, 406);
+            this.panelBottom.Name = "panelBottom";
+            this.panelBottom.Size = new System.Drawing.Size(800, 44);
+            this.panelBottom.TabIndex = 8;
+            // 
+            // lbPmjStatus
+            // 
+            this.lbPmjStatus.AutoSize = true;
+            this.lbPmjStatus.Location = new System.Drawing.Point(4, 20);
+            this.lbPmjStatus.Name = "lbPmjStatus";
+            this.lbPmjStatus.Size = new System.Drawing.Size(41, 12);
+            this.lbPmjStatus.TabIndex = 0;
+            this.lbPmjStatus.Text = "未连接";
+            // 
+            // btnPrintOnce
+            // 
+            this.btnPrintOnce.Location = new System.Drawing.Point(689, 250);
+            this.btnPrintOnce.Name = "btnPrintOnce";
+            this.btnPrintOnce.Size = new System.Drawing.Size(87, 23);
+            this.btnPrintOnce.TabIndex = 9;
+            this.btnPrintOnce.Text = "执行一次打印";
+            this.btnPrintOnce.UseVisualStyleBackColor = true;
+            this.btnPrintOnce.Click += new System.EventHandler(this.btnPrintOnce_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnPrintOnce);
+            this.Controls.Add(this.panelBottom);
+            this.Controls.Add(this.btnFindDevice);
             this.Controls.Add(this.btnAddText);
             this.Controls.Add(this.panelTest);
             this.Controls.Add(this.label1);
@@ -123,6 +170,8 @@
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.panelBottom.ResumeLayout(false);
+            this.panelBottom.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -138,6 +187,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panelTest;
         private System.Windows.Forms.Button btnAddText;
+        private System.Windows.Forms.Button btnFindDevice;
+        private System.Windows.Forms.Panel panelBottom;
+        private System.Windows.Forms.Label lbPmjStatus;
+        private System.Windows.Forms.Button btnPrintOnce;
     }
 }
 

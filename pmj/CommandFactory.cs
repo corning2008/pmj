@@ -12,7 +12,8 @@ namespace pmj
         二维码,
         Code128A,
         Code128B,
-        Code128C
+        Code128C,
+        ENA13
     }
 
     public class CommandFactory
@@ -20,11 +21,33 @@ namespace pmj
 
         public void Test1()
         {
-            var command = GetCommand(0x21, new byte[] { 0x00 });
+            
+
+            var command = GetPrintOnceCommand();
             foreach (var b in command)
             {
                 Console.Write("{0:X2} ",b);
             }
+        }
+
+
+        public void Test2()
+        {
+            var command = GetCommand(0x01,Encoding.ASCII.GetBytes("123"));
+            foreach (var b in command)
+            {
+                Console.Write("{0:X2} ", b);
+            }
+        }
+        
+
+        /// <summary>
+        /// 执行一次打印的命令
+        /// </summary>
+        /// <returns></returns>
+        public static byte[] GetPrintOnceCommand()
+        {
+            return GetCommand(0x30, null);
         }
 
         /// <summary>
@@ -80,6 +103,11 @@ namespace pmj
             {
                 return Encoding.ASCII.GetBytes("C");
             }
+
+            if (insertMode == EnumInsertMode.ENA13)
+            {
+                return Encoding.ASCII.GetBytes("E");
+            }
             throw new Exception("不存在输入模式");
         }
 
@@ -104,7 +132,7 @@ namespace pmj
                 list = list.Concat(content);
             }
             //计算校验码
-            var crc16 = CRC.CRC16(list.ToArray());
+            var crc16 = CRC.CRC16Ex(list.ToArray());
             list = list.Concat(crc16);
             return list.ToArray();
            

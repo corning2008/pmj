@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using GodSharp.SerialPort;
 
@@ -18,6 +19,9 @@ namespace pmj
         private GodSerialPort _port = null;
         private string _portName;
         private IDataRecvPort _dataRecvPort;
+        //发送命令返回的数据
+        private byte[] _dataRecv = null;
+        
 
         public PmjSerialPort(string portName,IDataRecvPort dataRecvPort)
         {
@@ -43,6 +47,7 @@ namespace pmj
                     }
                     Console.WriteLine($"recv data:{sb.ToString()}");
                     //如果接受到数据,就提交给接口处理
+                    _dataRecv = bytes;
                     _dataRecvPort?.DealData(bytes);
                 });
             }
@@ -56,19 +61,70 @@ namespace pmj
         }
 
         /// <summary>
+        /// 用于进程间同步
+        /// </summary>
+        private readonly object _flag = new object();
+
+        public DataResult WriteForResult(byte[] dataList,int timeOut)
+        {
+            if (!Monitor.TryEnter(_flag))
+            {
+                throw new Exception("串口正在执行命令,请稍后");
+            }
+            lock (_flag)
+            {
+                _dataRecv = null;
+                if (null != _port && _port.IsOpen)
+                {
+                    _port.Write(dataList);
+                }
+                else
+                {
+                    throw new Exception("请先打开串口");
+                }
+
+                var index = 1;
+                while (index < timeOut)
+                {
+                    Thread.Sleep(1);
+                    index++;
+                    if (null != _dataRecv && _dataRecv.Length > 1)
+                    {
+                        var newBuffer = new byte[_dataRecv.Length];
+                        Array.Copy(_dataRecv,0,newBuffer,0,_dataRecv.Length);
+                        //对接受到的数据进行解析
+                        if (!CommandFactory.ValidateData(newBuffer))
+                        {
+                            throw new Exception("接受到的数据校验失败");
+                        }
+                        return new DataResult(newBuffer);
+                    }
+                }
+
+                throw new Exception("执行命令超时");
+            }
+           
+        }
+        
+
+        /// <summary>
         /// 发送字节数组
         /// </summary>
         /// <param name="dataList"></param>
         public void Write(byte[] dataList)
         {
-            if (null != _port && _port.IsOpen)
+            lock (_flag)
             {
-                _port.Write(dataList);
+                if (null != _port && _port.IsOpen)
+                {
+                    _port.Write(dataList);
+                }
+                else
+                {
+                    throw new Exception("请先打开串口");
+                }
             }
-            else
-            {
-                throw new Exception("请先打开串口");
-            }
+          
 
         }
 
