@@ -20,7 +20,10 @@ namespace pmj
            
             Bitmap ImageBaseOriginal = new Bitmap(fileName);
             Mat mat = OpenCvSharp.Extensions.BitmapConverter.ToMat(ImageBaseOriginal);
-            mat = mat.CvtColor(ColorConversionCodes.BGR2GRAY);
+           
+             mat = mat.CvtColor(ColorConversionCodes.BGR2GRAY);
+            
+            //mat = mat.CvtColor(ColorConversionCodes.BGRA2YUV_IYUV);
             var newBitmap = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(mat);
             mat.Dispose();
             ImageBaseOriginal.Dispose();

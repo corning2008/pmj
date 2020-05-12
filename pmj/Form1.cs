@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -75,17 +76,6 @@ namespace pmj
             }
         }
 
-        private void btnSend_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                _pmjSerialPort.Write(CommandFactory.GetCheckDeviceCommand());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
 
         private Point _mousePoint;
         private bool _mouseDown = false;
@@ -103,15 +93,6 @@ namespace pmj
         private List<PmjData> _pmjDataList = new List<PmjData>();
         private string _id;
 
-        private void btnAddText_Click(object sender, EventArgs e)
-        {
-            Label label = new Label();
-            label.Text = "corningtest";
-            label.Font = new Font(FontFamily.GenericMonospace, 15);
-            label.BorderStyle = BorderStyle.Fixed3D;
-            SetItemEvent(label);
-            this.panelTest.Controls.Add(label);
-        }
 
         private void SetItemEvent(Control label)
         {
@@ -268,6 +249,7 @@ namespace pmj
                 pictureBox.Height = bitmap.Height;
                 pictureBox.Name = pmjData.Id;
                 pictureBox.DoubleClick += SetPmjDataClick;
+               
                 panelTest.Controls.Add(pictureBox);
                 pmjData.Bitmap = srcBitmap;
                 pmjData.Left = left;
@@ -285,9 +267,11 @@ namespace pmj
                 pictureBox.Height = bitmap.Height;
                 pmjData.Left = left;
                 pmjData.Top = top;
+                
             }
           
         }
+
 
         private void SetPmjDataClick(object sender, EventArgs e)
         {
@@ -334,6 +318,27 @@ namespace pmj
                     SetPmjDataClick(lastData.Control,null);
                 }
                 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnWriteBuffer_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (var pmjData in _pmjDataList)
+                {
+                    if (pmjData.DateType == EnumPmjData.图片)
+                    {
+                        var control = (pmjData.Control as PictureBox);
+                        var bitmap = control.Image as Bitmap;
+                        _pmjSerialPort.WriteImageBuffer(bitmap, control.Left, control.Top);
+                    }
+                   
+                }
             }
             catch (Exception ex)
             {

@@ -32,28 +32,25 @@
             this.serialPort = new System.IO.Ports.SerialPort(this.components);
             this.comboBoxPmj = new System.Windows.Forms.ComboBox();
             this.btnOpenPortPmj = new System.Windows.Forms.Button();
-            this.tbSend = new System.Windows.Forms.TextBox();
-            this.btnSend = new System.Windows.Forms.Button();
             this.panelTest = new System.Windows.Forms.Panel();
-            this.btnAddText = new System.Windows.Forms.Button();
             this.btnFindDevice = new System.Windows.Forms.Button();
             this.panelBottom = new System.Windows.Forms.Panel();
+            this.btnPmjDelete = new System.Windows.Forms.Button();
             this.lbPmjStatus = new System.Windows.Forms.Label();
             this.btnPrintOnce = new System.Windows.Forms.Button();
             this.panelTop = new System.Windows.Forms.Panel();
+            this.btnWriteBuffer = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelRight = new System.Windows.Forms.Panel();
+            this.btnPicture = new System.Windows.Forms.Button();
             this.panelLeft = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelTip = new System.Windows.Forms.Panel();
             this.panelSetting = new System.Windows.Forms.Panel();
-            this.btnPicture = new System.Windows.Forms.Button();
-            this.btnPmjDelete = new System.Windows.Forms.Button();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panelTip.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBoxPmj
@@ -74,23 +71,6 @@
             this.btnOpenPortPmj.UseVisualStyleBackColor = true;
             this.btnOpenPortPmj.Click += new System.EventHandler(this.btnOpenPortPmj_Click);
             // 
-            // tbSend
-            // 
-            this.tbSend.Location = new System.Drawing.Point(207, 21);
-            this.tbSend.Name = "tbSend";
-            this.tbSend.Size = new System.Drawing.Size(100, 21);
-            this.tbSend.TabIndex = 2;
-            // 
-            // btnSend
-            // 
-            this.btnSend.Location = new System.Drawing.Point(406, 11);
-            this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(75, 23);
-            this.btnSend.TabIndex = 3;
-            this.btnSend.Text = "发送";
-            this.btnSend.UseVisualStyleBackColor = true;
-            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
-            // 
             // panelTest
             // 
             this.panelTest.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -99,16 +79,6 @@
             this.panelTest.Size = new System.Drawing.Size(2000, 100);
             this.panelTest.TabIndex = 5;
             this.panelTest.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTest_Paint);
-            // 
-            // btnAddText
-            // 
-            this.btnAddText.Location = new System.Drawing.Point(425, 21);
-            this.btnAddText.Name = "btnAddText";
-            this.btnAddText.Size = new System.Drawing.Size(75, 23);
-            this.btnAddText.TabIndex = 6;
-            this.btnAddText.Text = "文本";
-            this.btnAddText.UseVisualStyleBackColor = true;
-            this.btnAddText.Click += new System.EventHandler(this.btnAddText_Click);
             // 
             // btnFindDevice
             // 
@@ -132,6 +102,16 @@
             this.panelBottom.Size = new System.Drawing.Size(1055, 44);
             this.panelBottom.TabIndex = 8;
             // 
+            // btnPmjDelete
+            // 
+            this.btnPmjDelete.Location = new System.Drawing.Point(155, 8);
+            this.btnPmjDelete.Name = "btnPmjDelete";
+            this.btnPmjDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnPmjDelete.TabIndex = 1;
+            this.btnPmjDelete.Text = "删除";
+            this.btnPmjDelete.UseVisualStyleBackColor = true;
+            this.btnPmjDelete.Click += new System.EventHandler(this.btnPmjDelete_Click);
+            // 
             // lbPmjStatus
             // 
             this.lbPmjStatus.AutoSize = true;
@@ -154,17 +134,27 @@
             // panelTop
             // 
             this.panelTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTop.Controls.Add(this.btnWriteBuffer);
             this.panelTop.Controls.Add(this.panel1);
             this.panelTop.Controls.Add(this.comboBoxPmj);
             this.panelTop.Controls.Add(this.btnOpenPortPmj);
             this.panelTop.Controls.Add(this.btnFindDevice);
             this.panelTop.Controls.Add(this.btnPrintOnce);
-            this.panelTop.Controls.Add(this.btnSend);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(1055, 48);
             this.panelTop.TabIndex = 10;
+            // 
+            // btnWriteBuffer
+            // 
+            this.btnWriteBuffer.Location = new System.Drawing.Point(581, 12);
+            this.btnWriteBuffer.Name = "btnWriteBuffer";
+            this.btnWriteBuffer.Size = new System.Drawing.Size(75, 23);
+            this.btnWriteBuffer.TabIndex = 12;
+            this.btnWriteBuffer.Text = "下发缓存";
+            this.btnWriteBuffer.UseVisualStyleBackColor = true;
+            this.btnWriteBuffer.Click += new System.EventHandler(this.btnWriteBuffer_Click);
             // 
             // panel1
             // 
@@ -182,6 +172,17 @@
             this.panelRight.Name = "panelRight";
             this.panelRight.Size = new System.Drawing.Size(163, 456);
             this.panelRight.TabIndex = 11;
+            // 
+            // btnPicture
+            // 
+            this.btnPicture.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnPicture.Location = new System.Drawing.Point(0, 0);
+            this.btnPicture.Name = "btnPicture";
+            this.btnPicture.Size = new System.Drawing.Size(161, 48);
+            this.btnPicture.TabIndex = 0;
+            this.btnPicture.Text = "图片";
+            this.btnPicture.UseVisualStyleBackColor = true;
+            this.btnPicture.Click += new System.EventHandler(this.btnPicture_Click);
             // 
             // panelLeft
             // 
@@ -205,8 +206,6 @@
             // panelTip
             // 
             this.panelTip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelTip.Controls.Add(this.tbSend);
-            this.panelTip.Controls.Add(this.btnAddText);
             this.panelTip.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTip.Location = new System.Drawing.Point(156, 176);
             this.panelTip.Name = "panelTip";
@@ -221,27 +220,6 @@
             this.panelSetting.Name = "panelSetting";
             this.panelSetting.Size = new System.Drawing.Size(736, 264);
             this.panelSetting.TabIndex = 15;
-            // 
-            // btnPicture
-            // 
-            this.btnPicture.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnPicture.Location = new System.Drawing.Point(0, 0);
-            this.btnPicture.Name = "btnPicture";
-            this.btnPicture.Size = new System.Drawing.Size(161, 48);
-            this.btnPicture.TabIndex = 0;
-            this.btnPicture.Text = "图片";
-            this.btnPicture.UseVisualStyleBackColor = true;
-            this.btnPicture.Click += new System.EventHandler(this.btnPicture_Click);
-            // 
-            // btnPmjDelete
-            // 
-            this.btnPmjDelete.Location = new System.Drawing.Point(155, 8);
-            this.btnPmjDelete.Name = "btnPmjDelete";
-            this.btnPmjDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnPmjDelete.TabIndex = 1;
-            this.btnPmjDelete.Text = "删除";
-            this.btnPmjDelete.UseVisualStyleBackColor = true;
-            this.btnPmjDelete.Click += new System.EventHandler(this.btnPmjDelete_Click);
             // 
             // Form1
             // 
@@ -265,8 +243,6 @@
             this.panelTop.ResumeLayout(false);
             this.panelRight.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.panelTip.ResumeLayout(false);
-            this.panelTip.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -276,10 +252,7 @@
         private System.IO.Ports.SerialPort serialPort;
         private System.Windows.Forms.ComboBox comboBoxPmj;
         private System.Windows.Forms.Button btnOpenPortPmj;
-        private System.Windows.Forms.TextBox tbSend;
-        private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Panel panelTest;
-        private System.Windows.Forms.Button btnAddText;
         private System.Windows.Forms.Button btnFindDevice;
         private System.Windows.Forms.Panel panelBottom;
         private System.Windows.Forms.Label lbPmjStatus;
@@ -293,6 +266,7 @@
         private System.Windows.Forms.Panel panelTip;
         private System.Windows.Forms.Panel panelSetting;
         private System.Windows.Forms.Button btnPmjDelete;
+        private System.Windows.Forms.Button btnWriteBuffer;
     }
 }
 

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace pmj
 {
@@ -14,6 +16,52 @@ namespace pmj
         Code128B,
         Code128C,
         ENA13
+    }
+    /// <summary>
+    /// 写打印缓冲的数据
+    /// </summary>
+    public class BufferImageData
+    {
+        /// <summary>
+        /// x开始
+        /// </summary>
+        public UInt16 X;
+        /// <summary>
+        /// y开始点
+        /// </summary>
+        public UInt16 Y;
+        /// <summary>
+        /// 宽度
+        /// </summary>
+        public UInt16 Width;
+        /// <summary>
+        /// 高度
+        /// </summary>
+        public UInt16 Height;
+        /// <summary>
+        /// 点阵数据
+        /// </summary>
+        public byte[] Data;
+
+        public override string ToString()
+        {
+            return $"X:{X} Y:{Y} Width:{Width} Height:{Height} Data.Length:{Data.Length}"; 
+        }
+
+
+        public byte[] GetContentData()
+        {
+            var header = Encoding.ASCII.GetBytes("B");
+            var dataLength = BitConverter.GetBytes((UInt16) Data.Length);
+            var xBytes = BitConverter.GetBytes(X);
+            var widthBytes = BitConverter.GetBytes(Width);
+            var yBytes = BitConverter.GetBytes(Y);
+            var heightBytes = BitConverter.GetBytes(Height);
+            //反色2B
+            var fanByte = BitConverter.GetBytes((UInt16) 100);
+            return header.Concat(dataLength).Concat(xBytes).Concat(widthBytes).Concat(yBytes).Concat(heightBytes)
+                .Concat(fanByte).Concat(Data).ToArray();
+        }
     }
 
     public class CommandFactory
@@ -37,6 +85,71 @@ namespace pmj
             foreach (var b in command)
             {
                 Console.Write("{0:X2} ", b);
+            }
+        }
+
+
+        public static List<byte[]> GetImageBufferCommand(Bitmap bitmap, int left, int top)
+        {
+            var width = left+bitmap.Width>2000? 2000-left: bitmap.Width;
+            var height = top + bitmap.Height > 100 ? 100 - top : bitmap.Height;
+            //高度必须是8的倍数
+            while (height%8!=0)
+            {
+                height--;
+            }
+
+            if (height == 0)
+            {
+                return null;
+            }
+
+            var list = new List<byte[]>();
+            var byteList = new List<byte>();
+            var picWidth = 0;
+           // var lockBitmap = new LockBitmap(bitmap);
+           // lockBitmap.LockBits();
+            try
+            {
+                for (var i = 0; i < width; i++)
+                {
+                    for (var j = 0; j < height; j++)
+                    {
+                        var color = bitmap.GetPixel(j, i);
+                       // var value = (byte) (0.229 * color.R + 0.587 * color.G + 0.144 * color.B);
+             //           var newVaue = lockBitmap.GetPixel(i, j);
+                        Console.Write($"{color:X2} ");
+                        byteList.Add(color.B);
+                    }
+
+                    //
+                    picWidth++;
+
+
+                    //单个包的数量不能超过1000
+                    if (byteList.Count > 900 || (i == width - 1 && byteList.Count > 0))
+                    {
+                        var bufferImage = new BufferImageData();
+                        bufferImage.X = (UInt16) (left + i);
+                        bufferImage.Y = (UInt16) top;
+                        bufferImage.Width = (UInt16) picWidth;
+                        bufferImage.Height = (UInt16) height;
+                        bufferImage.Data = byteList.ToArray();
+                        byteList.Clear();
+                        picWidth = 0;
+                        list.Add(GetCommand(0x22, bufferImage.GetContentData()));
+                        Console.WriteLine("添加分割数据");
+                        Console.WriteLine(bufferImage.ToString());
+
+                    }
+                }
+
+
+                return list;
+            }
+            finally
+            {
+               // lockBitmap.UnlockBits();
             }
         }
         

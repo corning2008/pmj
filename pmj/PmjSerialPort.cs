@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -58,6 +59,39 @@ namespace pmj
             //打开串口,并进行监听
             return _port.Open();
             
+        }
+
+        /// <summary>
+        /// 写入缓冲数据
+        /// </summary>
+        /// <param name="bitmap">图片</param>
+        /// <param name="left">x起点</param>
+        /// <param name="top">y起点</param>
+        /// <returns></returns>
+        public bool WriteImageBuffer(Bitmap bitmap, int left, int top)
+        {
+            var commandList = CommandFactory.GetImageBufferCommand(bitmap, left, top);
+            if (null == commandList || commandList.Count == 0)
+            {
+                throw new Exception("没有获取到缓冲数据");
+            }
+
+            foreach (var bytese in commandList)
+            {
+                var dataResult = WriteForResult(bytese, 4000);
+                var data = dataResult.GetData();
+                if (data == null || data.Length == 0)
+                {
+                    throw new Exception("下发缓冲数据返回失败");
+                }
+
+                if (data[0] == 0x00)
+                {
+                    throw new Exception("下发命令失败");
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
