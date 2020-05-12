@@ -14,9 +14,13 @@ namespace pmj
 {
     public partial class Form1 : Form,ICutPicture
     {
+        private static log4net.ILog Log = log4net.LogManager.GetLogger(typeof(Form1));
+
         public Form1()
         {
             InitializeComponent();
+            Log.Info("Form1 init");
+            Log.Error("test");
         }
 
         private void Form1_Load(object sender, EventArgs e)
