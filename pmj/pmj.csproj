@@ -80,6 +80,14 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImageTool.cs" />
+    <Compile Include="PictureSetting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PictureSetting.Designer.cs">
+      <DependentUpon>PictureSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PmjData.cs" />
     <Compile Include="PmjDataRecv.cs" />
     <Compile Include="PmjSerialPort.cs" />
     <Compile Include="Program.cs" />
@@ -87,6 +95,9 @@
     <Compile Include="TestClass.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PictureSetting.resx">
+      <DependentUpon>PictureSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

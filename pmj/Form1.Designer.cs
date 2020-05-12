@@ -34,27 +34,39 @@
             this.btnOpenPortPmj = new System.Windows.Forms.Button();
             this.tbSend = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.panelTest = new System.Windows.Forms.Panel();
             this.btnAddText = new System.Windows.Forms.Button();
             this.btnFindDevice = new System.Windows.Forms.Button();
             this.panelBottom = new System.Windows.Forms.Panel();
             this.lbPmjStatus = new System.Windows.Forms.Label();
             this.btnPrintOnce = new System.Windows.Forms.Button();
+            this.panelTop = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelRight = new System.Windows.Forms.Panel();
+            this.panelLeft = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panelTip = new System.Windows.Forms.Panel();
+            this.panelSetting = new System.Windows.Forms.Panel();
+            this.btnPicture = new System.Windows.Forms.Button();
+            this.btnPmjDelete = new System.Windows.Forms.Button();
             this.panelBottom.SuspendLayout();
+            this.panelTop.SuspendLayout();
+            this.panelRight.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panelTip.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBoxPmj
             // 
             this.comboBoxPmj.FormattingEnabled = true;
-            this.comboBoxPmj.Location = new System.Drawing.Point(22, 22);
+            this.comboBoxPmj.Location = new System.Drawing.Point(12, 12);
             this.comboBoxPmj.Name = "comboBoxPmj";
             this.comboBoxPmj.Size = new System.Drawing.Size(121, 20);
             this.comboBoxPmj.TabIndex = 0;
             // 
             // btnOpenPortPmj
             // 
-            this.btnOpenPortPmj.Location = new System.Drawing.Point(175, 22);
+            this.btnOpenPortPmj.Location = new System.Drawing.Point(151, 12);
             this.btnOpenPortPmj.Name = "btnOpenPortPmj";
             this.btnOpenPortPmj.Size = new System.Drawing.Size(75, 23);
             this.btnOpenPortPmj.TabIndex = 1;
@@ -64,14 +76,14 @@
             // 
             // tbSend
             // 
-            this.tbSend.Location = new System.Drawing.Point(22, 77);
+            this.tbSend.Location = new System.Drawing.Point(207, 21);
             this.tbSend.Name = "tbSend";
             this.tbSend.Size = new System.Drawing.Size(100, 21);
             this.tbSend.TabIndex = 2;
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(175, 77);
+            this.btnSend.Location = new System.Drawing.Point(406, 11);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(75, 23);
             this.btnSend.TabIndex = 3;
@@ -79,31 +91,18 @@
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(389, 77);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 12);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "label1";
-            this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label1_MouseDown);
-            this.label1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label1_MouseMove);
-            this.label1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.label1_MouseUp);
-            // 
             // panelTest
             // 
-            this.panelTest.AutoScroll = true;
             this.panelTest.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.panelTest.Location = new System.Drawing.Point(22, 138);
+            this.panelTest.Location = new System.Drawing.Point(0, 0);
             this.panelTest.Name = "panelTest";
-            this.panelTest.Size = new System.Drawing.Size(556, 169);
+            this.panelTest.Size = new System.Drawing.Size(2000, 100);
             this.panelTest.TabIndex = 5;
             this.panelTest.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTest_Paint);
             // 
             // btnAddText
             // 
-            this.btnAddText.Location = new System.Drawing.Point(682, 106);
+            this.btnAddText.Location = new System.Drawing.Point(425, 21);
             this.btnAddText.Name = "btnAddText";
             this.btnAddText.Size = new System.Drawing.Size(75, 23);
             this.btnAddText.TabIndex = 6;
@@ -113,7 +112,7 @@
             // 
             // btnFindDevice
             // 
-            this.btnFindDevice.Location = new System.Drawing.Point(682, 173);
+            this.btnFindDevice.Location = new System.Drawing.Point(232, 12);
             this.btnFindDevice.Name = "btnFindDevice";
             this.btnFindDevice.Size = new System.Drawing.Size(75, 23);
             this.btnFindDevice.TabIndex = 7;
@@ -124,11 +123,13 @@
             // panelBottom
             // 
             this.panelBottom.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panelBottom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelBottom.Controls.Add(this.btnPmjDelete);
             this.panelBottom.Controls.Add(this.lbPmjStatus);
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottom.Location = new System.Drawing.Point(0, 406);
+            this.panelBottom.Location = new System.Drawing.Point(0, 504);
             this.panelBottom.Name = "panelBottom";
-            this.panelBottom.Size = new System.Drawing.Size(800, 44);
+            this.panelBottom.Size = new System.Drawing.Size(1055, 44);
             this.panelBottom.TabIndex = 8;
             // 
             // lbPmjStatus
@@ -142,7 +143,7 @@
             // 
             // btnPrintOnce
             // 
-            this.btnPrintOnce.Location = new System.Drawing.Point(689, 250);
+            this.btnPrintOnce.Location = new System.Drawing.Point(313, 12);
             this.btnPrintOnce.Name = "btnPrintOnce";
             this.btnPrintOnce.Size = new System.Drawing.Size(87, 23);
             this.btnPrintOnce.TabIndex = 9;
@@ -150,30 +151,123 @@
             this.btnPrintOnce.UseVisualStyleBackColor = true;
             this.btnPrintOnce.Click += new System.EventHandler(this.btnPrintOnce_Click);
             // 
+            // panelTop
+            // 
+            this.panelTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTop.Controls.Add(this.panel1);
+            this.panelTop.Controls.Add(this.comboBoxPmj);
+            this.panelTop.Controls.Add(this.btnOpenPortPmj);
+            this.panelTop.Controls.Add(this.btnFindDevice);
+            this.panelTop.Controls.Add(this.btnPrintOnce);
+            this.panelTop.Controls.Add(this.btnSend);
+            this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelTop.Location = new System.Drawing.Point(0, 0);
+            this.panelTop.Name = "panelTop";
+            this.panelTop.Size = new System.Drawing.Size(1055, 48);
+            this.panelTop.TabIndex = 10;
+            // 
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(866, 54);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(200, 100);
+            this.panel1.TabIndex = 11;
+            // 
+            // panelRight
+            // 
+            this.panelRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelRight.Controls.Add(this.btnPicture);
+            this.panelRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelRight.Location = new System.Drawing.Point(892, 48);
+            this.panelRight.Name = "panelRight";
+            this.panelRight.Size = new System.Drawing.Size(163, 456);
+            this.panelRight.TabIndex = 11;
+            // 
+            // panelLeft
+            // 
+            this.panelLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panelLeft.Location = new System.Drawing.Point(0, 48);
+            this.panelLeft.Name = "panelLeft";
+            this.panelLeft.Size = new System.Drawing.Size(156, 456);
+            this.panelLeft.TabIndex = 12;
+            // 
+            // panel2
+            // 
+            this.panel2.AutoScroll = true;
+            this.panel2.Controls.Add(this.panelTest);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(156, 48);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(736, 128);
+            this.panel2.TabIndex = 13;
+            // 
+            // panelTip
+            // 
+            this.panelTip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTip.Controls.Add(this.tbSend);
+            this.panelTip.Controls.Add(this.btnAddText);
+            this.panelTip.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelTip.Location = new System.Drawing.Point(156, 176);
+            this.panelTip.Name = "panelTip";
+            this.panelTip.Size = new System.Drawing.Size(736, 64);
+            this.panelTip.TabIndex = 14;
+            // 
+            // panelSetting
+            // 
+            this.panelSetting.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelSetting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelSetting.Location = new System.Drawing.Point(156, 240);
+            this.panelSetting.Name = "panelSetting";
+            this.panelSetting.Size = new System.Drawing.Size(736, 264);
+            this.panelSetting.TabIndex = 15;
+            // 
+            // btnPicture
+            // 
+            this.btnPicture.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnPicture.Location = new System.Drawing.Point(0, 0);
+            this.btnPicture.Name = "btnPicture";
+            this.btnPicture.Size = new System.Drawing.Size(161, 48);
+            this.btnPicture.TabIndex = 0;
+            this.btnPicture.Text = "图片";
+            this.btnPicture.UseVisualStyleBackColor = true;
+            this.btnPicture.Click += new System.EventHandler(this.btnPicture_Click);
+            // 
+            // btnPmjDelete
+            // 
+            this.btnPmjDelete.Location = new System.Drawing.Point(155, 8);
+            this.btnPmjDelete.Name = "btnPmjDelete";
+            this.btnPmjDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnPmjDelete.TabIndex = 1;
+            this.btnPmjDelete.Text = "删除";
+            this.btnPmjDelete.UseVisualStyleBackColor = true;
+            this.btnPmjDelete.Click += new System.EventHandler(this.btnPmjDelete_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnPrintOnce);
+            this.ClientSize = new System.Drawing.Size(1055, 548);
+            this.Controls.Add(this.panelSetting);
+            this.Controls.Add(this.panelTip);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panelLeft);
+            this.Controls.Add(this.panelRight);
+            this.Controls.Add(this.panelTop);
             this.Controls.Add(this.panelBottom);
-            this.Controls.Add(this.btnFindDevice);
-            this.Controls.Add(this.btnAddText);
-            this.Controls.Add(this.panelTest);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnSend);
-            this.Controls.Add(this.tbSend);
-            this.Controls.Add(this.btnOpenPortPmj);
-            this.Controls.Add(this.comboBoxPmj);
             this.Name = "Form1";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panelBottom.ResumeLayout(false);
             this.panelBottom.PerformLayout();
+            this.panelTop.ResumeLayout(false);
+            this.panelRight.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panelTip.ResumeLayout(false);
+            this.panelTip.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -184,13 +278,21 @@
         private System.Windows.Forms.Button btnOpenPortPmj;
         private System.Windows.Forms.TextBox tbSend;
         private System.Windows.Forms.Button btnSend;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panelTest;
         private System.Windows.Forms.Button btnAddText;
         private System.Windows.Forms.Button btnFindDevice;
         private System.Windows.Forms.Panel panelBottom;
         private System.Windows.Forms.Label lbPmjStatus;
         private System.Windows.Forms.Button btnPrintOnce;
+        private System.Windows.Forms.Panel panelTop;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panelRight;
+        private System.Windows.Forms.Panel panelLeft;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnPicture;
+        private System.Windows.Forms.Panel panelTip;
+        private System.Windows.Forms.Panel panelSetting;
+        private System.Windows.Forms.Button btnPmjDelete;
     }
 }
 

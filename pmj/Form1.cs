@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace pmj
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form,ICutPicture
     {
         public Form1()
         {
@@ -100,20 +100,8 @@ namespace pmj
             }
         }
 
-        private void label1_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (_mouseDown)
-            {
-                int x = label1.Left + (e.X - _mousePoint.X);
-                int y = label1.Top + (e.Y - _mousePoint.Y);
-                label1.Location = new Point(x,y);
-            }
-        }
-
-        private void label1_MouseUp(object sender, MouseEventArgs e)
-        {
-            _mouseDown = false;
-        }
+        private List<PmjData> _pmjDataList = new List<PmjData>();
+        private string _id;
 
         private void btnAddText_Click(object sender, EventArgs e)
         {
@@ -125,7 +113,7 @@ namespace pmj
             this.panelTest.Controls.Add(label);
         }
 
-        private void SetItemEvent(Label label)
+        private void SetItemEvent(Control label)
         {
             label.MouseDown += (sender, e) =>
             {
@@ -145,9 +133,10 @@ namespace pmj
                     int y = label.Top + (e.Y - _mousePoint.Y);
                     var right = x + label.Size.Width;
                     var bottom = y + label.Size.Height;
+                    var control = label.Parent;
                     //需要判断label的范围不能超出panel
-                    if (x >= 0 && y >= 0 && right <= panelTest.Width &&
-                        bottom <= panelTest.Height)
+                    if (x >= 0 && y >= 0 && right <= control.Width &&
+                        bottom <= control.Height)
                     {
                         label.Location = new Point(x, y);
                     }
@@ -167,8 +156,39 @@ namespace pmj
             float y1 = 0;
             float x2 = this.panelTest.Width / 2;
             float y2 = 10;
-            //注意坐标系的定义
-            graphics.DrawLine(new Pen(Color.Red, 2), x1, y1, x2, y2);
+            Font drawFont = new Font("Arial", 7);
+            SolidBrush drawBrush = new SolidBrush(Color.Black);
+            for (var i = 0; i < this.panelTest.Width; i++)
+            {
+                
+                if (i % 5 == 0)
+                {
+                    //注意坐标系的定义
+                    graphics.DrawLine(new Pen(Color.Red, 2), i, 0, i, 5);
+                  
+                }
+
+                if (i % 100 == 0)
+                {
+                    graphics.DrawString(i.ToString(), drawFont, drawBrush, new PointF(i, 9));
+                }
+            }
+            //计算有坐标
+            for (var j = 0; j < this.panelTest.Height; j++)
+            {
+                if (j % 5 == 0)
+                {
+                    //注意坐标系的定义
+                    graphics.DrawLine(new Pen(Color.Red, 2), 0, j, 5, j);
+
+                }
+
+                if (j % 50 == 0 && j!=0)
+                {
+                    graphics.DrawString(j.ToString(), drawFont, drawBrush, new PointF(9, j));
+                }
+            }
+           
            
         }
 
@@ -195,6 +215,125 @@ namespace pmj
             try
             {
                 _pmjSerialPort.Write(CommandFactory.GetPrintOnceCommand());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnPicture_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var dialog = new OpenFileDialog();
+                dialog.Filter = "bmp图片|*.bmp";
+                var flag = dialog.ShowDialog();
+                if (flag == DialogResult.OK)
+                {
+                    var filePath = dialog.FileName;
+                    Console.WriteLine(filePath);
+                    //加载图片设置的类
+                    this.panelSetting.Controls.Clear();
+                    var pictureSetting = new PictureSetting(Guid.NewGuid().ToString("N"),ImageTool.GetGrayPic(filePath),this);
+                    pictureSetting.Dock = DockStyle.Fill;
+                    this.panelSetting.Controls.Add(pictureSetting);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 裁剪到的图片
+        /// </summary>
+        /// <param name="bitmap"></param>
+        public void GetCutPicture(Bitmap bitmap,Bitmap srcBitmap,int left,int top,string guid)
+        {
+            this._id = guid;
+            //查找是否存在这个组件
+            var pmjData = _pmjDataList.FirstOrDefault(item => item.Id == guid);
+           
+            if (null == pmjData)
+            {
+                pmjData = new PmjData();
+                pmjData.Id = guid;
+                pmjData.DateType = EnumPmjData.图片;
+                var pictureBox = new PictureBox();
+                pmjData.Control = pictureBox;
+                pictureBox.Image = bitmap;
+                pictureBox.Width = bitmap.Width;
+                pictureBox.Height = bitmap.Height;
+                pictureBox.Name = pmjData.Id;
+                pictureBox.DoubleClick += SetPmjDataClick;
+                panelTest.Controls.Add(pictureBox);
+                pmjData.Bitmap = srcBitmap;
+                pmjData.Left = left;
+                pmjData.Top = top;
+                //设置可以移动
+                SetItemEvent(pictureBox);
+                _pmjDataList.Add(pmjData);
+                
+            }
+            else
+            {
+                var pictureBox = pmjData.Control as PictureBox;
+                pictureBox.Image = bitmap;
+                pictureBox.Width = bitmap.Width;
+                pictureBox.Height = bitmap.Height;
+                pmjData.Left = left;
+                pmjData.Top = top;
+            }
+          
+        }
+
+        private void SetPmjDataClick(object sender, EventArgs e)
+        {
+            var control = sender as Control;
+            var name = (sender as Control).Name;
+            this._id = name;
+            var pmjData = _pmjDataList.First(item => item.Id == name);
+            if (pmjData.DateType == EnumPmjData.图片)
+            {
+                var pictureSetting = new PictureSetting(pmjData.Id,pmjData.Bitmap,this,control.Width,control.Height,pmjData.Left,pmjData.Top);
+                pictureSetting.Dock = DockStyle.Fill;
+                panelSetting.Controls.Clear();
+                panelSetting.Controls.Add(pictureSetting);
+            }
+        }
+
+        private void btnPmjDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(_id))
+                {
+                    MessageBox.Show("请选择要删除的组件");
+                    return;
+                }
+
+                var pmjData = _pmjDataList.FirstOrDefault(item => item.Id == _id);
+              
+                if (pmjData != null)
+                {
+                    //从序列中删除元素
+                    _pmjDataList.Remove(pmjData);
+                    pmjData.Bitmap?.Dispose();
+                    this.panelTest.Controls.Remove(pmjData.Control);
+                    pmjData.Control.Dispose();
+                    //重新加载配置页面
+                    var lastData = _pmjDataList.LastOrDefault();
+                    if (null == lastData)
+                    {
+                        panelSetting.Controls.Clear();
+                        return;
+                    }
+                    //重新加载配置元素
+                    SetPmjDataClick(lastData.Control,null);
+                }
+                
             }
             catch (Exception ex)
             {
