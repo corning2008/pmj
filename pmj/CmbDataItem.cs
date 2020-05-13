@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZXing;
 
 namespace pmj
 {
@@ -14,6 +15,23 @@ namespace pmj
         {
             Console.WriteLine(1.ToString("00"));
         }
+
+        public static List<CmbDataItem> GetBarcodeType()
+        {
+            var list = new List<CmbDataItem>();
+            list.Add(new CmbDataItem(){Name = "bcCode128A"});
+            list.Add(new CmbDataItem() { Name = "bcCode128B" });
+            list.Add(new CmbDataItem() { Name = "bcCode128C" });
+            list.Add(new CmbDataItem() { Name = "bcCodeEAN13" });
+            list.Add(new CmbDataItem() { Name = "bcCode93" });
+            list.Add(new CmbDataItem() { Name = "bcCode93Extended" });
+            list.Add(new CmbDataItem() { Name = "bcCodeMSI" });
+            list.Add(new CmbDataItem() { Name = "bcCodePostNet" });
+            list.Add(new CmbDataItem() { Name = "bcCodeCodeBar" });
+            list.Add(new CmbDataItem() { Name = "bcCodeEAN8" });
+            return list;
+        }
+
         /// <summary>
         /// 二维码的类型
         /// </summary>

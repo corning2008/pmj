@@ -42,6 +42,8 @@
             this.btnWriteBuffer = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelRight = new System.Windows.Forms.Panel();
+            this.btnQrcode = new System.Windows.Forms.Button();
+            this.btnText = new System.Windows.Forms.Button();
             this.btnSerialNumber = new System.Windows.Forms.Button();
             this.btnTimeSetting = new System.Windows.Forms.Button();
             this.btnPicture = new System.Windows.Forms.Button();
@@ -49,8 +51,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelTip = new System.Windows.Forms.Panel();
             this.panelSetting = new System.Windows.Forms.Panel();
-            this.btnText = new System.Windows.Forms.Button();
-            this.btnQrcode = new System.Windows.Forms.Button();
+            this.btnBarcode = new System.Windows.Forms.Button();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
@@ -170,6 +171,7 @@
             // panelRight
             // 
             this.panelRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelRight.Controls.Add(this.btnBarcode);
             this.panelRight.Controls.Add(this.btnQrcode);
             this.panelRight.Controls.Add(this.btnText);
             this.panelRight.Controls.Add(this.btnSerialNumber);
@@ -180,6 +182,28 @@
             this.panelRight.Name = "panelRight";
             this.panelRight.Size = new System.Drawing.Size(163, 456);
             this.panelRight.TabIndex = 11;
+            // 
+            // btnQrcode
+            // 
+            this.btnQrcode.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnQrcode.Location = new System.Drawing.Point(0, 192);
+            this.btnQrcode.Name = "btnQrcode";
+            this.btnQrcode.Size = new System.Drawing.Size(161, 48);
+            this.btnQrcode.TabIndex = 4;
+            this.btnQrcode.Text = "二维码";
+            this.btnQrcode.UseVisualStyleBackColor = true;
+            this.btnQrcode.Click += new System.EventHandler(this.btnQrcode_Click);
+            // 
+            // btnText
+            // 
+            this.btnText.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnText.Location = new System.Drawing.Point(0, 144);
+            this.btnText.Name = "btnText";
+            this.btnText.Size = new System.Drawing.Size(161, 48);
+            this.btnText.TabIndex = 3;
+            this.btnText.Text = "文本";
+            this.btnText.UseVisualStyleBackColor = true;
+            this.btnText.Click += new System.EventHandler(this.btnText_Click);
             // 
             // btnSerialNumber
             // 
@@ -251,27 +275,16 @@
             this.panelSetting.Size = new System.Drawing.Size(736, 264);
             this.panelSetting.TabIndex = 15;
             // 
-            // btnText
+            // btnBarcode
             // 
-            this.btnText.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnText.Location = new System.Drawing.Point(0, 144);
-            this.btnText.Name = "btnText";
-            this.btnText.Size = new System.Drawing.Size(161, 48);
-            this.btnText.TabIndex = 3;
-            this.btnText.Text = "文本";
-            this.btnText.UseVisualStyleBackColor = true;
-            this.btnText.Click += new System.EventHandler(this.btnText_Click);
-            // 
-            // btnQrcode
-            // 
-            this.btnQrcode.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnQrcode.Location = new System.Drawing.Point(0, 192);
-            this.btnQrcode.Name = "btnQrcode";
-            this.btnQrcode.Size = new System.Drawing.Size(161, 48);
-            this.btnQrcode.TabIndex = 4;
-            this.btnQrcode.Text = "二维码";
-            this.btnQrcode.UseVisualStyleBackColor = true;
-            this.btnQrcode.Click += new System.EventHandler(this.btnQrcode_Click);
+            this.btnBarcode.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnBarcode.Location = new System.Drawing.Point(0, 240);
+            this.btnBarcode.Name = "btnBarcode";
+            this.btnBarcode.Size = new System.Drawing.Size(161, 48);
+            this.btnBarcode.TabIndex = 5;
+            this.btnBarcode.Text = "条码";
+            this.btnBarcode.UseVisualStyleBackColor = true;
+            this.btnBarcode.Click += new System.EventHandler(this.btnBarcode_Click);
             // 
             // Form1
             // 
@@ -323,6 +336,7 @@
         private System.Windows.Forms.Button btnSerialNumber;
         private System.Windows.Forms.Button btnText;
         private System.Windows.Forms.Button btnQrcode;
+        private System.Windows.Forms.Button btnBarcode;
     }
 }
 

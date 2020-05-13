@@ -16,7 +16,7 @@ using ZXing.QrCode;
 
 namespace pmj
 {
-    public partial class Form1 : Form,ICutPicture,ITimeSetting,ISerialNumberSetting,ITextSetting,IQrcodeSetting
+    public partial class Form1 : Form,ICutPicture,ITimeSetting,ISerialNumberSetting,ITextSetting,IQrcodeSetting,IBarcodeSetting
     {
         private static log4net.ILog Log = log4net.LogManager.GetLogger(typeof(Form1));
 
@@ -352,6 +352,20 @@ namespace pmj
                 panelSetting.Controls.Add(userControll);
                 return;
             }
+            //条码
+            if (pmjData.DataType == EnumPmjData.条码)
+            {
+                var para = pmjData.DataSource as BarcodeSettingParameter;
+                var userControll = para?.UserControl;
+                if (null == userControll)
+                {
+                    return;
+                }
+                userControll.Dock = DockStyle.Fill;
+                panelSetting.Controls.Clear();
+                panelSetting.Controls.Add(userControll);
+                return;
+            }
 
             
         }
@@ -653,6 +667,23 @@ namespace pmj
         }
 
         /// <summary>
+        /// 生成条形码
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        private Bitmap GetBarcodeBitmap(BarcodeSettingParameter para)
+        {
+            QrCodeEncodingOptions option = new QrCodeEncodingOptions()
+            {
+                CharacterSet = "utf8bom",
+                Width = 250,
+                Height = para.PicSize
+            };
+            BarcodeWriter bw = new BarcodeWriter(){Options = option,Format = BarcodeFormat.CODABAR};
+            return bw.Write(para.Content);
+        }
+
+        /// <summary>
         /// 生成二维码的图片
         /// </summary>
         /// <param name="para"></param>
@@ -676,5 +707,73 @@ namespace pmj
                 control.Top = 0;
             }
         }
+
+        private void btnBarcode_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var qrCodeSetting = new BarcodeSetting(this);
+                qrCodeSetting.Dock = DockStyle.Fill;
+                panelSetting.Controls.Clear();
+                panelSetting.Controls.Add(qrCodeSetting);
+                qrCodeSetting.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void DealBarcodeSetting(string guid, BarcodeSettingParameter para)
+        {
+            try
+            {
+
+                this._id = guid;
+                //查找是否存在这个组件
+                var pmjData = _pmjDataList.FirstOrDefault(item => item.Id == guid);
+                //生成bitmap图片
+                var bitmap = GetBarcodeBitmap(para);
+                Console.WriteLine($"二维码, width:{bitmap.Width}  height:{bitmap.Height}");
+                if (null == pmjData)
+                {
+                    pmjData = new PmjData();
+                    pmjData.Id = guid;
+                    pmjData.DataType = EnumPmjData.条码;
+                    var picture = new PictureBox();
+                    picture.Name = guid;
+                    pmjData.Control = picture;
+                    picture.Image = bitmap;
+                    picture.Width = bitmap.Width;
+                    picture.Height = bitmap.Height;
+                    picture.DoubleClick += SetPmjDataClick;
+                    panelTest.Controls.Add(picture);
+                    pmjData.DataSource = para;
+                    //设置可以移动
+                    SetItemEvent(picture);
+                    _pmjDataList.Add(pmjData);
+
+                }
+                else
+                {
+                    var pic = pmjData.Control as PictureBox;
+                    //销毁原来的bitmap数据
+                    (pic.Image as Bitmap)?.Dispose();
+                    pic.Image = bitmap;
+                    pic.Width = bitmap.Width;
+                    pic.Height = bitmap.Height;
+                    //有可能会越界,如果越界的话,就直接重置top的数值
+                    ResetLocation(pic);
+
+                    pmjData.DataSource = para;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+      
     }
 }
