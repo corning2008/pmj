@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace pmj
 {
-    public partial class Form1 : Form,ICutPicture
+    public partial class Form1 : Form,ICutPicture,ITimeSetting,ISerialNumberSetting
     {
         private static log4net.ILog Log = log4net.LogManager.GetLogger(typeof(Form1));
 
@@ -289,7 +289,37 @@ namespace pmj
                 pictureSetting.Dock = DockStyle.Fill;
                 panelSetting.Controls.Clear();
                 panelSetting.Controls.Add(pictureSetting);
+                return;
             }
+
+            if (pmjData.DateType == EnumPmjData.时间)
+            {
+                var para = pmjData.DataSource as TimeSettingParameter;
+                var userControl = para?.UserControl;
+                if (null == userControl)
+                {
+                    return;
+                }
+                userControl.Dock = DockStyle.Fill;
+                panelSetting.Controls.Clear();
+                panelSetting.Controls.Add(userControl);
+            }
+
+            if (pmjData.DateType == EnumPmjData.序号)
+            {
+                var para = pmjData.DataSource as SerialNumberParameter;
+                var userControll = para?.UserControl;
+                if (null == userControll)
+                {
+                    return;
+                }
+                userControll.Dock = DockStyle.Fill;
+                panelSetting.Controls.Clear();
+                panelSetting.Controls.Add(userControll);
+                return;
+            }
+
+            
         }
 
         private void btnPmjDelete_Click(object sender, EventArgs e)
@@ -342,6 +372,114 @@ namespace pmj
                         _pmjSerialPort.WriteImageBuffer(bitmap, control.Left, control.Top);
                     }
                    
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnTimeSetting_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                panelSetting.Controls.Clear();
+                var newPanel = new TimeSetting(this,new TimeSettingParameter(){Format = "yyyyMMdd",Size = 12});
+                newPanel.Dock = DockStyle.Fill;
+                panelSetting.Controls.Add(newPanel);
+                newPanel.Init();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void Deal(string guid, TimeSettingParameter parameter)
+        {
+            this._id = guid;
+            //查找是否存在这个组件
+            var pmjData = _pmjDataList.FirstOrDefault(item => item.Id == guid);
+
+            if (null == pmjData)
+            {
+                pmjData = new PmjData();
+                pmjData.Id = guid;
+                pmjData.DateType = EnumPmjData.时间;
+                var label = new Label();
+                pmjData.Control = label;
+                label.Text = DateTime.Now.ToString(parameter.Format);
+                label.AutoSize = true;
+                label.Name = guid;
+                label.Font = new Font(FontFamily.GenericMonospace,parameter.Size);
+                label.DoubleClick += SetPmjDataClick;
+                panelTest.Controls.Add(label);
+                pmjData.DataSource = parameter;
+                //设置可以移动
+                SetItemEvent(label);
+                _pmjDataList.Add(pmjData);
+
+            }
+            else
+            {
+                var label = pmjData.Control as Label;
+                label.Text = DateTime.Now.ToString(parameter.Format);
+                label.Font = new Font(FontFamily.GenericMonospace, parameter.Size);
+                pmjData.DataSource = parameter;
+            }
+        }
+
+        private void btnSerialNumber_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                panelSetting.Controls.Clear();
+                var newPanel = new SerialNumberSetting(this, new SerialNumberParameter() { Format = "00", Size = 12 });
+                newPanel.Dock = DockStyle.Fill;
+                panelSetting.Controls.Add(newPanel);
+                newPanel.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void SerialNumberDeal(string guid, SerialNumberParameter para)
+        {
+            try
+            {
+                Log.Info(para);
+                this._id = guid;
+                //查找是否存在这个组件
+                var pmjData = _pmjDataList.FirstOrDefault(item => item.Id == guid);
+
+                if (null == pmjData)
+                {
+                    pmjData = new PmjData();
+                    pmjData.Id = guid;
+                    pmjData.DateType = EnumPmjData.序号;
+                    var label = new Label();
+                    pmjData.Control = label;
+                    label.Text = para.NumberInit.ToString(para.Format);
+                    label.Name = guid;
+                    label.AutoSize = true;
+                    label.Font = new Font(FontFamily.GenericMonospace, para.Size);
+                    label.DoubleClick += SetPmjDataClick;
+                    panelTest.Controls.Add(label);
+                    pmjData.DataSource = para;
+                    //设置可以移动
+                    SetItemEvent(label);
+                    _pmjDataList.Add(pmjData);
+
+                }
+                else
+                {
+                    var label = pmjData.Control as Label;
+                    label.Text = para.NumberInit.ToString(para.Format);
+                    label.Font = new Font(FontFamily.GenericMonospace, para.Size);
+                    pmjData.DataSource = para;
                 }
             }
             catch (Exception ex)

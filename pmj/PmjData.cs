@@ -37,6 +37,11 @@ namespace pmj
         public Control Control { get; set; }
 
         /// <summary>
+        /// 附件的控件的信息
+        /// </summary>
+        public Object DataSource { get; set; }
+
+        /// <summary>
         /// 数据
         /// </summary>
         public byte[] Data { get; set; }
