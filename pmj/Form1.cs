@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using ZXing;
+using ZXing.QrCode;
 
 namespace pmj
 {
-    public partial class Form1 : Form,ICutPicture,ITimeSetting,ISerialNumberSetting,ITextSetting
+    public partial class Form1 : Form,ICutPicture,ITimeSetting,ISerialNumberSetting,ITextSetting,IQrcodeSetting
     {
         private static log4net.ILog Log = log4net.LogManager.GetLogger(typeof(Form1));
 
@@ -245,7 +249,7 @@ namespace pmj
             {
                 pmjData = new PmjData();
                 pmjData.Id = guid;
-                pmjData.DateType = EnumPmjData.图片;
+                pmjData.DataType = EnumPmjData.图片;
                 var pictureBox = new PictureBox();
                 var bitmap = para.Bitmap;
                 pmjData.Control = pictureBox;
@@ -268,6 +272,7 @@ namespace pmj
                 pictureBox.Width = para.Bitmap.Width;
                 pictureBox.Height = para.Bitmap.Height;
                 pmjData.DataSource = para;
+                ResetLocation(pictureBox);
             }
           
         }
@@ -279,7 +284,7 @@ namespace pmj
             var name = (sender as Control).Name;
             this._id = name;
             var pmjData = _pmjDataList.First(item => item.Id == name);
-            if (pmjData.DateType == EnumPmjData.图片)
+            if (pmjData.DataType == EnumPmjData.图片)
             {
                 var para = pmjData.DataSource as PictureSettingParameter;
                 var userControl = para?.UserControl;
@@ -293,7 +298,7 @@ namespace pmj
                 return;
             }
 
-            if (pmjData.DateType == EnumPmjData.时间)
+            if (pmjData.DataType == EnumPmjData.时间)
             {
                 var para = pmjData.DataSource as TimeSettingParameter;
                 var userControl = para?.UserControl;
@@ -306,7 +311,7 @@ namespace pmj
                 panelSetting.Controls.Add(userControl);
             }
 
-            if (pmjData.DateType == EnumPmjData.序号)
+            if (pmjData.DataType == EnumPmjData.序号)
             {
                 var para = pmjData.DataSource as SerialNumberParameter;
                 var userControll = para?.UserControl;
@@ -320,9 +325,23 @@ namespace pmj
                 return;
             }
 
-            if (pmjData.DateType == EnumPmjData.文本)
+            if (pmjData.DataType == EnumPmjData.文本)
             {
                 var para = pmjData.DataSource as TextSettingParameter;
+                var userControll = para?.UserControl;
+                if (null == userControll)
+                {
+                    return;
+                }
+                userControll.Dock = DockStyle.Fill;
+                panelSetting.Controls.Clear();
+                panelSetting.Controls.Add(userControll);
+                return;
+            }
+            //如果是二维码双击事件
+            if (pmjData.DataType == EnumPmjData.二维码)
+            {
+                var para = pmjData.DataSource as QrcodeSettingParameter;
                 var userControll = para?.UserControl;
                 if (null == userControll)
                 {
@@ -380,7 +399,7 @@ namespace pmj
             {
                 foreach (var pmjData in _pmjDataList)
                 {
-                    if (pmjData.DateType == EnumPmjData.图片)
+                    if (pmjData.DataType == EnumPmjData.图片)
                     {
                         var control = (pmjData.Control as PictureBox);
                         var bitmap = control.Image as Bitmap;
@@ -421,7 +440,7 @@ namespace pmj
             {
                 pmjData = new PmjData();
                 pmjData.Id = guid;
-                pmjData.DateType = EnumPmjData.时间;
+                pmjData.DataType = EnumPmjData.时间;
                 var label = new Label();
                 pmjData.Control = label;
                 label.Text = DateTime.Now.ToString(parameter.Format);
@@ -442,6 +461,7 @@ namespace pmj
                 label.Text = DateTime.Now.ToString(parameter.Format);
                 label.Font = new Font(FontFamily.GenericMonospace, parameter.Size);
                 pmjData.DataSource = parameter;
+                ResetLocation(label);
             }
         }
 
@@ -474,7 +494,7 @@ namespace pmj
                 {
                     pmjData = new PmjData();
                     pmjData.Id = guid;
-                    pmjData.DateType = EnumPmjData.序号;
+                    pmjData.DataType = EnumPmjData.序号;
                     var label = new Label();
                     pmjData.Control = label;
                     label.Text = para.NumberInit.ToString(para.Format);
@@ -495,6 +515,7 @@ namespace pmj
                     label.Text = para.NumberInit.ToString(para.Format);
                     label.Font = new Font(FontFamily.GenericMonospace, para.Size);
                     pmjData.DataSource = para;
+                    ResetLocation(label);
                 }
             }
             catch (Exception ex)
@@ -535,7 +556,7 @@ namespace pmj
             {
                 pmjData = new PmjData();
                 pmjData.Id = guid;
-                pmjData.DateType = EnumPmjData.文本;
+                pmjData.DataType = EnumPmjData.文本;
                 var label = new Label();
                 pmjData.Control = label;
                 label.Text = para.Content;
@@ -556,6 +577,103 @@ namespace pmj
                 label.Text = para.Content;
                 label.Font = new Font(FontFamily.GenericMonospace, para.Size);
                 pmjData.DataSource = para;
+                ResetLocation(label);
+            }
+        }
+
+        private void btnQrcode_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var qrCodeSetting = new QrcodeSetting(this);
+                qrCodeSetting.Dock = DockStyle.Fill;
+                panelSetting.Controls.Clear();
+                panelSetting.Controls.Add(qrCodeSetting);
+                qrCodeSetting.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 对二维码的编辑信息进行处理
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="para"></param>
+        public void DealQrcodeSetting(string guid, QrcodeSettingParameter para)
+        {
+            try
+            {
+                
+                this._id = guid;
+                //查找是否存在这个组件
+                var pmjData = _pmjDataList.FirstOrDefault(item => item.Id == guid);
+                //生成bitmap图片
+                var bitmap = GetQrcodeBitmap(para);
+                Console.WriteLine($"二维码, width:{bitmap.Width}  height:{bitmap.Height}");
+                if (null == pmjData)
+                {
+                    pmjData = new PmjData();
+                    pmjData.Id = guid;
+                    pmjData.DataType = EnumPmjData.二维码;
+                    var picture = new PictureBox();
+                    picture.Name = guid;
+                    pmjData.Control = picture;
+                    picture.Image = bitmap;
+                    picture.Width = bitmap.Width;
+                    picture.Height = bitmap.Height;
+                    picture.DoubleClick += SetPmjDataClick;
+                    panelTest.Controls.Add(picture);
+                    pmjData.DataSource = para;
+                    //设置可以移动
+                    SetItemEvent(picture);
+                    _pmjDataList.Add(pmjData);
+                   
+                }
+                else
+                {
+                    var pic = pmjData.Control as PictureBox;
+                    //销毁原来的bitmap数据
+                    (pic.Image as Bitmap)?.Dispose();
+                    pic.Image = bitmap;
+                    pic.Width = bitmap.Width;
+                    pic.Height = bitmap.Height;
+                    //有可能会越界,如果越界的话,就直接重置top的数值
+                    ResetLocation(pic);
+
+                    pmjData.DataSource = para;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 生成二维码的图片
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        private Bitmap GetQrcodeBitmap(QrcodeSettingParameter para)
+        {
+           QrCodeEncodingOptions option = new QrCodeEncodingOptions()
+           {
+               CharacterSet = para.QrcodeType,
+               Width = para.PicSize,
+               Height = para.PicSize
+           };
+            BarcodeWriter bw = new BarcodeWriter(){Options = option,Format = BarcodeFormat.QR_CODE};
+            return bw.Write(para.Content);
+        }
+
+        private void ResetLocation(Control control)
+        {
+            if (control.Top + control.Height > 100)
+            {
+                control.Top = 0;
             }
         }
     }

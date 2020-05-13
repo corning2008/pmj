@@ -28,9 +28,9 @@ namespace pmj
             this._serialNumberSetting = iSerialNumberSetting;
             this._parameter = parameter;
             this._guid = Guid.NewGuid().ToString("N");
-            cmbFormat.DataSource = CmdDataItemFactory.GetSerialNumberFormatList();
-            cmbFontSize.DataSource = CmdDataItemFactory.GetFontSizeList();
-            cmbStyle.DataSource = CmdDataItemFactory.GetFontList();
+            cmbFormat.DataSource = CmbDataItemFactory.GetSerialNumberFormatList();
+            cmbFontSize.DataSource = CmbDataItemFactory.GetFontSizeList();
+            cmbStyle.DataSource = CmbDataItemFactory.GetFontList();
         }
 
         private void SerialNumberSetting_Load(object sender, EventArgs e)

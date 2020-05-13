@@ -31,7 +31,7 @@ namespace pmj
         /// <summary>
         /// 数据的类型
         /// </summary>
-        public EnumPmjData DateType { get; set; }
+        public EnumPmjData DataType { get; set; }
 
 
         public Control Control { get; set; }

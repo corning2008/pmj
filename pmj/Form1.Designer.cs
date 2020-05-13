@@ -50,6 +50,7 @@
             this.panelTip = new System.Windows.Forms.Panel();
             this.panelSetting = new System.Windows.Forms.Panel();
             this.btnText = new System.Windows.Forms.Button();
+            this.btnQrcode = new System.Windows.Forms.Button();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
@@ -169,6 +170,7 @@
             // panelRight
             // 
             this.panelRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelRight.Controls.Add(this.btnQrcode);
             this.panelRight.Controls.Add(this.btnText);
             this.panelRight.Controls.Add(this.btnSerialNumber);
             this.panelRight.Controls.Add(this.btnTimeSetting);
@@ -260,6 +262,17 @@
             this.btnText.UseVisualStyleBackColor = true;
             this.btnText.Click += new System.EventHandler(this.btnText_Click);
             // 
+            // btnQrcode
+            // 
+            this.btnQrcode.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnQrcode.Location = new System.Drawing.Point(0, 192);
+            this.btnQrcode.Name = "btnQrcode";
+            this.btnQrcode.Size = new System.Drawing.Size(161, 48);
+            this.btnQrcode.TabIndex = 4;
+            this.btnQrcode.Text = "二维码";
+            this.btnQrcode.UseVisualStyleBackColor = true;
+            this.btnQrcode.Click += new System.EventHandler(this.btnQrcode_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -309,6 +322,7 @@
         private System.Windows.Forms.Button btnTimeSetting;
         private System.Windows.Forms.Button btnSerialNumber;
         private System.Windows.Forms.Button btnText;
+        private System.Windows.Forms.Button btnQrcode;
     }
 }
 

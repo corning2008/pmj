@@ -21,8 +21,8 @@ namespace pmj
         public TextSetting(ITextSetting iTextSetting)
         {
             InitializeComponent();
-            cmbFontSize.DataSource = CmdDataItemFactory.GetFontSizeList();
-            cmbFont.DataSource = CmdDataItemFactory.GetFontList();
+            cmbFontSize.DataSource = CmbDataItemFactory.GetFontSizeList();
+            cmbFont.DataSource = CmbDataItemFactory.GetFontList();
             this._guid = Guid.NewGuid().ToString("N");
             this._iTextSetting = iTextSetting;
         }

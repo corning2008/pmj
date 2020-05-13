@@ -31,9 +31,9 @@ namespace pmj
             this._timeSetting = timeSetting;
             this._format = parameter.Format;
             this._size = parameter.Size;
-            cmbStyle.DataSource = CmdDataItemFactory.GetTimeStyleList();
-            cmdFont.DataSource = CmdDataItemFactory.GetFontList();
-            cmbFontSize.DataSource = CmdDataItemFactory.GetFontSizeList();
+            cmbStyle.DataSource = CmbDataItemFactory.GetTimeStyleList();
+            cmdFont.DataSource = CmbDataItemFactory.GetFontList();
+            cmbFontSize.DataSource = CmbDataItemFactory.GetFontSizeList();
         }
 
         private void TimeSetting_Load(object sender, EventArgs e)

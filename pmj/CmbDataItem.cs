@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace pmj
 {
-    public class CmdDataItemFactory
+    public class CmbDataItemFactory
     {
         
 
@@ -14,6 +14,30 @@ namespace pmj
         {
             Console.WriteLine(1.ToString("00"));
         }
+        /// <summary>
+        /// 二维码的类型
+        /// </summary>
+        /// <returns></returns>
+        public static List<CmbDataItem> GetQrcodeType()
+        {
+            var list = new List<CmbDataItem>();
+            list.Add(new CmbDataItem() { Name = "utf8bom", Value = 40 });
+            return list;
+        }
+        
+        /// <summary>
+        /// 生产的条码或者二维码的大小
+        /// </summary>
+        /// <returns></returns>
+        public static List<CmbDataItem> GetSizeList()
+        {
+            var list = new List<CmbDataItem>();
+            list.Add(new CmbDataItem(){Name = "小",Value = 40});
+            list.Add(new CmbDataItem(){Name = "中",Value = 50});
+            list.Add(new CmbDataItem(){Name = "大",Value = 70});
+            return list;
+        }
+
         /// <summary>
         /// 获取序列号的样式
         /// </summary>
@@ -63,8 +87,7 @@ namespace pmj
             list.Add(new CmbDataItem() { Name = "24", Value = 12 });
             list.Add(new CmbDataItem() { Name = "32", Value = 12 });
             list.Add(new CmbDataItem() { Name = "48", Value = 12 });
-            list.Add(new CmbDataItem() { Name = "64", Value = 12 });
-            list.Add(new CmbDataItem() { Name = "72", Value = 12 });
+          
             return list;
         }
 
