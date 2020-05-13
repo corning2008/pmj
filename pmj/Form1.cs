@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace pmj
 {
-    public partial class Form1 : Form,ICutPicture,ITimeSetting,ISerialNumberSetting
+    public partial class Form1 : Form,ICutPicture,ITimeSetting,ISerialNumberSetting,ITextSetting
     {
         private static log4net.ILog Log = log4net.LogManager.GetLogger(typeof(Form1));
 
@@ -235,29 +235,27 @@ namespace pmj
         /// 裁剪到的图片
         /// </summary>
         /// <param name="bitmap"></param>
-        public void GetCutPicture(Bitmap bitmap,Bitmap srcBitmap,int left,int top,string guid)
+        public void GetCutPicture(string guid,PictureSettingParameter para)
         {
             this._id = guid;
             //查找是否存在这个组件
             var pmjData = _pmjDataList.FirstOrDefault(item => item.Id == guid);
-           
+            
             if (null == pmjData)
             {
                 pmjData = new PmjData();
                 pmjData.Id = guid;
                 pmjData.DateType = EnumPmjData.图片;
                 var pictureBox = new PictureBox();
+                var bitmap = para.Bitmap;
                 pmjData.Control = pictureBox;
+                pmjData.DataSource = para;
                 pictureBox.Image = bitmap;
                 pictureBox.Width = bitmap.Width;
                 pictureBox.Height = bitmap.Height;
                 pictureBox.Name = pmjData.Id;
                 pictureBox.DoubleClick += SetPmjDataClick;
-               
                 panelTest.Controls.Add(pictureBox);
-                pmjData.Bitmap = srcBitmap;
-                pmjData.Left = left;
-                pmjData.Top = top;
                 //设置可以移动
                 SetItemEvent(pictureBox);
                 _pmjDataList.Add(pmjData);
@@ -266,12 +264,10 @@ namespace pmj
             else
             {
                 var pictureBox = pmjData.Control as PictureBox;
-                pictureBox.Image = bitmap;
-                pictureBox.Width = bitmap.Width;
-                pictureBox.Height = bitmap.Height;
-                pmjData.Left = left;
-                pmjData.Top = top;
-                
+                pictureBox.Image = para.Bitmap;
+                pictureBox.Width = para.Bitmap.Width;
+                pictureBox.Height = para.Bitmap.Height;
+                pmjData.DataSource = para;
             }
           
         }
@@ -285,10 +281,15 @@ namespace pmj
             var pmjData = _pmjDataList.First(item => item.Id == name);
             if (pmjData.DateType == EnumPmjData.图片)
             {
-                var pictureSetting = new PictureSetting(pmjData.Id,pmjData.Bitmap,this,control.Width,control.Height,pmjData.Left,pmjData.Top);
-                pictureSetting.Dock = DockStyle.Fill;
+                var para = pmjData.DataSource as PictureSettingParameter;
+                var userControl = para?.UserControl;
+                if (null == userControl)
+                {
+                    return;
+                }
+                userControl.Dock = DockStyle.Fill;
                 panelSetting.Controls.Clear();
-                panelSetting.Controls.Add(pictureSetting);
+                panelSetting.Controls.Add(userControl);
                 return;
             }
 
@@ -319,6 +320,20 @@ namespace pmj
                 return;
             }
 
+            if (pmjData.DateType == EnumPmjData.文本)
+            {
+                var para = pmjData.DataSource as TextSettingParameter;
+                var userControll = para?.UserControl;
+                if (null == userControll)
+                {
+                    return;
+                }
+                userControll.Dock = DockStyle.Fill;
+                panelSetting.Controls.Clear();
+                panelSetting.Controls.Add(userControll);
+                return;
+            }
+
             
         }
 
@@ -338,7 +353,7 @@ namespace pmj
                 {
                     //从序列中删除元素
                     _pmjDataList.Remove(pmjData);
-                    pmjData.Bitmap?.Dispose();
+                
                     this.panelTest.Controls.Remove(pmjData.Control);
                     pmjData.Control.Dispose();
                     //重新加载配置页面
@@ -485,6 +500,62 @@ namespace pmj
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnText_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var textSetting = new TextSetting(this);
+                textSetting.Dock = DockStyle.Fill;
+                panelSetting.Controls.Clear();
+                panelSetting.Controls.Add(textSetting);
+                textSetting.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 处理文件编辑的动作
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="para"></param>
+        public void DealTextSetting(string guid, TextSettingParameter para)
+        {
+            Log.Info(para);
+            this._id = guid;
+            //查找是否存在这个组件
+            var pmjData = _pmjDataList.FirstOrDefault(item => item.Id == guid);
+
+            if (null == pmjData)
+            {
+                pmjData = new PmjData();
+                pmjData.Id = guid;
+                pmjData.DateType = EnumPmjData.文本;
+                var label = new Label();
+                pmjData.Control = label;
+                label.Text = para.Content;
+                label.Name = guid;
+                label.AutoSize = true;
+                label.Font = new Font(FontFamily.GenericMonospace, para.Size);
+                label.DoubleClick += SetPmjDataClick;
+                panelTest.Controls.Add(label);
+                pmjData.DataSource = para;
+                //设置可以移动
+                SetItemEvent(label);
+                _pmjDataList.Add(pmjData);
+
+            }
+            else
+            {
+                var label = pmjData.Control as Label;
+                label.Text = para.Content;
+                label.Font = new Font(FontFamily.GenericMonospace, para.Size);
+                pmjData.DataSource = para;
             }
         }
     }

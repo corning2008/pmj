@@ -46,19 +46,9 @@ namespace pmj
         /// </summary>
         public byte[] Data { get; set; }
 
-        /// <summary>
-        ///原来的Bitmap图片
-        /// </summary>
-        public Bitmap Bitmap { get; set; }
+      
+        
 
-        /// <summary>
-        /// 剪切图片的Left
-        /// </summary>
-        public int Left { get; set; }
-
-        /// <summary>
-        /// 剪切图片的TOP
-        /// </summary>
-        public int Top { get; set; }
+    
     }
 }

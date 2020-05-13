@@ -104,6 +104,12 @@
       <DependentUpon>SerialNumberSetting.cs</DependentUpon>
     </Compile>
     <Compile Include="TestClass.cs" />
+    <Compile Include="TextSetting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextSetting.Designer.cs">
+      <DependentUpon>TextSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="TimeSetting.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -127,6 +133,9 @@
     </Compile>
     <EmbeddedResource Include="SerialNumberSetting.resx">
       <DependentUpon>SerialNumberSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextSetting.resx">
+      <DependentUpon>TextSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TimeSetting.resx">
       <DependentUpon>TimeSetting.cs</DependentUpon>

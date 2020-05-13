@@ -42,13 +42,14 @@
             this.btnWriteBuffer = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelRight = new System.Windows.Forms.Panel();
+            this.btnSerialNumber = new System.Windows.Forms.Button();
+            this.btnTimeSetting = new System.Windows.Forms.Button();
             this.btnPicture = new System.Windows.Forms.Button();
             this.panelLeft = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelTip = new System.Windows.Forms.Panel();
             this.panelSetting = new System.Windows.Forms.Panel();
-            this.btnTimeSetting = new System.Windows.Forms.Button();
-            this.btnSerialNumber = new System.Windows.Forms.Button();
+            this.btnText = new System.Windows.Forms.Button();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
@@ -75,7 +76,7 @@
             // 
             // panelTest
             // 
-            this.panelTest.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panelTest.BackColor = System.Drawing.Color.Transparent;
             this.panelTest.Location = new System.Drawing.Point(0, 0);
             this.panelTest.Name = "panelTest";
             this.panelTest.Size = new System.Drawing.Size(2000, 100);
@@ -168,6 +169,7 @@
             // panelRight
             // 
             this.panelRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelRight.Controls.Add(this.btnText);
             this.panelRight.Controls.Add(this.btnSerialNumber);
             this.panelRight.Controls.Add(this.btnTimeSetting);
             this.panelRight.Controls.Add(this.btnPicture);
@@ -176,6 +178,28 @@
             this.panelRight.Name = "panelRight";
             this.panelRight.Size = new System.Drawing.Size(163, 456);
             this.panelRight.TabIndex = 11;
+            // 
+            // btnSerialNumber
+            // 
+            this.btnSerialNumber.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnSerialNumber.Location = new System.Drawing.Point(0, 96);
+            this.btnSerialNumber.Name = "btnSerialNumber";
+            this.btnSerialNumber.Size = new System.Drawing.Size(161, 48);
+            this.btnSerialNumber.TabIndex = 2;
+            this.btnSerialNumber.Text = "序号";
+            this.btnSerialNumber.UseVisualStyleBackColor = true;
+            this.btnSerialNumber.Click += new System.EventHandler(this.btnSerialNumber_Click);
+            // 
+            // btnTimeSetting
+            // 
+            this.btnTimeSetting.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnTimeSetting.Location = new System.Drawing.Point(0, 48);
+            this.btnTimeSetting.Name = "btnTimeSetting";
+            this.btnTimeSetting.Size = new System.Drawing.Size(161, 48);
+            this.btnTimeSetting.TabIndex = 1;
+            this.btnTimeSetting.Text = "时间";
+            this.btnTimeSetting.UseVisualStyleBackColor = true;
+            this.btnTimeSetting.Click += new System.EventHandler(this.btnTimeSetting_Click);
             // 
             // btnPicture
             // 
@@ -225,27 +249,16 @@
             this.panelSetting.Size = new System.Drawing.Size(736, 264);
             this.panelSetting.TabIndex = 15;
             // 
-            // btnTimeSetting
+            // btnText
             // 
-            this.btnTimeSetting.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnTimeSetting.Location = new System.Drawing.Point(0, 48);
-            this.btnTimeSetting.Name = "btnTimeSetting";
-            this.btnTimeSetting.Size = new System.Drawing.Size(161, 48);
-            this.btnTimeSetting.TabIndex = 1;
-            this.btnTimeSetting.Text = "时间";
-            this.btnTimeSetting.UseVisualStyleBackColor = true;
-            this.btnTimeSetting.Click += new System.EventHandler(this.btnTimeSetting_Click);
-            // 
-            // btnSerialNumber
-            // 
-            this.btnSerialNumber.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnSerialNumber.Location = new System.Drawing.Point(0, 96);
-            this.btnSerialNumber.Name = "btnSerialNumber";
-            this.btnSerialNumber.Size = new System.Drawing.Size(161, 48);
-            this.btnSerialNumber.TabIndex = 2;
-            this.btnSerialNumber.Text = "序号";
-            this.btnSerialNumber.UseVisualStyleBackColor = true;
-            this.btnSerialNumber.Click += new System.EventHandler(this.btnSerialNumber_Click);
+            this.btnText.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnText.Location = new System.Drawing.Point(0, 144);
+            this.btnText.Name = "btnText";
+            this.btnText.Size = new System.Drawing.Size(161, 48);
+            this.btnText.TabIndex = 3;
+            this.btnText.Text = "文本";
+            this.btnText.UseVisualStyleBackColor = true;
+            this.btnText.Click += new System.EventHandler(this.btnText_Click);
             // 
             // Form1
             // 
@@ -295,6 +308,7 @@
         private System.Windows.Forms.Button btnWriteBuffer;
         private System.Windows.Forms.Button btnTimeSetting;
         private System.Windows.Forms.Button btnSerialNumber;
+        private System.Windows.Forms.Button btnText;
     }
 }
 

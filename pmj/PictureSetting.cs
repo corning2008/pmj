@@ -16,7 +16,7 @@ namespace pmj
     public partial class PictureSetting : UserControl
     {
         
-        public PictureSetting(string guid,Bitmap bitmap,ICutPicture iCutPicture,int width = 50,int height = 50,int left = 0,int top = 0)
+        public PictureSetting(string guid,Bitmap bitmap,ICutPicture iCutPicture)
         {
             InitializeComponent();
             this.bitmap = bitmap;
@@ -30,20 +30,20 @@ namespace pmj
             //设置选中区域的最大和最小
             picWidth.Maximum = bitmap.Width;
             picHeight.Maximum = bitmap.Height > 100 ? 100 : bitmap.Height;
-            picWidth.Value = width;
-            picHeight.Value = height;
+            picWidth.Value = 50;
+            picHeight.Value = 50;
             //设置控件可移动
             SetItemEvent(btnSize);
             SetBtn();
-            btnSize.Left = left;
-            btnSize.Top = top;
-            btnSize.Width = width;
-            btnSize.Height = height;
+            btnSize.Left = 0;
+            btnSize.Top = 0;
+            btnSize.Width = 50;
+            btnSize.Height = 50;
             this._iCutPicture = iCutPicture;
             this._guid = guid;
 
             var newBitmap = ImageTool.GetCutPic(bitmap, btnSize.Left, btnSize.Top, btnSize.Width, btnSize.Height);
-            _iCutPicture?.GetCutPicture(newBitmap, bitmap, btnSize.Left, btnSize.Top, _guid);
+            _iCutPicture?.GetCutPicture(guid,new PictureSettingParameter(){Bitmap = newBitmap,UserControl = this});
         }
 
 
@@ -109,14 +109,14 @@ namespace pmj
         {
             btnSize.Width = (int)picWidth.Value;
             var newBitmap = ImageTool.GetCutPic(bitmap, btnSize.Left, btnSize.Top, btnSize.Width, btnSize.Height);
-            _iCutPicture?.GetCutPicture(newBitmap, bitmap, btnSize.Left, btnSize.Top, _guid);
+            _iCutPicture?.GetCutPicture(_guid, new PictureSettingParameter() { Bitmap = newBitmap, UserControl = this });
         }
 
         private void picHeight_ValueChanged(object sender, EventArgs e)
         {
             btnSize.Height = (int) picHeight.Value;
             var newBitmap = ImageTool.GetCutPic(bitmap, btnSize.Left, btnSize.Top, btnSize.Width, btnSize.Height);
-            _iCutPicture?.GetCutPicture(newBitmap, bitmap, btnSize.Left, btnSize.Top, _guid);
+            _iCutPicture?.GetCutPicture(_guid, new PictureSettingParameter() { Bitmap = newBitmap, UserControl = this });
         }
 
 
@@ -127,7 +127,7 @@ namespace pmj
             if (_mouseDown)
             {
                 var newBitmap = ImageTool.GetCutPic(bitmap, btnSize.Left, btnSize.Top, btnSize.Width, btnSize.Height);
-                _iCutPicture?.GetCutPicture(newBitmap, bitmap, btnSize.Left, btnSize.Top, _guid);
+                _iCutPicture?.GetCutPicture(_guid, new PictureSettingParameter(){Bitmap = newBitmap,UserControl = this});
             }
         }
 
@@ -136,6 +136,19 @@ namespace pmj
 
     public interface ICutPicture
     {
-        void GetCutPicture(Bitmap bitmap,Bitmap srcBitmap,int left,int top,string guid);
+        void GetCutPicture(string guid,PictureSettingParameter para);
+    }
+
+    public class PictureSettingParameter
+    {
+        /// <summary>
+        /// 裁剪的图片
+        /// </summary>
+        public Bitmap Bitmap { get; set; }
+
+        /// <summary>
+        /// 编辑控件
+        /// </summary>
+        public UserControl UserControl { get; set; }
     }
 }
