@@ -60,6 +60,7 @@
             // 
             // comboBoxPmj
             // 
+            this.comboBoxPmj.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPmj.FormattingEnabled = true;
             this.comboBoxPmj.Location = new System.Drawing.Point(12, 12);
             this.comboBoxPmj.Name = "comboBoxPmj";

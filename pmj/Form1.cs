@@ -252,6 +252,7 @@ namespace pmj
                 pmjData.DataType = EnumPmjData.图片;
                 var pictureBox = new PictureBox();
                 var bitmap = para.Bitmap;
+                Console.WriteLine($"图片格式:{para.Bitmap.PixelFormat}");
                 pmjData.Control = pictureBox;
                 pmjData.DataSource = para;
                 pictureBox.Image = bitmap;
@@ -680,7 +681,7 @@ namespace pmj
                 Height = para.PicSize
             };
             BarcodeWriter bw = new BarcodeWriter(){Options = option,Format = BarcodeFormat.CODABAR};
-            return bw.Write(para.Content);
+            return ImageTool.ConvertBitmapTo8(bw.Write(para.Content));
         }
 
         /// <summary>
@@ -697,7 +698,7 @@ namespace pmj
                Height = para.PicSize
            };
             BarcodeWriter bw = new BarcodeWriter(){Options = option,Format = BarcodeFormat.QR_CODE};
-            return bw.Write(para.Content);
+            return ImageTool.ConvertBitmapTo8(bw.Write(para.Content));
         }
 
         private void ResetLocation(Control control)
@@ -734,7 +735,8 @@ namespace pmj
                 var pmjData = _pmjDataList.FirstOrDefault(item => item.Id == guid);
                 //生成bitmap图片
                 var bitmap = GetBarcodeBitmap(para);
-                Console.WriteLine($"二维码, width:{bitmap.Width}  height:{bitmap.Height}");
+               
+                Console.WriteLine($"二维码, width:{bitmap.Width}  height:{bitmap.Height} format:{bitmap.PixelFormat}");
                 if (null == pmjData)
                 {
                     pmjData = new PmjData();

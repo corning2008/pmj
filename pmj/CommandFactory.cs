@@ -164,6 +164,17 @@ namespace pmj
         }
 
         /// <summary>
+        /// 执行清洗碰头的操作
+        /// </summary>
+        /// <param name="timer">清洗碰头的次数</param>
+        /// <returns></returns>
+        public static byte[] GetCleanPrinter(ushort timer)
+        {
+            var bytes = BitConverter.GetBytes(timer);
+            return GetCommand(0x40, bytes);
+        }
+
+        /// <summary>
         /// 检测是否存在打印设备的命令
         /// </summary>
         /// <returns></returns>
