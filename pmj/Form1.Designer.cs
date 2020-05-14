@@ -42,6 +42,7 @@
             this.btnWriteBuffer = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelRight = new System.Windows.Forms.Panel();
+            this.btnBarcode = new System.Windows.Forms.Button();
             this.btnQrcode = new System.Windows.Forms.Button();
             this.btnText = new System.Windows.Forms.Button();
             this.btnSerialNumber = new System.Windows.Forms.Button();
@@ -51,7 +52,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelTip = new System.Windows.Forms.Panel();
             this.panelSetting = new System.Windows.Forms.Panel();
-            this.btnBarcode = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
@@ -140,6 +141,7 @@
             // panelTop
             // 
             this.panelTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTop.Controls.Add(this.button1);
             this.panelTop.Controls.Add(this.btnWriteBuffer);
             this.panelTop.Controls.Add(this.panel1);
             this.panelTop.Controls.Add(this.comboBoxPmj);
@@ -183,6 +185,17 @@
             this.panelRight.Name = "panelRight";
             this.panelRight.Size = new System.Drawing.Size(163, 456);
             this.panelRight.TabIndex = 11;
+            // 
+            // btnBarcode
+            // 
+            this.btnBarcode.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnBarcode.Location = new System.Drawing.Point(0, 240);
+            this.btnBarcode.Name = "btnBarcode";
+            this.btnBarcode.Size = new System.Drawing.Size(161, 48);
+            this.btnBarcode.TabIndex = 5;
+            this.btnBarcode.Text = "条码";
+            this.btnBarcode.UseVisualStyleBackColor = true;
+            this.btnBarcode.Click += new System.EventHandler(this.btnBarcode_Click);
             // 
             // btnQrcode
             // 
@@ -276,16 +289,15 @@
             this.panelSetting.Size = new System.Drawing.Size(736, 264);
             this.panelSetting.TabIndex = 15;
             // 
-            // btnBarcode
+            // button1
             // 
-            this.btnBarcode.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnBarcode.Location = new System.Drawing.Point(0, 240);
-            this.btnBarcode.Name = "btnBarcode";
-            this.btnBarcode.Size = new System.Drawing.Size(161, 48);
-            this.btnBarcode.TabIndex = 5;
-            this.btnBarcode.Text = "条码";
-            this.btnBarcode.UseVisualStyleBackColor = true;
-            this.btnBarcode.Click += new System.EventHandler(this.btnBarcode_Click);
+            this.button1.Location = new System.Drawing.Point(723, 12);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
@@ -338,6 +350,7 @@
         private System.Windows.Forms.Button btnText;
         private System.Windows.Forms.Button btnQrcode;
         private System.Windows.Forms.Button btnBarcode;
+        private System.Windows.Forms.Button button1;
     }
 }
 

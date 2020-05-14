@@ -111,6 +111,7 @@ namespace pmj
                 if (null != _port && _port.IsOpen)
                 {
                     _port.Write(dataList);
+                    Console.WriteLine($"发送数据：{GetHexString(dataList)}");
                 }
                 else
                 {
@@ -126,6 +127,8 @@ namespace pmj
                     {
                         var newBuffer = new byte[_dataRecv.Length];
                         Array.Copy(_dataRecv,0,newBuffer,0,_dataRecv.Length);
+                        //接受到应答数据
+                        Console.WriteLine($"接受到应答数据:{GetHexString(newBuffer)}");
                         //对接受到的数据进行解析
                         if (!CommandFactory.ValidateData(newBuffer))
                         {
@@ -152,6 +155,8 @@ namespace pmj
                 if (null != _port && _port.IsOpen)
                 {
                     _port.Write(dataList);
+                    //打印发送的数据
+                    Console.WriteLine($"发送命令：{GetHexString(dataList)}");
                 }
                 else
                 {
@@ -160,6 +165,17 @@ namespace pmj
             }
           
 
+        }
+
+
+        public static string GetHexString(byte[] dataList)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in dataList)
+            {
+                sb.Append($"{item:X2} ");
+            }
+            return sb.ToString();
         }
 
         /// <summary>

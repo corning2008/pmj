@@ -69,13 +69,9 @@ namespace pmj
 
         public void Test1()
         {
-            
-
-            var command = GetPrintOnceCommand();
-            foreach (var b in command)
-            {
-                Console.Write("{0:X2} ",b);
-            }
+            var dataList = new byte[] { 0x06, 0x00, 0x20, 0x00 };
+            var crc = CRC.CRC16(dataList);
+            Console.WriteLine(PmjSerialPort.GetHexString(crc));
         }
 
 
@@ -115,10 +111,9 @@ namespace pmj
                 {
                     for (var j = 0; j < height; j++)
                     {
-                        var color = bitmap.GetPixel(j, i);
+                        var color = bitmap.GetPixel(i, j);
                        // var value = (byte) (0.229 * color.R + 0.587 * color.G + 0.144 * color.B);
              //           var newVaue = lockBitmap.GetPixel(i, j);
-                        Console.Write($"{color:X2} ");
                         byteList.Add(color.B);
                     }
 
@@ -127,7 +122,7 @@ namespace pmj
 
 
                     //单个包的数量不能超过1000
-                    if (byteList.Count > 900 || (i == width - 1 && byteList.Count > 0))
+                    if (byteList.Count > 100 || (i == width - 1 && byteList.Count > 0))
                     {
                         var bufferImage = new BufferImageData();
                         bufferImage.X = (UInt16) (left + i);
@@ -188,18 +183,21 @@ namespace pmj
         /// </summary>
         /// <param name="insertMode">动态插入模式</param>
         /// <param name="content">插入的内容</param>
+        /// <param name="index">小红点的位置</param>
         /// <returns></returns>
 
-        public static byte[] GetDynamicInsert(EnumInsertMode insertMode, string content)
+        public static byte[] GetDynamicInsert(EnumInsertMode insertMode, string content,ushort index)
         {
             //获取头部
             byte[] header = GetInsertModeHeader(insertMode);
             //获取发送的文本
             var contentData = Encoding.ASCII.GetBytes(content);
             //获取长度
-            var length = BitConverter.GetBytes((ushort) contentData.Length);
+            var length = new byte[] { (byte)contentData.Length };
+            //小红点的位置
+            var indexBytes = BitConverter.GetBytes(index);
             //拼接数组
-            var dataList =  header.Concat(length).Concat(contentData).ToArray();
+            var dataList =  header.Concat(length).Concat(new byte[] { (byte)index}).Concat(contentData).ToArray();
             return GetCommand(0x20, dataList);
         }
 
@@ -256,11 +254,21 @@ namespace pmj
                 list = list.Concat(content);
             }
             //计算校验码
-            var crc16 = CRC.CRC16Ex(list.ToArray());
+            var crc16 = CRC.CRC16(list.ToArray());
             list = list.Concat(crc16);
             return list.ToArray();
            
         }
+
+
+        public byte[] GetMyTest()
+        {
+            var header = new byte[] { 0x7a };
+
+            var list = new byte[] { 0x42};
+            return list;
+        }
+
 
         /// <summary>
         /// 检测接收到的数据是否合法
@@ -279,12 +287,12 @@ namespace pmj
             {
                 return false;
             }
-            //获取数据的长度
+            //获取数据的长度(这儿先不做校验，因为比较混乱)
             var dataLength = BitConverter.ToUInt16(data.Skip(1).Take(2).ToArray(),0);
-            if (dataLength != data.Length - 1)
-            {
-                return false;
-            }
+            //if (dataLength != data.Length - 1)
+            //{
+            //    return false;
+            //}
 
             return true;
         }

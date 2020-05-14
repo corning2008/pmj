@@ -42,7 +42,7 @@ namespace pmj
         /// <returns></returns>
         public byte[] GetData()
         {
-            return _dataBytes.Skip(4).Take(GetLength() - 5).ToArray();
+            return _dataBytes.Skip(4).Take(GetLength()-5).ToArray();
         }
     }
 }

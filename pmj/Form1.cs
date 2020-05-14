@@ -776,6 +776,26 @@ namespace pmj
             }
         }
 
-      
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var command = CommandFactory.GetDynamicInsert(EnumInsertMode.文本, "321",0);
+                var result = _pmjSerialPort.WriteForResult(command, 2000);
+                var data = result.GetData();
+                if(null != data && data.Length > 0)
+                {
+                    Console.WriteLine($"返回数据Content：{PmjSerialPort.GetHexString(data)}");
+                }
+                else
+                {
+                    Console.WriteLine("中间不存在内容");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

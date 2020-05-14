@@ -29,20 +29,20 @@
         private void InitializeComponent()
         {
             this.panelPicSetting = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.picWidth = new System.Windows.Forms.NumericUpDown();
             this.picHeight = new System.Windows.Forms.NumericUpDown();
+            this.picWidth = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.panelBitmap = new System.Windows.Forms.Panel();
-            this.picBitmap = new System.Windows.Forms.PictureBox();
             this.panelBack = new System.Windows.Forms.Panel();
             this.btnSize = new System.Windows.Forms.Button();
+            this.picBitmap = new System.Windows.Forms.PictureBox();
             this.panelPicSetting.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picWidth)).BeginInit();
             this.panelBitmap.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picBitmap)).BeginInit();
             this.panelBack.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picBitmap)).BeginInit();
             this.SuspendLayout();
             // 
             // panelPicSetting
@@ -58,14 +58,41 @@
             this.panelPicSetting.Size = new System.Drawing.Size(135, 323);
             this.panelPicSetting.TabIndex = 0;
             // 
-            // label1
+            // picHeight
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "图片宽度";
+            this.picHeight.Location = new System.Drawing.Point(16, 108);
+            this.picHeight.Minimum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.picHeight.Name = "picHeight";
+            this.picHeight.Size = new System.Drawing.Size(95, 21);
+            this.picHeight.TabIndex = 3;
+            this.picHeight.Value = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.picHeight.ValueChanged += new System.EventHandler(this.picHeight_ValueChanged);
+            // 
+            // picWidth
+            // 
+            this.picWidth.Location = new System.Drawing.Point(16, 42);
+            this.picWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.picWidth.Name = "picWidth";
+            this.picWidth.Size = new System.Drawing.Size(95, 21);
+            this.picWidth.TabIndex = 2;
+            this.picWidth.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.picWidth.ValueChanged += new System.EventHandler(this.picWidth_ValueChanged);
             // 
             // label2
             // 
@@ -76,21 +103,14 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "图片高度";
             // 
-            // picWidth
+            // label1
             // 
-            this.picWidth.Location = new System.Drawing.Point(16, 42);
-            this.picWidth.Name = "picWidth";
-            this.picWidth.Size = new System.Drawing.Size(95, 21);
-            this.picWidth.TabIndex = 2;
-            this.picWidth.ValueChanged += new System.EventHandler(this.picWidth_ValueChanged);
-            // 
-            // picHeight
-            // 
-            this.picHeight.Location = new System.Drawing.Point(16, 108);
-            this.picHeight.Name = "picHeight";
-            this.picHeight.Size = new System.Drawing.Size(95, 21);
-            this.picHeight.TabIndex = 3;
-            this.picHeight.ValueChanged += new System.EventHandler(this.picHeight_ValueChanged);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(14, 18);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "图片宽度";
             // 
             // panelBitmap
             // 
@@ -101,14 +121,6 @@
             this.panelBitmap.Name = "panelBitmap";
             this.panelBitmap.Size = new System.Drawing.Size(506, 323);
             this.panelBitmap.TabIndex = 1;
-            // 
-            // picBitmap
-            // 
-            this.picBitmap.Location = new System.Drawing.Point(34, 109);
-            this.picBitmap.Name = "picBitmap";
-            this.picBitmap.Size = new System.Drawing.Size(100, 50);
-            this.picBitmap.TabIndex = 0;
-            this.picBitmap.TabStop = false;
             // 
             // panelBack
             // 
@@ -131,6 +143,14 @@
             this.btnSize.UseVisualStyleBackColor = false;
             this.btnSize.MouseMove += new System.Windows.Forms.MouseEventHandler(this.btnSize_MouseMove);
             // 
+            // picBitmap
+            // 
+            this.picBitmap.Location = new System.Drawing.Point(34, 109);
+            this.picBitmap.Name = "picBitmap";
+            this.picBitmap.Size = new System.Drawing.Size(100, 50);
+            this.picBitmap.TabIndex = 0;
+            this.picBitmap.TabStop = false;
+            // 
             // PictureSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -141,11 +161,11 @@
             this.Size = new System.Drawing.Size(641, 323);
             this.panelPicSetting.ResumeLayout(false);
             this.panelPicSetting.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picWidth)).EndInit();
             this.panelBitmap.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picBitmap)).EndInit();
             this.panelBack.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picBitmap)).EndInit();
             this.ResumeLayout(false);
 
         }
