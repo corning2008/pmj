@@ -60,6 +60,11 @@
             // 
             // picHeight
             // 
+            this.picHeight.Increment = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
             this.picHeight.Location = new System.Drawing.Point(16, 108);
             this.picHeight.Minimum = new decimal(new int[] {
             8,

@@ -51,14 +51,14 @@ namespace pmj
 
         public byte[] GetContentData()
         {
-            var header = Encoding.ASCII.GetBytes("B");
+            var header = new byte[]{0x12,0x00};
             var dataLength = BitConverter.GetBytes((UInt16) Data.Length);
             var xBytes = BitConverter.GetBytes(X);
             var widthBytes = BitConverter.GetBytes(Width);
             var yBytes = BitConverter.GetBytes(Y);
             var heightBytes = BitConverter.GetBytes(Height);
             //反色2B
-            var fanByte = BitConverter.GetBytes((UInt16) 100);
+            var fanByte = BitConverter.GetBytes((UInt16) 00);
             return header.Concat(dataLength).Concat(xBytes).Concat(widthBytes).Concat(yBytes).Concat(heightBytes)
                 .Concat(fanByte).Concat(Data).ToArray();
         }
@@ -109,12 +109,32 @@ namespace pmj
             {
                 for (var i = 0; i < width; i++)
                 {
+                    var heightList = new List<byte>();
                     for (var j = 0; j < height; j++)
                     {
                         var color = bitmap.GetPixel(i, j);
-                       // var value = (byte) (0.229 * color.R + 0.587 * color.G + 0.144 * color.B);
-             //           var newVaue = lockBitmap.GetPixel(i, j);
-                        byteList.Add(color.B);
+         
+                        var value = color.B;
+                        if (value == 255)
+                        {
+                            heightList.Add(0x01);
+                        }
+                        else
+                        {
+                            heightList.Add(0x00);
+                        }
+                        //如果高度正好8的话,就拼接成一个字节
+                        if (heightList.Count == 8)
+                        {
+                            byteList.Add(GetContactByte(heightList));
+                            heightList.Clear();
+                        }
+                        //如果高度不是8的倍数,并且到了最后一位就直接转化
+                        if (j == height - 1 && heightList.Count >0)
+                        {
+                            byteList.Add(GetContactByte(heightList));
+                            break;
+                        }
                     }
 
                     //
@@ -122,7 +142,7 @@ namespace pmj
 
 
                     //单个包的数量不能超过1000
-                    if (byteList.Count > 100 || (i == width - 1 && byteList.Count > 0))
+                    if (byteList.Count > 200 || (i == width - 1 && byteList.Count > 0))
                     {
                         var bufferImage = new BufferImageData();
                         bufferImage.X = (UInt16) (left + i);
@@ -133,7 +153,7 @@ namespace pmj
                         byteList.Clear();
                         picWidth = 0;
                         list.Add(GetCommand(0x22, bufferImage.GetContentData()));
-                        Console.WriteLine("添加分割数据");
+                        Console.WriteLine($"添加分割数据  x:{bufferImage.X} width:{bufferImage.Width} y:{bufferImage.Y} height:{bufferImage.Height}");
                         Console.WriteLine(bufferImage.ToString());
 
                     }
@@ -147,7 +167,28 @@ namespace pmj
                // lockBitmap.UnlockBits();
             }
         }
-        
+
+        private static byte GetContactByte(List<byte> heightList)
+        {
+            var byteValue = heightList.Last();
+            for (var j = heightList.Count - 2; j >= 0; j--)
+            {
+                byteValue = (byte)(byteValue << 1);
+                byteValue += heightList[j];
+            }
+
+            return byteValue;
+        }
+
+
+        private void Test3()
+        {
+            var list = new List<byte>();
+            list.Add(0x01);
+            list.Add(0x01);
+            list.Add(0x00);
+            Console.WriteLine(GetContactByte(list));
+        }
 
         /// <summary>
         /// 执行一次打印的命令

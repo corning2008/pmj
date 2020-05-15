@@ -23,10 +23,13 @@ namespace pmj
             Mat mat = OpenCvSharp.Extensions.BitmapConverter.ToMat(ImageBaseOriginal);
            
              mat = mat.CvtColor(ColorConversionCodes.BGR2GRAY);
-            
+            //阈值化操作
+            var matThreadHold = mat.Threshold(125, 255, ThresholdTypes.Binary);
             //mat = mat.CvtColor(ColorConversionCodes.BGRA2YUV_IYUV);
-            var newBitmap = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(mat);
+            //
+            var newBitmap = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(matThreadHold);
             mat.Dispose();
+            matThreadHold.Dispose();
             ImageBaseOriginal.Dispose();
             Console.WriteLine("转化完成");
             return newBitmap;
