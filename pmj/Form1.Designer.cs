@@ -39,6 +39,7 @@
             this.lbPmjStatus = new System.Windows.Forms.Label();
             this.btnPrintOnce = new System.Windows.Forms.Button();
             this.panelTop = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.btnWriteBuffer = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelRight = new System.Windows.Forms.Panel();
@@ -51,12 +52,14 @@
             this.panelLeft = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelTip = new System.Windows.Forms.Panel();
+            this.btnDownload = new System.Windows.Forms.Button();
+            this.cmbFileList = new System.Windows.Forms.ComboBox();
             this.panelSetting = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panelTip.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBoxPmj
@@ -83,7 +86,7 @@
             this.panelTest.BackColor = System.Drawing.Color.Transparent;
             this.panelTest.Location = new System.Drawing.Point(0, 0);
             this.panelTest.Name = "panelTest";
-            this.panelTest.Size = new System.Drawing.Size(2000, 100);
+            this.panelTest.Size = new System.Drawing.Size(2000, 50);
             this.panelTest.TabIndex = 5;
             this.panelTest.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTest_Paint);
             // 
@@ -104,9 +107,9 @@
             this.panelBottom.Controls.Add(this.btnPmjDelete);
             this.panelBottom.Controls.Add(this.lbPmjStatus);
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottom.Location = new System.Drawing.Point(0, 504);
+            this.panelBottom.Location = new System.Drawing.Point(0, 410);
             this.panelBottom.Name = "panelBottom";
-            this.panelBottom.Size = new System.Drawing.Size(1055, 44);
+            this.panelBottom.Size = new System.Drawing.Size(941, 44);
             this.panelBottom.TabIndex = 8;
             // 
             // btnPmjDelete
@@ -151,8 +154,19 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(1055, 48);
+            this.panelTop.Size = new System.Drawing.Size(941, 48);
             this.panelTop.TabIndex = 10;
+            this.panelTop.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTop_Paint);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(723, 12);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnWriteBuffer
             // 
@@ -181,9 +195,9 @@
             this.panelRight.Controls.Add(this.btnTimeSetting);
             this.panelRight.Controls.Add(this.btnPicture);
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelRight.Location = new System.Drawing.Point(892, 48);
+            this.panelRight.Location = new System.Drawing.Point(778, 48);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(163, 456);
+            this.panelRight.Size = new System.Drawing.Size(163, 362);
             this.panelRight.TabIndex = 11;
             // 
             // btnBarcode
@@ -258,7 +272,7 @@
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeft.Location = new System.Drawing.Point(0, 48);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(156, 456);
+            this.panelLeft.Size = new System.Drawing.Size(156, 362);
             this.panelLeft.TabIndex = 12;
             // 
             // panel2
@@ -268,17 +282,38 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(156, 48);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(736, 128);
+            this.panel2.Size = new System.Drawing.Size(622, 128);
             this.panel2.TabIndex = 13;
             // 
             // panelTip
             // 
             this.panelTip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTip.Controls.Add(this.btnDownload);
+            this.panelTip.Controls.Add(this.cmbFileList);
             this.panelTip.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTip.Location = new System.Drawing.Point(156, 176);
             this.panelTip.Name = "panelTip";
-            this.panelTip.Size = new System.Drawing.Size(736, 64);
+            this.panelTip.Size = new System.Drawing.Size(622, 64);
             this.panelTip.TabIndex = 14;
+            this.panelTip.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTip_Paint);
+            // 
+            // btnDownload
+            // 
+            this.btnDownload.Location = new System.Drawing.Point(133, 25);
+            this.btnDownload.Name = "btnDownload";
+            this.btnDownload.Size = new System.Drawing.Size(75, 23);
+            this.btnDownload.TabIndex = 1;
+            this.btnDownload.Text = "下载";
+            this.btnDownload.UseVisualStyleBackColor = true;
+            this.btnDownload.Click += new System.EventHandler(this.btnDownload_Click);
+            // 
+            // cmbFileList
+            // 
+            this.cmbFileList.FormattingEnabled = true;
+            this.cmbFileList.Location = new System.Drawing.Point(6, 25);
+            this.cmbFileList.Name = "cmbFileList";
+            this.cmbFileList.Size = new System.Drawing.Size(121, 20);
+            this.cmbFileList.TabIndex = 0;
             // 
             // panelSetting
             // 
@@ -286,25 +321,15 @@
             this.panelSetting.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSetting.Location = new System.Drawing.Point(156, 240);
             this.panelSetting.Name = "panelSetting";
-            this.panelSetting.Size = new System.Drawing.Size(736, 264);
+            this.panelSetting.Size = new System.Drawing.Size(622, 170);
             this.panelSetting.TabIndex = 15;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(723, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1055, 548);
+            this.ClientSize = new System.Drawing.Size(941, 454);
             this.Controls.Add(this.panelSetting);
             this.Controls.Add(this.panelTip);
             this.Controls.Add(this.panel2);
@@ -321,6 +346,7 @@
             this.panelTop.ResumeLayout(false);
             this.panelRight.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.panelTip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -351,6 +377,8 @@
         private System.Windows.Forms.Button btnQrcode;
         private System.Windows.Forms.Button btnBarcode;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnDownload;
+        private System.Windows.Forms.ComboBox cmbFileList;
     }
 }
 

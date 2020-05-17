@@ -49,6 +49,8 @@ namespace pmj
         }
 
 
+
+
         public byte[] GetContentData()
         {
             var header = new byte[]{0x12,0x00};
@@ -75,15 +77,142 @@ namespace pmj
         }
 
 
-        public void Test2()
+        /// <summary>
+        /// 下载指令
+        /// </summary>
+        /// <param name="fileIndex">文件的序列号 0：第一个文件 。。。。3：第四个文件</param>
+        /// <returns></returns>
+        public static byte[] GetDownloadCommand(byte fileIndex)
         {
-            var command = GetCommand(0x01,Encoding.ASCII.GetBytes("123"));
-            foreach (var b in command)
-            {
-                Console.Write("{0:X2} ", b);
-            }
+            return GetCommand(0x0A, new byte[] { fileIndex });
         }
 
+
+        public void Test2()
+        {
+          
+        }
+
+        /// <summary>
+        /// 下发文本的命令
+        /// </summary>
+        /// <param name="left">left</param>
+        /// <param name="top">top</param>
+        /// <param name="content">下发文本的字节数组</param>
+        /// <param name="fontSize">字体的index</param>
+        /// <param name="distance">间距默认0x00</param>
+        /// <param name="style2">样式默认0x00</param>
+        /// <returns></returns>
+        public static byte[] GetTextCommand(UInt16 left,UInt16 top,byte[] content,ushort fontSize,ushort distance=0x00,ushort style2=0x00)
+        {
+            var contentHeader = new byte[] { 0x74, 0x00 };
+            var lengthBytes = BitConverter.GetBytes((ushort)content.Length);
+            //字体大小
+            var fontSizeBytes = BitConverter.GetBytes(fontSize);
+            var leftBytes = BitConverter.GetBytes(left);
+            var topBytes = BitConverter.GetBytes(top);
+            var distanceBytes = BitConverter.GetBytes(distance);
+            var style2Bytes = BitConverter.GetBytes(style2);
+            var contentBytes = contentHeader.Concat(lengthBytes).Concat(fontSizeBytes).Concat(leftBytes).Concat(topBytes).Concat(distanceBytes).Concat(style2Bytes).Concat(content).ToArray();
+
+            return GetCommand(0x0b, contentBytes);
+        }
+
+        /// <summary>
+        /// 下载时间的命令
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="top"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static byte[] GetTimeCommand(ushort left, ushort top,byte[] content)
+        {
+            return GetCommandDownload(0x0b, new byte[] { 0x54, 0x00 }, left, top, 0, 0, content);
+        }
+
+        public static List<byte[]> GetImageCommand(UInt16 left,UInt16 top, Bitmap bitmap)
+        {
+            var width = left + bitmap.Width > 2000 ? 2000 - left : bitmap.Width;
+            var height = top + bitmap.Height > 100 ? 100 - top : bitmap.Height;
+            //高度必须是8的倍数
+            while (height % 8 != 0)
+            {
+                height--;
+            }
+
+            if (height == 0)
+            {
+                return null;
+            }
+
+            var list = new List<byte[]>();
+            var byteList = new List<byte>();
+            var picWidth = 0;
+          
+            try
+            {
+                for (var i = 0; i < width; i++)
+                {
+                    var heightList = new List<byte>();
+                    for (var j = 0; j < height; j++)
+                    {
+                        var color = bitmap.GetPixel(i, j);
+
+                        var value = color.B;
+                        if (value == 255)
+                        {
+                            heightList.Add(0x00);
+                        }
+                        else
+                        {
+                            heightList.Add(0x01);
+                        }
+                        //如果高度正好8的话,就拼接成一个字节
+                        if (heightList.Count == 8)
+                        {
+                            byteList.Add(GetContactByte(heightList));
+                            heightList.Clear();
+                        }
+                        //如果高度不是8的倍数,并且到了最后一位就直接转化
+                        if (j == height - 1 && heightList.Count > 0)
+                        {
+                            byteList.Add(GetContactByte(heightList));
+                            break;
+                        }
+                    }
+
+                    //
+                    picWidth++;
+
+
+                    //单个包的数量不能超过1000
+                    if (byteList.Count > 200 || (i == width - 1 && byteList.Count > 0))
+                    {
+                        var bufferImage = new BufferImageData();
+                        bufferImage.X = (UInt16)((left + i+1)-picWidth);
+                        bufferImage.Y = (UInt16)top;
+                        bufferImage.Width = (UInt16)picWidth;
+                        bufferImage.Height = (UInt16)height;
+                        bufferImage.Data = byteList.ToArray();
+                        byteList.Clear();
+                        picWidth = 0;
+                        list.Add(GetCommandDownload(0x0b,new byte[] { 0x42,0x00},bufferImage.X,bufferImage.Width,bufferImage.Y,bufferImage.Height,bufferImage.Data));
+                        Console.WriteLine($"添加分割数据  x:{bufferImage.X} width:{bufferImage.Width} y:{bufferImage.Y} height:{bufferImage.Height}");
+                        Console.WriteLine(bufferImage.ToString());
+                    }
+                }
+
+
+                return list;
+            }
+            finally
+            {
+                // lockBitmap.UnlockBits();
+            }
+        }
+       
+
+        
 
         public static List<byte[]> GetImageBufferCommand(Bitmap bitmap, int left, int top)
         {
@@ -183,11 +312,8 @@ namespace pmj
 
         private void Test3()
         {
-            var list = new List<byte>();
-            list.Add(0x01);
-            list.Add(0x01);
-            list.Add(0x00);
-            Console.WriteLine(GetContactByte(list));
+            var command = GetSerialNumberCommand(8, 0, 0, 7, 2);
+            PrintBytes(command);
         }
 
         /// <summary>
@@ -217,6 +343,35 @@ namespace pmj
         public static byte[] GetCheckDeviceCommand()
         {
             return GetCommand(0x01, null);
+        }
+
+        public static void PrintBytes(byte[] dataList)
+        {
+            var sb = new StringBuilder();
+            foreach(var item in dataList)
+            {
+                sb.Append($"{item:X2} ");
+            }
+            Console.WriteLine(sb.ToString());
+        }
+
+        /// <summary>
+        /// 序列号设置命令
+        /// </summary>
+        /// <param name="strLength">序列号长度</param>
+        /// <param name="left">left</param>
+        /// <param name="top">top</param>
+        /// <param name="interval">步进数值</param>
+        /// <param name="initValue">初始值</param>
+        /// <returns></returns>
+        public static byte[] GetSerialNumberCommand(ushort strLength,ushort left, ushort top,byte interval,byte initValue)
+        {
+            var contentHeader = new byte[] { 0x53, 0x00 };
+            var lengthBytes = BitConverter.GetBytes(strLength);
+            var locationBytes = GetLocationBytes(left, top, 0, 0);
+            var settins = new byte[] { initValue,0x00,interval,0x00,0x00,0x00};
+            var content = contentHeader.Concat(lengthBytes).Concat(locationBytes).Concat(settins).ToArray();
+            return GetCommand(0x0b, content);
         }
 
         /// <summary>
@@ -275,6 +430,56 @@ namespace pmj
         }
 
         /// <summary>
+        /// 获取下载的位置信息
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="top"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        private static byte[] GetLocationBytes(ushort left, ushort top,ushort width,ushort height)
+        {
+            //X起点
+            var xBegin = BitConverter.GetBytes(left);
+            //x宽度
+            var xWidth = BitConverter.GetBytes(width);
+            //y起点
+            var yBegin = BitConverter.GetBytes(top);
+            //y宽度
+            var yHeight = BitConverter.GetBytes(height);
+            //反色
+            var fan = BitConverter.GetBytes((ushort)0);
+            return xBegin.Concat(xWidth).Concat(yBegin).Concat(yHeight).Concat(fan).ToArray();
+        }
+
+        public static byte[] GetCommandDownload(byte functionId,byte[] contentHeader,ushort left,ushort top,ushort width,ushort height,byte[] content)
+        {
+         
+            //获取消息的长度
+            var lengthBytes = BitConverter.GetBytes((ushort)content.Length);
+            var locatioBytes = GetLocationBytes(left, top, width, height);
+          
+            var contentCommand = contentHeader.Concat(lengthBytes).Concat(locatioBytes).Concat(content).ToArray();
+            //合成整个命令
+            return GetCommand(functionId, contentCommand);
+        }
+
+        /// <summary>
+        /// 根据内容获取消息的头部，如果插入的是文本，头部就是0x74，0x00
+        /// </summary>
+        /// <param name="functionId"></param>
+        /// <returns></returns>
+        private static byte[] GetContentHeader(byte functionId)
+        {
+            //插入消息文本
+            if(functionId == 0x0b)
+            {
+                return new byte[] { 0x74, 0x00 };
+            }
+            return new byte[] { 0x00, 0x00 };
+        }
+
+        /// <summary>
         /// 获取命令
         /// </summary>
         /// <param name="functionId"></param>
@@ -295,7 +500,7 @@ namespace pmj
                 list = list.Concat(content);
             }
             //计算校验码
-            var crc16 = CRC.CRC16(list.ToArray());
+            var crc16 = CRC.CRC16Ex(list.ToArray());
             list = list.Concat(crc16);
             return list.ToArray();
            

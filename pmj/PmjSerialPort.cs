@@ -70,7 +70,7 @@ namespace pmj
         /// <returns></returns>
         public bool WriteImageBuffer(Bitmap bitmap, int left, int top)
         {
-            var commandList = CommandFactory.GetImageBufferCommand(bitmap, left, top);
+            var commandList = CommandFactory.GetImageCommand((ushort)left, (ushort)top,bitmap);
             if (null == commandList || commandList.Count == 0)
             {
                 throw new Exception("没有获取到缓冲数据");
@@ -143,6 +143,37 @@ namespace pmj
            
         }
         
+        /// <summary>
+        /// 发送命令
+        /// </summary>
+        /// <param name="command">命令的内容</param>
+        /// <param name="result">返回的结果</param>
+        /// <returns>true：执行成功 false： 执行失败</returns>
+        public bool SendCommand(byte[] command ,out DataResult result)
+        {
+            result = WriteForResult(command, 3000);
+            if(null == result)
+            {
+                Console.WriteLine("没有接受到应答数据");
+                return false;
+            }
+            if(result.GetFunctionId()!= command[3])
+            {
+                Console.WriteLine("应答数据的功能码不对");
+                return false;
+            }
+            var content = result.GetData();
+            if(null == content || content.Length ==0)
+            {
+                return false;
+            }
+            if(content[0] != 0x01)
+            {
+                return false;
+            }
+            return true;
+        }
+
 
         /// <summary>
         /// 发送字节数组
@@ -198,15 +229,46 @@ namespace pmj
         /// 发送Hex字符串,比如7E 48 53 44
         /// </summary>
         /// <param name="str"></param>
-        public void WriteHexString(string str)
+        public DataResult WriteHexString(string str,int timeOut)
         {
-            if (null != _port && _port.IsOpen)
+            if (!Monitor.TryEnter(_flag))
             {
-                _port.WriteHexString(str);
+                throw new Exception("串口正在执行命令,请稍后");
             }
-            else
+            lock (_flag)
             {
-                throw new Exception("请先打开串口");
+                _dataRecv = null;
+                if (null != _port && _port.IsOpen)
+                {
+                    _port.WriteHexString(str);
+                    Console.WriteLine($"发送数据：{str}");
+                }
+                else
+                {
+                    throw new Exception("请先打开串口");
+                }
+
+                var index = 1;
+                while (index < timeOut)
+                {
+                    Thread.Sleep(1);
+                    index++;
+                    if (null != _dataRecv && _dataRecv.Length > 1)
+                    {
+                        var newBuffer = new byte[_dataRecv.Length];
+                        Array.Copy(_dataRecv, 0, newBuffer, 0, _dataRecv.Length);
+                        //接受到应答数据
+                        Console.WriteLine($"接受到应答数据:{GetHexString(newBuffer)}");
+                        //对接受到的数据进行解析
+                        if (!CommandFactory.ValidateData(newBuffer))
+                        {
+                            throw new Exception("接受到的数据校验失败");
+                        }
+                        return new DataResult(newBuffer);
+                    }
+                }
+
+                throw new Exception("执行命令超时");
             }
         }
         /// <summary>

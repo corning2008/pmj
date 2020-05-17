@@ -16,6 +16,17 @@ namespace pmj
             Console.WriteLine(1.ToString("00"));
         }
 
+
+        public static List<CmbDataItem> GetFileList()
+        {
+            var list = new List<CmbDataItem>();
+            list.Add(new CmbDataItem { Name = "文件1", Value = 0 });
+            list.Add(new CmbDataItem { Name = "文件2", Value = 1 });
+            list.Add(new CmbDataItem { Name = "文件3", Value = 2 });
+            list.Add(new CmbDataItem { Name = "文件4", Value = 3 });
+            return list;
+        }
+
         public static List<CmbDataItem> GetBarcodeType()
         {
             var list = new List<CmbDataItem>();
@@ -98,13 +109,13 @@ namespace pmj
         public static List<CmbDataItem> GetFontSizeList()
         {
             var list = new List<CmbDataItem>();
-            list.Add(new CmbDataItem(){Name = "10",Value = 12});
-            list.Add(new CmbDataItem() { Name = "12", Value = 12 });
-            list.Add(new CmbDataItem() { Name = "12", Value = 12 });
-            list.Add(new CmbDataItem() { Name = "16", Value = 12 });
-            list.Add(new CmbDataItem() { Name = "24", Value = 12 });
-            list.Add(new CmbDataItem() { Name = "32", Value = 12 });
-            list.Add(new CmbDataItem() { Name = "48", Value = 12 });
+            list.Add(new CmbDataItem(){Name = "10",Value = 0});
+            list.Add(new CmbDataItem() { Name = "12", Value = 1 });
+           
+            list.Add(new CmbDataItem() { Name = "16", Value = 2 });
+            list.Add(new CmbDataItem() { Name = "24", Value = 3 });
+            list.Add(new CmbDataItem() { Name = "32", Value = 4 });
+            list.Add(new CmbDataItem() { Name = "48", Value = 5 });
           
             return list;
         }

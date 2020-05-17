@@ -32,6 +32,9 @@ namespace pmj
             //加载串口
             var serialPortList = GetSerialPortList();
             comboBoxPmj.DataSource = serialPortList;
+            //加载文件列表
+            var fileList = CmbDataItemFactory.GetFileList();
+            cmbFileList.DataSource = fileList;
         }
 
         private List<String> GetSerialPortList()
@@ -100,7 +103,8 @@ namespace pmj
 
         private List<PmjData> _pmjDataList = new List<PmjData>();
         private string _id;
-
+        //是否已经连接串口，并扫描到打印机
+        private bool _connectFlag = false;
 
         private void SetItemEvent(Control label)
         {
@@ -191,6 +195,7 @@ namespace pmj
                 
                 var pmjName = Encoding.ASCII.GetString(result.GetData());
                 lbPmjStatus.Text = $"{pmjName}--已连接";
+                this._connectFlag = true;
             }
             catch (Exception ex)
             {
@@ -780,8 +785,16 @@ namespace pmj
         {
             try
             {
-                var command = CommandFactory.GetDynamicInsert(EnumInsertMode.文本, "321",0);
-                var result = _pmjSerialPort.WriteForResult(command, 2000);
+                var content = "fa 1c 00 0b 74 00 09 00 00 00 00 00 00 00 00 00 00 00 c9 fa b2 fa c8 d5 c6 da 3a aa aa";
+                var sb = new StringBuilder();
+                for (var i = 0; i < content.Length; i += 2)
+                {
+                    sb.Append(content.Substring(i, 2));
+                    //sb.Append(" ");
+                }
+
+
+                var result = _pmjSerialPort.WriteHexString(sb.ToString(),4000);
                 var data = result.GetData();
                 if(null != data && data.Length > 0)
                 {
@@ -793,6 +806,69 @@ namespace pmj
                 }
             }
             catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void panelTop_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelTip_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnDownload_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //判断下发对象是否存在
+                if(_pmjDataList.Count == 0)
+                {
+                    MessageBox.Show("请编辑下发对象");
+                    return;
+                }
+                //获取File的列表
+                var cmbData = cmbFileList.SelectedItem as CmbDataItem;
+                //判断串口是否打开
+                if (!_connectFlag)
+                {
+                    MessageBox.Show("请先扫描喷码机设备");
+                    return;
+                }
+                //下发下载的指令
+                var commandDownload = CommandFactory.GetDownloadCommand((byte)cmbData.Value);
+                var result = _pmjSerialPort.SendCommand(commandDownload,out DataResult dataResult);
+               
+                if(!result)
+                {
+                    MessageBox.Show("下发下载文件的命令执行失败");
+                    return;
+                }
+                //
+                foreach(var item in _pmjDataList)
+                {
+                    if(item.DataType == EnumPmjData.文本)
+                    {
+                        var label = item.Control as Label;
+                        var settingPanel = (item.DataSource as TextSettingParameter).UserControl as TextSetting;
+                        
+                        var command = CommandFactory.GetTextCommand((ushort)label.Left, (ushort)label.Top, Encoding.Default.GetBytes(label.Text),(ushort)settingPanel.GetSelectFont().Value);
+                        var resultForSend = _pmjSerialPort.SendCommand(command,out DataResult resultF);
+                        if (!resultForSend)
+                        {
+                            MessageBox.Show("命令下发失败");
+                            break;
+                        }
+                    }
+                }
+                MessageBox.Show("下载文件成功");
+                return;
+
+            }catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }

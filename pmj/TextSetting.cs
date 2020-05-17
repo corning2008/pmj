@@ -34,6 +34,15 @@ namespace pmj
 
         }
 
+        /// <summary>
+        /// 获取选中的字体
+        /// </summary>
+        /// <returns></returns>
+        public CmbDataItem GetSelectFont()
+        {
+            return cmbFontSize.SelectedItem as CmbDataItem;
+        }
+
         private TextSettingParameter GetParameter()
         {
             var para = new TextSettingParameter();

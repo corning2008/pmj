@@ -173,6 +173,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="文档\通信协议20190326%281%29.pdf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

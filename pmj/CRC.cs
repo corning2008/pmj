@@ -15,11 +15,12 @@ namespace pmj
 
         public void Test()
         {
-            var list = new byte[] {0x06, 0x00, 0x21, 0x00};
-            var value = CRC16(list);
+            var test = "生产日期:";
+
+            var value = Encoding.Default.GetBytes(test);
             foreach (var b in value)
             {
-                Console.WriteLine("{0:X2}",b);
+                Console.Write("{0:X2} ",b);
             }
         }
 
