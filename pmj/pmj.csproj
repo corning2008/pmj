@@ -95,8 +95,20 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetting.Designer.cs">
+      <DependentUpon>FormSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImageTool.cs" />
     <Compile Include="LockBitmap.cs" />
+    <Compile Include="ParameterSetting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ParameterSetting.Designer.cs">
+      <DependentUpon>ParameterSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="PictureSetting.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -138,6 +150,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting.resx">
+      <DependentUpon>FormSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParameterSetting.resx">
+      <DependentUpon>ParameterSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PictureSetting.resx">
       <DependentUpon>PictureSetting.cs</DependentUpon>

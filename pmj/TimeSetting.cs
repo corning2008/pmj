@@ -23,6 +23,24 @@ namespace pmj
         private string _format;
         private int _size;
 
+        /// <summary>
+        /// 获取时间的样式
+        /// </summary>
+        /// <returns></returns>
+        public string GetTimeFormat()
+        {
+            return (cmbStyle.SelectedItem as CmbDataItem).ValueStr;
+        }
+
+        /// <summary>
+        /// 获取设置的字体的数据
+        /// </summary>
+        /// <returns></returns>
+        public int GetFongValue()
+        {
+            return (cmbFontSize.SelectedItem as CmbDataItem).Value;
+        }
+
         public TimeSetting(ITimeSetting timeSetting,TimeSettingParameter parameter)
         {
             InitializeComponent();

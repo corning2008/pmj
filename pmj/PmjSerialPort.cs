@@ -82,12 +82,12 @@ namespace pmj
                 var data = dataResult.GetData();
                 if (data == null || data.Length == 0)
                 {
-                    throw new Exception("下发缓冲数据返回失败");
+                    throw new Exception("图片下发没有接受到应答数据");
                 }
 
                 if (data[0] == 0x00)
                 {
-                    throw new Exception("下发命令失败");
+                    throw new Exception("图片下发命令失败");
                 }
             }
 

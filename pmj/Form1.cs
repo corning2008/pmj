@@ -851,6 +851,7 @@ namespace pmj
                 //
                 foreach(var item in _pmjDataList)
                 {
+                    //下发文本
                     if(item.DataType == EnumPmjData.文本)
                     {
                         var label = item.Control as Label;
@@ -860,15 +861,73 @@ namespace pmj
                         var resultForSend = _pmjSerialPort.SendCommand(command,out DataResult resultF);
                         if (!resultForSend)
                         {
-                            MessageBox.Show("命令下发失败");
+                            MessageBox.Show("文本命令下发失败");
                             break;
                         }
                     }
+                    //下发序列号
+                    if (item.DataType == EnumPmjData.序号)
+                    {
+                        var lable = item.Control as Label;
+                        var settingPanel =
+                            (item.DataSource as SerialNumberParameter).UserControl as SerialNumberSetting;
+                        var timeCommand = CommandFactory.GetSerialNumberCommand((ushort) lable.Text.Length,
+                            (ushort) settingPanel.GetFontValue(), (ushort) lable.Left, (ushort) lable.Top,
+                            (ushort) settingPanel.GetIntervalValue(), (uint)settingPanel.GetInitValue());
+                        var resultForSend = _pmjSerialPort.SendCommand(timeCommand, out DataResult resultF);
+                        if (!resultForSend)
+                        {
+                            MessageBox.Show("序列号命令下发失败");
+                            break;
+                        }
+                    }
+                    //下发设置的时间
+                    if (item.DataType == EnumPmjData.时间)
+                    {
+                        var label = item.Control as Label;
+                        var settingPanel = (item.DataSource as TimeSettingParameter).UserControl as TimeSetting;
+                        var format = settingPanel.GetTimeFormat();
+                        var fontSize = settingPanel.GetFongValue();
+                        var command = CommandFactory.GetTimeCommand(format, (ushort) fontSize, (ushort)label.Left, (ushort)label.Top);
+                        var resultForSend = _pmjSerialPort.SendCommand(command, out DataResult resultF);
+                        if (!resultForSend)
+                        {
+                            MessageBox.Show("时间命令下发失败");
+                            break;
+                        }
+                    }
+                    //图片
+                    if (item.DataType == EnumPmjData.图片 || item.DataType == EnumPmjData.二维码 || item.DataType == EnumPmjData.条码)
+                    {
+                        var control = (item.Control as PictureBox);
+                        var bitmap = control.Image as Bitmap;
+                        var flag = _pmjSerialPort.WriteImageBuffer(bitmap, control.Left, control.Top);
+                        if (!flag)
+                        {
+                            MessageBox.Show("图片命令下发失败");
+                            break;
+                        }
+                    }
+
+
                 }
                 MessageBox.Show("下载文件成功");
                 return;
 
             }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnParameter_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var dialog = new FormSetting(this._pmjSerialPort);
+                dialog.ShowDialog();
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }

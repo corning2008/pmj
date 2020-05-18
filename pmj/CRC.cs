@@ -15,6 +15,7 @@ namespace pmj
 
         public void Test()
         {
+            Console.WriteLine(DateTime.Now.ToString("Yy-Mm-Dd"));
             var test = "生产日期:";
 
             var value = Encoding.Default.GetBytes(test);

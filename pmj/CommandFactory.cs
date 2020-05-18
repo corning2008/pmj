@@ -68,6 +68,55 @@ namespace pmj
 
     public class CommandFactory
     {
+        /// <summary>
+        /// 设置打印的参数 
+        /// </summary>
+        /// <param name="beginDelay"></param>
+        /// <param name="numberCount"></param>
+        /// <param name="colDelay"></param>
+        /// <param name="pluseWidth"></param>
+        /// <param name="grayScale"></param>
+        /// <param name="vValue"></param>
+        /// <param name="fileValue"></param>
+        /// <param name="powerOffValue"></param>
+        /// <param name="idleValue"></param>
+        /// <returns></returns>
+        public static byte[] GetSettingCommand(ushort beginDelay, ushort numberCount, ushort colDelay,
+            ushort pluseWidth, ushort grayScale, ushort vValue, ushort fileValue, ushort powerOffValue,
+            ushort idleValue)
+        {
+
+            //打印延迟
+            var content = BitConverter.GetBytes(beginDelay);
+            //列间延迟
+            content = content.Concat(BitConverter.GetBytes(colDelay)).ToArray();
+            //编码器基数
+            content = content.Concat(BitConverter.GetBytes(numberCount)).ToArray();
+            //脉冲宽度
+            content = content.Concat(BitConverter.GetBytes(pluseWidth)).ToArray();
+            //打印灰度
+            content = content.Concat(BitConverter.GetBytes(grayScale)).ToArray();
+            //grayDelay 未知
+            content = content.Concat(BitConverter.GetBytes((ushort) 0)).ToArray();
+            //打印电压
+            content = content.Concat(BitConverter.GetBytes(vValue)).ToArray();
+            //RorL 未知
+            content = content.Concat(BitConverter.GetBytes((ushort) 0)).ToArray();
+            //打印文件选择
+            content = content.Concat(BitConverter.GetBytes(fileValue)).ToArray();
+            //hp lut未知
+            content = content.Concat(BitConverter.GetBytes((ushort) 1)).ToArray();
+            //PttRasterize 
+            content = content.Concat(BitConverter.GetBytes((ushort) 0)).ToArray();
+            //自动关机
+            content = content.Concat(BitConverter.GetBytes((ushort) powerOffValue)).ToArray();
+            //闲喷
+            content = content.Concat(BitConverter.GetBytes((ushort) idleValue)).ToArray();
+            //NoUse[1]
+            content = content.Concat(BitConverter.GetBytes((ushort) 0)).ToArray();
+
+            return GetCommand(0x06, content);
+        }
 
         public void Test1()
         {
@@ -119,21 +168,42 @@ namespace pmj
         }
 
         /// <summary>
-        /// 下载时间的命令
+        /// 设置时间的命令
         /// </summary>
+        /// <param name="format">时间的格式</param>
+        /// <param name="fontSize">字体大小</param>
         /// <param name="left"></param>
         /// <param name="top"></param>
-        /// <param name="content"></param>
+        /// <param name="space">间隔</param>
+        /// <param name="style">样式</param>
         /// <returns></returns>
-        public static byte[] GetTimeCommand(ushort left, ushort top,byte[] content)
+        public static byte[] GetTimeCommand(string format,ushort fontSize, ushort left, ushort top,ushort space = 0,ushort style=0)
         {
-            return GetCommandDownload(0x0b, new byte[] { 0x54, 0x00 }, left, top, 0, 0, content);
+            var header = new byte[] {0x54, 0x00};
+            //采用的字节个数
+            var lengthStyle = BitConverter.GetBytes((ushort) Encoding.Default.GetBytes(format).Length);
+            //字体
+            var fongSizeBytes = BitConverter.GetBytes(fontSize);
+            //x开始
+            var xBytes = BitConverter.GetBytes(left);
+            //y开始
+            var yBytes = BitConverter.GetBytes(top);
+            //间隔
+            var spaceBytes = BitConverter.GetBytes(space);
+            //格式
+            var styleBytes = BitConverter.GetBytes(style);
+            //时间格式
+            var timeBytes = Encoding.Default.GetBytes(format);
+            var content = header.Concat(lengthStyle).Concat(fongSizeBytes)
+                .Concat(xBytes).Concat(yBytes).Concat(spaceBytes).Concat(styleBytes)
+                .Concat(timeBytes).ToArray();
+            return GetCommand(0x0b, content);
         }
 
         public static List<byte[]> GetImageCommand(UInt16 left,UInt16 top, Bitmap bitmap)
         {
             var width = left + bitmap.Width > 2000 ? 2000 - left : bitmap.Width;
-            var height = top + bitmap.Height > 100 ? 100 - top : bitmap.Height;
+            var height = top + bitmap.Height > 50 ? 50 - top : bitmap.Height;
             //高度必须是8的倍数
             while (height % 8 != 0)
             {
@@ -312,8 +382,7 @@ namespace pmj
 
         private void Test3()
         {
-            var command = GetSerialNumberCommand(8, 0, 0, 7, 2);
-            PrintBytes(command);
+          
         }
 
         /// <summary>
@@ -359,18 +428,37 @@ namespace pmj
         /// 序列号设置命令
         /// </summary>
         /// <param name="strLength">序列号长度</param>
+        /// <param name="fontSize">字体大小</param>
         /// <param name="left">left</param>
         /// <param name="top">top</param>
-        /// <param name="interval">步进数值</param>
-        /// <param name="initValue">初始值</param>
+        /// <param name="interval">步进</param>
+        /// <param name="initValue">初始数据</param>
+        /// <param name="space">间隔</param>
+        /// <param name="style">其他样式</param>
         /// <returns></returns>
-        public static byte[] GetSerialNumberCommand(ushort strLength,ushort left, ushort top,byte interval,byte initValue)
+        public static byte[] GetSerialNumberCommand(ushort strLength,ushort fontSize,ushort left, ushort top,ushort interval,UInt32 initValue,ushort space = 0,ushort style=0)
         {
             var contentHeader = new byte[] { 0x53, 0x00 };
+            //序号的位数
             var lengthBytes = BitConverter.GetBytes(strLength);
-            var locationBytes = GetLocationBytes(left, top, 0, 0);
-            var settins = new byte[] { initValue,0x00,interval,0x00,0x00,0x00};
-            var content = contentHeader.Concat(lengthBytes).Concat(locationBytes).Concat(settins).ToArray();
+            //字体
+            var fontSizeByte = BitConverter.GetBytes(fontSize);
+            //x开始
+            var leftBytes = BitConverter.GetBytes(left);
+            //y开始
+            var topBytes = BitConverter.GetBytes(top);
+            //间距
+            var spanceBytes = BitConverter.GetBytes(space);
+            //格式
+            var styleBytes = BitConverter.GetBytes(style);
+            //步进数值
+            var intervalBytes = BitConverter.GetBytes(interval);
+            //初始数据
+            var initValueBytes = BitConverter.GetBytes(initValue);
+
+            var content = contentHeader.Concat(lengthBytes).Concat(leftBytes).Concat(topBytes).Concat(spanceBytes)
+                .Concat(styleBytes)
+                .Concat(intervalBytes).Concat(initValueBytes).ToArray();
             return GetCommand(0x0b, content);
         }
 

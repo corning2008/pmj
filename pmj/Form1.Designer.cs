@@ -55,9 +55,11 @@
             this.btnDownload = new System.Windows.Forms.Button();
             this.cmbFileList = new System.Windows.Forms.ComboBox();
             this.panelSetting = new System.Windows.Forms.Panel();
+            this.btnParameter = new System.Windows.Forms.Button();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
+            this.panelLeft.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panelTip.SuspendLayout();
             this.SuspendLayout();
@@ -269,6 +271,7 @@
             // panelLeft
             // 
             this.panelLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelLeft.Controls.Add(this.btnParameter);
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeft.Location = new System.Drawing.Point(0, 48);
             this.panelLeft.Name = "panelLeft";
@@ -324,6 +327,17 @@
             this.panelSetting.Size = new System.Drawing.Size(622, 170);
             this.panelSetting.TabIndex = 15;
             // 
+            // btnParameter
+            // 
+            this.btnParameter.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnParameter.Location = new System.Drawing.Point(0, 0);
+            this.btnParameter.Name = "btnParameter";
+            this.btnParameter.Size = new System.Drawing.Size(154, 48);
+            this.btnParameter.TabIndex = 1;
+            this.btnParameter.Text = "参数";
+            this.btnParameter.UseVisualStyleBackColor = true;
+            this.btnParameter.Click += new System.EventHandler(this.btnParameter_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -345,6 +359,7 @@
             this.panelBottom.PerformLayout();
             this.panelTop.ResumeLayout(false);
             this.panelRight.ResumeLayout(false);
+            this.panelLeft.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panelTip.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -379,6 +394,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnDownload;
         private System.Windows.Forms.ComboBox cmbFileList;
+        private System.Windows.Forms.Button btnParameter;
     }
 }
 

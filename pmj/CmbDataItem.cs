@@ -9,7 +9,128 @@ namespace pmj
 {
     public class CmbDataItemFactory
     {
-        
+        /// <summary>
+        /// 获取保留参数列表
+        /// </summary>
+        /// <returns></returns>
+        public static List<CmbDataItem> GetRetainParameterList()
+        {
+            var list = new List<CmbDataItem>();
+            list.Add(new CmbDataItem(){Name = "1"});
+            list.Add(new CmbDataItem(){Name = "2"});
+            return list;
+        }
+
+        /// <summary>
+        /// 获取脉冲宽度列表
+        /// </summary>
+        /// <returns></returns>
+        public static List<CmbDataItem> GetPulseWidthList()
+        {
+            var list = new List<CmbDataItem>();
+            list.Add(new CmbDataItem(){Name = "1.6us"});
+            list.Add(new CmbDataItem() { Name = "1.8us" });
+            list.Add(new CmbDataItem() { Name = "2.0us" });
+            list.Add(new CmbDataItem() { Name = "2.2us" });
+            list.Add(new CmbDataItem() { Name = "2.4us" });
+            list.Add(new CmbDataItem() { Name = "2.6us" });
+            list.Add(new CmbDataItem() { Name = "2.8us" });
+            return list;
+        }
+
+        /// <summary>
+        /// 获取闲置喷墨设置列表
+        /// </summary>
+        /// <returns></returns>
+        public static List<CmbDataItem> GetLeaveTimeList()
+        {
+            var list = new List<CmbDataItem>();
+            list.Add(new CmbDataItem(){Name = "闲喷无效"});
+            list.Add(new CmbDataItem() { Name = "1分钟" });
+            list.Add(new CmbDataItem() { Name = "2分钟" });
+            list.Add(new CmbDataItem() { Name = "5分钟" });
+            list.Add(new CmbDataItem() { Name = "10分钟" });
+            list.Add(new CmbDataItem() { Name = "30分钟" });
+            return list;
+        }
+
+        /// <summary>
+        /// 文件列表
+        /// </summary>
+        /// <returns></returns>
+        public static List<CmbDataItem> GetPaperList()
+        {
+            var list = new List<CmbDataItem>();
+            list.Add(new CmbDataItem(){Name = "文件1"});
+            list.Add(new CmbDataItem() { Name = "文件2" });
+            list.Add(new CmbDataItem() { Name = "文件3" });
+            list.Add(new CmbDataItem() { Name = "文件4" });
+            list.Add(new CmbDataItem() { Name = "文件1>2" });
+            list.Add(new CmbDataItem() { Name = "文件1>2>3" });
+            return list;
+        }
+
+        /// <summary>
+        /// 获取关机的列表
+        /// </summary>
+        /// <returns></returns>
+        public static List<CmbDataItem> GetShutdownList()
+        {
+            var list = new List<CmbDataItem>();
+            list.Add(new CmbDataItem(){Name = "不自动关机",Value = 0});
+            list.Add(new CmbDataItem() { Name = "5分钟", Value = 0 });
+            list.Add(new CmbDataItem() { Name = "10分钟", Value = 0 });
+            list.Add(new CmbDataItem() { Name = "30分钟", Value = 0 });
+            return list;
+        }
+
+        /// <summary>
+        /// 获取喷头列表
+        /// </summary>
+        /// <returns></returns>
+        public static List<CmbDataItem> GetPrintList()
+        {
+            var list = new List<CmbDataItem>();
+            list.Add(new CmbDataItem(){Name = "1.27右喷头",Value = 0});
+            list.Add(new CmbDataItem(){Name = "1.27左喷头",Value = 0});
+            list.Add(new CmbDataItem(){Name = "2.54宽喷头",Value = 0});
+            return list;
+        }
+
+        /// <summary>
+        /// 喷头电压列表
+        /// </summary>
+        /// <returns></returns>
+        public static List<CmbDataItem> GetVList()
+        {
+            var list = new List<CmbDataItem>();
+            list.Add(new CmbDataItem(){Name = "12.0V",Value = 0});
+            list.Add(new CmbDataItem() { Name = "11.6V", Value = 0 });
+            list.Add(new CmbDataItem() { Name = "11.2V", Value = 0 });
+            list.Add(new CmbDataItem() { Name = "10.8V", Value = 0 });
+            list.Add(new CmbDataItem() { Name = "10.4V", Value = 0 });
+            list.Add(new CmbDataItem() { Name = "10.0V", Value = 0 });
+            list.Add(new CmbDataItem() { Name = "9.6V", Value = 0 });
+            list.Add(new CmbDataItem() { Name = "9.2V", Value = 0 });
+            list.Add(new CmbDataItem() { Name = "8.8V", Value = 0 });
+            list.Add(new CmbDataItem() { Name = "8.4V", Value = 0 });
+            list.Add(new CmbDataItem() { Name = "8.0V", Value = 0 });
+            return list;
+        }
+
+        /// <summary>
+        /// 获取打印灰度列表
+        /// </summary>
+        /// <returns></returns>
+        public static List<CmbDataItem> GetGrayList()
+        {
+            var list = new List<CmbDataItem>();
+            list.Add(new CmbDataItem(){Name = "浅",Value = 0});
+            list.Add(new CmbDataItem() { Name = "中", Value = 1 });
+            list.Add(new CmbDataItem() { Name = "浓", Value = 2 });
+            list.Add(new CmbDataItem() { Name = "特浓", Value = 3 });
+            return list;
+        }
 
         public void Test()
         {
@@ -91,14 +212,14 @@ namespace pmj
         {
             var list = new List<CmbDataItem>();
            
-            list.Add(new CmbDataItem(){Name = "yyyyMMdd",Value = 2});
-            list.Add(new CmbDataItem() { Name = "yyyy/MM/dd", Value = 2 });
-            list.Add(new CmbDataItem() { Name = "yyyy-MM-dd", Value = 2 });
-            list.Add(new CmbDataItem() { Name = "yyyy年MM月dd", Value = 2 });
-            list.Add(new CmbDataItem() { Name = "yyMMdd", Value = 2 });
-            list.Add(new CmbDataItem() { Name = "yy/MM/dd", Value = 2 });
-            list.Add(new CmbDataItem() { Name = "yy-MM-dd", Value = 2 });
-            list.Add(new CmbDataItem() { Name = "yy年MM月dd", Value = 2 });
+            list.Add(new CmbDataItem(){Name = "yyyyMMdd",ValueStr = "20YyMmDd"});
+            list.Add(new CmbDataItem() { Name = "yyyy/MM/dd", ValueStr="20Yy/Mm/Dd" });
+            list.Add(new CmbDataItem() { Name = "yyyy-MM-dd", ValueStr = "20Yy-Md-Dd" });
+            list.Add(new CmbDataItem() { Name = "yyyy年MM月dd日", ValueStr = "20Yy年Md月Dd日" });
+            list.Add(new CmbDataItem() { Name = "yyMMdd", ValueStr="YyMdDd" });
+            list.Add(new CmbDataItem() { Name = "yy/MM/dd", ValueStr="Yy/Mm/Dd" });
+            list.Add(new CmbDataItem() { Name = "yy-MM-dd", ValueStr="Yy-Md-Dd" });
+            list.Add(new CmbDataItem() { Name = "yy年MM月dd日", ValueStr="Yy年Md月Dd日" });
             return list;
         }
 
@@ -147,6 +268,11 @@ namespace pmj
         /// 
         /// </summary>
         public int Value { get; set; }
+
+        /// <summary>
+        /// 字符串类型的数据
+        /// </summary>
+        public string ValueStr { get; set; }
 
 
         public override string ToString()

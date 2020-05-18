@@ -33,6 +33,36 @@ namespace pmj
             cmbStyle.DataSource = CmbDataItemFactory.GetFontList();
         }
 
+        /// <summary>
+        /// 获取字体
+        /// </summary>
+        /// <returns></returns>
+        public int GetFontValue()
+        {
+            return (cmbFontSize.SelectedItem as CmbDataItem).Value;
+        }
+
+
+
+        /// <summary>
+        /// 获取步进数据
+        /// </summary>
+        /// <returns></returns>
+        public int GetIntervalValue()
+        {
+            return (int) numberInterval.Value;
+        }
+
+        /// <summary>
+        /// 获取初始值
+        /// </summary>
+        /// <returns></returns>
+        public int GetInitValue()
+        {
+            return (int)numberInit.Value;
+        }
+
+
         private void SerialNumberSetting_Load(object sender, EventArgs e)
         {
             
