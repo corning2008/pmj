@@ -143,6 +143,20 @@ namespace pmj
         }
 
         /// <summary>
+        /// 结束下载的命令
+        /// </summary>
+        /// <param name="xBegin">x起点</param>
+        /// <param name="xEnd">x的终点</param>
+        /// <returns></returns>
+        public static byte[] GetFinishDownloadCommand(ushort xBegin,ushort xEnd)
+        {
+            var xBeginBytes = BitConverter.GetBytes(xBegin);
+            var xEndBytes = BitConverter.GetBytes(xEnd);
+            var content = xBeginBytes.Concat(xEndBytes).ToArray();
+            return GetCommand(0x0c, content);
+        }
+
+        /// <summary>
         /// 下发文本的命令
         /// </summary>
         /// <param name="left">left</param>
@@ -177,8 +191,9 @@ namespace pmj
         /// <param name="space">间隔</param>
         /// <param name="style">样式</param>
         /// <returns></returns>
-        public static byte[] GetTimeCommand(string format,ushort fontSize, ushort left, ushort top,ushort space = 0,ushort style=0)
+        public static byte[] GetTimeCommand(string format,ushort fontSize, ushort left, ushort top,byte[] timeOffset, ushort space = 0,ushort style=0)
         {
+            Console.WriteLine($"时间的格式：{format}  字体大小：{fontSize}");
             var header = new byte[] {0x54, 0x00};
             //采用的字节个数
             var lengthStyle = BitConverter.GetBytes((ushort) Encoding.Default.GetBytes(format).Length);
@@ -192,10 +207,13 @@ namespace pmj
             var spaceBytes = BitConverter.GetBytes(space);
             //格式
             var styleBytes = BitConverter.GetBytes(style);
+            //偏移量
+          
             //时间格式
             var timeBytes = Encoding.Default.GetBytes(format);
+            
             var content = header.Concat(lengthStyle).Concat(fongSizeBytes)
-                .Concat(xBytes).Concat(yBytes).Concat(spaceBytes).Concat(styleBytes)
+                .Concat(xBytes).Concat(yBytes).Concat(spaceBytes).Concat(styleBytes).Concat(timeOffset)
                 .Concat(timeBytes).ToArray();
             return GetCommand(0x0b, content);
         }
@@ -266,7 +284,7 @@ namespace pmj
                         bufferImage.Data = byteList.ToArray();
                         byteList.Clear();
                         picWidth = 0;
-                        list.Add(GetCommandDownload(0x0b,new byte[] { 0x42,0x00},bufferImage.X,bufferImage.Width,bufferImage.Y,bufferImage.Height,bufferImage.Data));
+                        list.Add(GetCommandDownload(0x0b,new byte[] { 0x42,0x00},bufferImage.X,bufferImage.Y,bufferImage.Width,bufferImage.Height,bufferImage.Data));
                         Console.WriteLine($"添加分割数据  x:{bufferImage.X} width:{bufferImage.Width} y:{bufferImage.Y} height:{bufferImage.Height}");
                         Console.WriteLine(bufferImage.ToString());
                     }
@@ -456,7 +474,7 @@ namespace pmj
             //初始数据
             var initValueBytes = BitConverter.GetBytes(initValue);
 
-            var content = contentHeader.Concat(lengthBytes).Concat(leftBytes).Concat(topBytes).Concat(spanceBytes)
+            var content = contentHeader.Concat(lengthBytes).Concat(fontSizeByte).Concat(leftBytes).Concat(topBytes).Concat(spanceBytes)
                 .Concat(styleBytes)
                 .Concat(intervalBytes).Concat(initValueBytes).ToArray();
             return GetCommand(0x0b, content);

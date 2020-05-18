@@ -580,6 +580,8 @@ namespace pmj
                 var label = new Label();
                 pmjData.Control = label;
                 label.Text = para.Content;
+                label.Margin = new Padding(0);
+                label.Padding = new Padding(0);
                 label.Name = guid;
                 label.AutoSize = true;
                 label.Font = new Font(FontFamily.GenericMonospace, para.Size);
@@ -857,8 +859,8 @@ namespace pmj
                         var label = item.Control as Label;
                         var settingPanel = (item.DataSource as TextSettingParameter).UserControl as TextSetting;
                         
-                        var command = CommandFactory.GetTextCommand((ushort)label.Left, (ushort)label.Top, Encoding.Default.GetBytes(label.Text),(ushort)settingPanel.GetSelectFont().Value);
-                        var resultForSend = _pmjSerialPort.SendCommand(command,out DataResult resultF);
+                        var commandText = CommandFactory.GetTextCommand((ushort)label.Left, (ushort)label.Top, Encoding.Default.GetBytes(label.Text),(ushort)settingPanel.GetSelectFont().Value);
+                        var resultForSend = _pmjSerialPort.SendCommand(commandText,out DataResult resultF);
                         if (!resultForSend)
                         {
                             MessageBox.Show("文本命令下发失败");
@@ -888,8 +890,10 @@ namespace pmj
                         var settingPanel = (item.DataSource as TimeSettingParameter).UserControl as TimeSetting;
                         var format = settingPanel.GetTimeFormat();
                         var fontSize = settingPanel.GetFongValue();
-                        var command = CommandFactory.GetTimeCommand(format, (ushort) fontSize, (ushort)label.Left, (ushort)label.Top);
-                        var resultForSend = _pmjSerialPort.SendCommand(command, out DataResult resultF);
+                        //获取时间的偏移量
+                        var timeOffset = settingPanel.GetTimeOffSet();
+                        var commandTime = CommandFactory.GetTimeCommand(format, (ushort) fontSize, (ushort)label.Left, (ushort)label.Top,timeOffset);
+                        var resultForSend = _pmjSerialPort.SendCommand(commandTime, out DataResult resultF);
                         if (!resultForSend)
                         {
                             MessageBox.Show("时间命令下发失败");
@@ -901,8 +905,8 @@ namespace pmj
                     {
                         var control = (item.Control as PictureBox);
                         var bitmap = control.Image as Bitmap;
-                        var flag = _pmjSerialPort.WriteImageBuffer(bitmap, control.Left, control.Top);
-                        if (!flag)
+                        var flagImage = _pmjSerialPort.WriteImageBuffer(bitmap, control.Left, control.Top);
+                        if (!flagImage)
                         {
                             MessageBox.Show("图片命令下发失败");
                             break;
@@ -911,6 +915,15 @@ namespace pmj
 
 
                 }
+                //结束下载，首先获取x的最大的终点
+                var xEnd = GetEndX();
+                var command = CommandFactory.GetFinishDownloadCommand(0, (ushort)xEnd);
+                var flag = _pmjSerialPort.SendCommand(command, out DataResult p);
+                if (!flag)
+                {
+                    MessageBox.Show("结束下载命令下发失败");
+                    return;
+                }
                 MessageBox.Show("下载文件成功");
                 return;
 
@@ -918,6 +931,23 @@ namespace pmj
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        /// <summary>
+        /// 获取x的最大值
+        /// </summary>
+        /// <returns></returns>
+        private int GetEndX()
+        {
+            var x = 0;
+            foreach(var item in _pmjDataList)
+            {
+                if(item.Control.Left+item.Control.Width > x)
+                {
+                    x = item.Control.Left + item.Control.Width;
+                }
+            }
+            return x;
         }
 
         private void btnParameter_Click(object sender, EventArgs e)

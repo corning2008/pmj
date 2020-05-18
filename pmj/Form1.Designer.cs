@@ -50,12 +50,12 @@
             this.btnTimeSetting = new System.Windows.Forms.Button();
             this.btnPicture = new System.Windows.Forms.Button();
             this.panelLeft = new System.Windows.Forms.Panel();
+            this.btnParameter = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelTip = new System.Windows.Forms.Panel();
             this.btnDownload = new System.Windows.Forms.Button();
             this.cmbFileList = new System.Windows.Forms.ComboBox();
             this.panelSetting = new System.Windows.Forms.Panel();
-            this.btnParameter = new System.Windows.Forms.Button();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
@@ -278,6 +278,17 @@
             this.panelLeft.Size = new System.Drawing.Size(156, 362);
             this.panelLeft.TabIndex = 12;
             // 
+            // btnParameter
+            // 
+            this.btnParameter.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnParameter.Location = new System.Drawing.Point(0, 0);
+            this.btnParameter.Name = "btnParameter";
+            this.btnParameter.Size = new System.Drawing.Size(154, 48);
+            this.btnParameter.TabIndex = 1;
+            this.btnParameter.Text = "参数";
+            this.btnParameter.UseVisualStyleBackColor = true;
+            this.btnParameter.Click += new System.EventHandler(this.btnParameter_Click);
+            // 
             // panel2
             // 
             this.panel2.AutoScroll = true;
@@ -326,17 +337,6 @@
             this.panelSetting.Name = "panelSetting";
             this.panelSetting.Size = new System.Drawing.Size(622, 170);
             this.panelSetting.TabIndex = 15;
-            // 
-            // btnParameter
-            // 
-            this.btnParameter.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnParameter.Location = new System.Drawing.Point(0, 0);
-            this.btnParameter.Name = "btnParameter";
-            this.btnParameter.Size = new System.Drawing.Size(154, 48);
-            this.btnParameter.TabIndex = 1;
-            this.btnParameter.Text = "参数";
-            this.btnParameter.UseVisualStyleBackColor = true;
-            this.btnParameter.Click += new System.EventHandler(this.btnParameter_Click);
             // 
             // Form1
             // 

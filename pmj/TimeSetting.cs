@@ -16,6 +16,7 @@ namespace pmj
         void Deal(string guid,TimeSettingParameter parameter);
     }
 
+
     public partial class TimeSetting : UserControl
     {
         private string _guid;
@@ -30,6 +31,19 @@ namespace pmj
         public string GetTimeFormat()
         {
             return (cmbStyle.SelectedItem as CmbDataItem).ValueStr;
+        }
+
+        /// <summary>
+        /// 获取时间的偏移量
+        /// </summary>
+        /// <returns></returns>
+        public byte[] GetTimeOffSet()
+        {
+            var yearValue = (byte)this.yearOffset.Value;
+            var monthValue = (byte)this.monthOffset.Value;
+            var dayValue = (byte)this.dayOffset.Value;
+            var hourValue = (byte)this.hourOffset.Value;
+            return new byte[] {0x00,0x00,hourValue,dayValue,monthValue,yearValue };
         }
 
         /// <summary>
@@ -56,7 +70,7 @@ namespace pmj
 
         private void TimeSetting_Load(object sender, EventArgs e)
         {
-         
+           
         }
 
 

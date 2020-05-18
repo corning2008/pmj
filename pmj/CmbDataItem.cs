@@ -214,12 +214,12 @@ namespace pmj
            
             list.Add(new CmbDataItem(){Name = "yyyyMMdd",ValueStr = "20YyMmDd"});
             list.Add(new CmbDataItem() { Name = "yyyy/MM/dd", ValueStr="20Yy/Mm/Dd" });
-            list.Add(new CmbDataItem() { Name = "yyyy-MM-dd", ValueStr = "20Yy-Md-Dd" });
-            list.Add(new CmbDataItem() { Name = "yyyy年MM月dd日", ValueStr = "20Yy年Md月Dd日" });
-            list.Add(new CmbDataItem() { Name = "yyMMdd", ValueStr="YyMdDd" });
+            list.Add(new CmbDataItem() { Name = "yyyy-MM-dd", ValueStr = "20Yy-Mm-Dd" });
+            list.Add(new CmbDataItem() { Name = "yyyy年MM月dd日", ValueStr = "20Yy年Mm月Dd日" });
+            list.Add(new CmbDataItem() { Name = "yyMMdd", ValueStr="YyMmDd" });
             list.Add(new CmbDataItem() { Name = "yy/MM/dd", ValueStr="Yy/Mm/Dd" });
-            list.Add(new CmbDataItem() { Name = "yy-MM-dd", ValueStr="Yy-Md-Dd" });
-            list.Add(new CmbDataItem() { Name = "yy年MM月dd日", ValueStr="Yy年Md月Dd日" });
+            list.Add(new CmbDataItem() { Name = "yy-MM-dd", ValueStr="Yy-Mm-Dd" });
+            list.Add(new CmbDataItem() { Name = "yy年MM月dd日", ValueStr="Yy年Mm月Dd日" });
             return list;
         }
 
