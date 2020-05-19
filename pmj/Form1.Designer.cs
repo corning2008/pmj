@@ -40,7 +40,6 @@
             this.btnPrintOnce = new System.Windows.Forms.Button();
             this.panelTop = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
-            this.btnWriteBuffer = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelRight = new System.Windows.Forms.Panel();
             this.btnBarcode = new System.Windows.Forms.Button();
@@ -147,7 +146,6 @@
             // 
             this.panelTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelTop.Controls.Add(this.button1);
-            this.panelTop.Controls.Add(this.btnWriteBuffer);
             this.panelTop.Controls.Add(this.panel1);
             this.panelTop.Controls.Add(this.comboBoxPmj);
             this.panelTop.Controls.Add(this.btnOpenPortPmj);
@@ -169,16 +167,6 @@
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // btnWriteBuffer
-            // 
-            this.btnWriteBuffer.Location = new System.Drawing.Point(581, 12);
-            this.btnWriteBuffer.Name = "btnWriteBuffer";
-            this.btnWriteBuffer.Size = new System.Drawing.Size(75, 23);
-            this.btnWriteBuffer.TabIndex = 12;
-            this.btnWriteBuffer.Text = "下发缓存";
-            this.btnWriteBuffer.UseVisualStyleBackColor = true;
-            this.btnWriteBuffer.Click += new System.EventHandler(this.btnWriteBuffer_Click);
             // 
             // panel1
             // 
@@ -385,7 +373,6 @@
         private System.Windows.Forms.Panel panelTip;
         private System.Windows.Forms.Panel panelSetting;
         private System.Windows.Forms.Button btnPmjDelete;
-        private System.Windows.Forms.Button btnWriteBuffer;
         private System.Windows.Forms.Button btnTimeSetting;
         private System.Windows.Forms.Button btnSerialNumber;
         private System.Windows.Forms.Button btnText;

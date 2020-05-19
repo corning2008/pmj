@@ -57,6 +57,7 @@
             this.panelPicSetting.Name = "panelPicSetting";
             this.panelPicSetting.Size = new System.Drawing.Size(135, 323);
             this.panelPicSetting.TabIndex = 0;
+            this.panelPicSetting.Paint += new System.Windows.Forms.PaintEventHandler(this.panelPicSetting_Paint);
             // 
             // picHeight
             // 
@@ -143,7 +144,7 @@
             this.btnSize.ForeColor = System.Drawing.Color.Transparent;
             this.btnSize.Location = new System.Drawing.Point(65, 26);
             this.btnSize.Name = "btnSize";
-            this.btnSize.Size = new System.Drawing.Size(50, 50);
+            this.btnSize.Size = new System.Drawing.Size(32, 32);
             this.btnSize.TabIndex = 3;
             this.btnSize.UseVisualStyleBackColor = false;
             this.btnSize.MouseMove += new System.Windows.Forms.MouseEventHandler(this.btnSize_MouseMove);

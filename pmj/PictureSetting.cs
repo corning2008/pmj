@@ -30,15 +30,15 @@ namespace pmj
             //设置选中区域的最大和最小
             picWidth.Maximum = bitmap.Width;
             picHeight.Maximum = bitmap.Height > 100 ? 100 : bitmap.Height;
-            picWidth.Value = 50;
-            picHeight.Value = 50;
+            picWidth.Value = 32;
+            picHeight.Value = 32;
             //设置控件可移动
             SetItemEvent(btnSize);
             SetBtn();
             btnSize.Left = 0;
             btnSize.Top = 0;
-            btnSize.Width = 50;
-            btnSize.Height = 50;
+            btnSize.Width = 32;
+            btnSize.Height = 32;
             this._iCutPicture = iCutPicture;
             this._guid = guid;
 
@@ -131,6 +131,10 @@ namespace pmj
             }
         }
 
+        private void panelPicSetting_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 
 

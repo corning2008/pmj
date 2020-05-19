@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tbTime = new System.Windows.Forms.TextBox();
-            this.btnGetSystemTime = new System.Windows.Forms.Button();
-            this.btnReadDeviceTime = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.btnReadDeviceTime = new System.Windows.Forms.Button();
+            this.btnGetSystemTime = new System.Windows.Forms.Button();
+            this.tbTime = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -82,21 +82,25 @@
             this.panel1.Size = new System.Drawing.Size(719, 76);
             this.panel1.TabIndex = 0;
             // 
-            // label1
+            // button2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 12);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "时间参数:";
+            this.button2.Location = new System.Drawing.Point(534, 24);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(97, 23);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "同步到喷码机";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // tbTime
+            // btnReadDeviceTime
             // 
-            this.tbTime.Location = new System.Drawing.Point(84, 27);
-            this.tbTime.Name = "tbTime";
-            this.tbTime.Size = new System.Drawing.Size(100, 21);
-            this.tbTime.TabIndex = 1;
+            this.btnReadDeviceTime.Location = new System.Drawing.Point(440, 24);
+            this.btnReadDeviceTime.Name = "btnReadDeviceTime";
+            this.btnReadDeviceTime.Size = new System.Drawing.Size(88, 23);
+            this.btnReadDeviceTime.TabIndex = 3;
+            this.btnReadDeviceTime.Text = "读取设备时间";
+            this.btnReadDeviceTime.UseVisualStyleBackColor = true;
+            this.btnReadDeviceTime.Click += new System.EventHandler(this.btnReadDeviceTime_Click);
             // 
             // btnGetSystemTime
             // 
@@ -108,23 +112,21 @@
             this.btnGetSystemTime.UseVisualStyleBackColor = true;
             this.btnGetSystemTime.Click += new System.EventHandler(this.btnGetSystemTime_Click);
             // 
-            // btnReadDeviceTime
+            // tbTime
             // 
-            this.btnReadDeviceTime.Location = new System.Drawing.Point(440, 24);
-            this.btnReadDeviceTime.Name = "btnReadDeviceTime";
-            this.btnReadDeviceTime.Size = new System.Drawing.Size(88, 23);
-            this.btnReadDeviceTime.TabIndex = 3;
-            this.btnReadDeviceTime.Text = "读取设备时间";
-            this.btnReadDeviceTime.UseVisualStyleBackColor = true;
+            this.tbTime.Location = new System.Drawing.Point(84, 27);
+            this.tbTime.Name = "tbTime";
+            this.tbTime.Size = new System.Drawing.Size(100, 21);
+            this.tbTime.TabIndex = 1;
             // 
-            // button2
+            // label1
             // 
-            this.button2.Location = new System.Drawing.Point(534, 24);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "同步到喷码机";
-            this.button2.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(19, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "时间参数:";
             // 
             // label2
             // 
@@ -245,21 +247,23 @@
             // 
             // btnReadParameter
             // 
-            this.btnReadParameter.Location = new System.Drawing.Point(177, 331);
+            this.btnReadParameter.Location = new System.Drawing.Point(225, 331);
             this.btnReadParameter.Name = "btnReadParameter";
             this.btnReadParameter.Size = new System.Drawing.Size(88, 23);
             this.btnReadParameter.TabIndex = 5;
             this.btnReadParameter.Text = "读取设备参数";
             this.btnReadParameter.UseVisualStyleBackColor = true;
+            this.btnReadParameter.Click += new System.EventHandler(this.btnReadParameter_Click);
             // 
             // btnSettingParameter
             // 
-            this.btnSettingParameter.Location = new System.Drawing.Point(328, 331);
+            this.btnSettingParameter.Location = new System.Drawing.Point(376, 331);
             this.btnSettingParameter.Name = "btnSettingParameter";
             this.btnSettingParameter.Size = new System.Drawing.Size(88, 23);
             this.btnSettingParameter.TabIndex = 14;
             this.btnSettingParameter.Text = "设置设备参数";
             this.btnSettingParameter.UseVisualStyleBackColor = true;
+            this.btnSettingParameter.Click += new System.EventHandler(this.btnSettingParameter_Click);
             // 
             // numberDelay
             // 

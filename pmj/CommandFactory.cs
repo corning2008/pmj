@@ -69,6 +69,54 @@ namespace pmj
     public class CommandFactory
     {
         /// <summary>
+        /// 查询系统设置的参数
+        /// </summary>
+        /// <returns></returns>
+        public static byte[] GetPrintParameters()
+        {
+            return GetCommand(0x07, null);
+        }
+
+
+        /// <summary>
+        /// 设置打印参数
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static byte[] getSetPrintParameters(byte[] content)
+        {
+            return GetCommand(0x06, content);
+        }
+        
+
+        /// <summary>
+        /// 查询系统的时间
+        /// </summary>
+        /// <returns></returns>
+        public static byte[] GetDeviceTime()
+        {
+            return GetCommand(0x03, null);
+        }
+
+        /// <summary>
+        /// 获取设置系统时间的命令
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static byte[] GetSetDeviceTime(DateTime dateTime)
+        {
+            var second = (byte) dateTime.Second;
+            var min = (byte) dateTime.Minute;
+            var hour = (byte) dateTime.Hour;
+            var day = (byte) dateTime.Day;
+            var week = (byte)dateTime.DayOfWeek;
+            var month = (byte) dateTime.Month;
+            var year = (byte) (dateTime.Year - 2000);
+            var content = new byte[] {second, min, hour, day, week, month, year};
+            return GetCommand(0x02, content);
+        }
+
+        /// <summary>
         /// 设置打印的参数 
         /// </summary>
         /// <param name="beginDelay"></param>

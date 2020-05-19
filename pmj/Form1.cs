@@ -124,8 +124,8 @@ namespace pmj
                 {
                     int x = label.Left + (e.X - _mousePoint.X);
                     int y = label.Top + (e.Y - _mousePoint.Y);
-                    var right = x + label.Size.Width;
-                    var bottom = y + label.Size.Height;
+                    var right = x + label.Size.Width/1.1;
+                    var bottom = y + label.Size.Height/1.1;
                     var control = label.Parent;
                     //需要判断label的范围不能超出panel
                     if (x >= 0 && y >= 0 && right <= control.Width &&
@@ -221,7 +221,7 @@ namespace pmj
             try
             {
                 var dialog = new OpenFileDialog();
-                dialog.Filter = "bmp图片|*.bmp";
+                dialog.Filter = "(*.jpg;*.bmp;*.jpeg)|*.jpg;*.bmp;*.jpeg";
                 var flag = dialog.ShowDialog();
                 if (flag == DialogResult.OK)
                 {
@@ -580,11 +580,13 @@ namespace pmj
                 var label = new Label();
                 pmjData.Control = label;
                 label.Text = para.Content;
+                
+                label.TextAlign = ContentAlignment.MiddleCenter;
                 label.Margin = new Padding(0);
                 label.Padding = new Padding(0);
                 label.Name = guid;
                 label.AutoSize = true;
-                label.Font = new Font(FontFamily.GenericMonospace, para.Size);
+                label.Font = new Font(FontFamily.GenericMonospace, para.Size,FontStyle.Regular,GraphicsUnit.Pixel);
                 label.DoubleClick += SetPmjDataClick;
                 panelTest.Controls.Add(label);
                 pmjData.DataSource = para;
@@ -714,6 +716,7 @@ namespace pmj
             {
                 control.Top = 0;
             }
+           
         }
 
         private void btnBarcode_Click(object sender, EventArgs e)

@@ -28,7 +28,7 @@ namespace pmj
 
         private void FormSetting_Load(object sender, EventArgs e)
         {
-            var setting = new ParameterSetting();
+            var setting = new ParameterSetting(_serialPort);
             setting.Dock = DockStyle.Fill;
             panel1.Controls.Add(setting);
         }
