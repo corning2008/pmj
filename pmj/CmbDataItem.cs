@@ -28,13 +28,13 @@ namespace pmj
         public static List<CmbDataItem> GetPulseWidthList()
         {
             var list = new List<CmbDataItem>();
-            list.Add(new CmbDataItem(){Name = "1.6us"});
-            list.Add(new CmbDataItem() { Name = "1.8us" });
-            list.Add(new CmbDataItem() { Name = "2.0us" });
-            list.Add(new CmbDataItem() { Name = "2.2us" });
-            list.Add(new CmbDataItem() { Name = "2.4us" });
-            list.Add(new CmbDataItem() { Name = "2.6us" });
-            list.Add(new CmbDataItem() { Name = "2.8us" });
+            list.Add(new CmbDataItem(){Name = "1.6us",Value=0});
+            list.Add(new CmbDataItem() { Name = "1.8us",Value=1 });
+            list.Add(new CmbDataItem() { Name = "2.0us",Value=2 });
+            list.Add(new CmbDataItem() { Name = "2.2us",Value=3 });
+            list.Add(new CmbDataItem() { Name = "2.4us",Value=4 });
+            list.Add(new CmbDataItem() { Name = "2.6us",Value=5 });
+            list.Add(new CmbDataItem() { Name = "2.8us",Value=6 });
             return list;
         }
 
@@ -61,12 +61,12 @@ namespace pmj
         public static List<CmbDataItem> GetPaperList()
         {
             var list = new List<CmbDataItem>();
-            list.Add(new CmbDataItem(){Name = "文件1"});
-            list.Add(new CmbDataItem() { Name = "文件2" });
-            list.Add(new CmbDataItem() { Name = "文件3" });
-            list.Add(new CmbDataItem() { Name = "文件4" });
-            list.Add(new CmbDataItem() { Name = "文件1>2" });
-            list.Add(new CmbDataItem() { Name = "文件1>2>3" });
+            list.Add(new CmbDataItem(){Name = "文件1",Value=0});
+            list.Add(new CmbDataItem() { Name = "文件2",Value=1 });
+            list.Add(new CmbDataItem() { Name = "文件3",Value=2 });
+            list.Add(new CmbDataItem() { Name = "文件4",Value=3 });
+            list.Add(new CmbDataItem() { Name = "文件1>2",Value=4 });
+            list.Add(new CmbDataItem() { Name = "文件1>2>3",Value=5 });
             return list;
         }
 
@@ -92,8 +92,8 @@ namespace pmj
         {
             var list = new List<CmbDataItem>();
             list.Add(new CmbDataItem(){Name = "1.27右喷头",Value = 0});
-            list.Add(new CmbDataItem(){Name = "1.27左喷头",Value = 0});
-            list.Add(new CmbDataItem(){Name = "2.54宽喷头",Value = 0});
+            list.Add(new CmbDataItem(){Name = "1.27左喷头",Value = 1});
+            list.Add(new CmbDataItem(){Name = "2.54宽喷头",Value = 2});
             return list;
         }
 
@@ -105,16 +105,16 @@ namespace pmj
         {
             var list = new List<CmbDataItem>();
             list.Add(new CmbDataItem(){Name = "12.0V",Value = 0});
-            list.Add(new CmbDataItem() { Name = "11.6V", Value = 0 });
-            list.Add(new CmbDataItem() { Name = "11.2V", Value = 0 });
-            list.Add(new CmbDataItem() { Name = "10.8V", Value = 0 });
-            list.Add(new CmbDataItem() { Name = "10.4V", Value = 0 });
-            list.Add(new CmbDataItem() { Name = "10.0V", Value = 0 });
-            list.Add(new CmbDataItem() { Name = "9.6V", Value = 0 });
-            list.Add(new CmbDataItem() { Name = "9.2V", Value = 0 });
-            list.Add(new CmbDataItem() { Name = "8.8V", Value = 0 });
-            list.Add(new CmbDataItem() { Name = "8.4V", Value = 0 });
-            list.Add(new CmbDataItem() { Name = "8.0V", Value = 0 });
+            list.Add(new CmbDataItem() { Name = "11.6V", Value = 1 });
+            list.Add(new CmbDataItem() { Name = "11.2V", Value = 2 });
+            list.Add(new CmbDataItem() { Name = "10.8V", Value = 3 });
+            list.Add(new CmbDataItem() { Name = "10.4V", Value = 4 });
+            list.Add(new CmbDataItem() { Name = "10.0V", Value = 5 });
+            list.Add(new CmbDataItem() { Name = "9.6V", Value = 6 });
+            list.Add(new CmbDataItem() { Name = "9.2V", Value = 7 });
+            list.Add(new CmbDataItem() { Name = "8.8V", Value = 8 });
+            list.Add(new CmbDataItem() { Name = "8.4V", Value = 9 });
+            list.Add(new CmbDataItem() { Name = "8.0V", Value = 10 });
             return list;
         }
 
@@ -125,10 +125,10 @@ namespace pmj
         public static List<CmbDataItem> GetGrayList()
         {
             var list = new List<CmbDataItem>();
-            list.Add(new CmbDataItem(){Name = "浅",Value = 0});
-            list.Add(new CmbDataItem() { Name = "中", Value = 1 });
-            list.Add(new CmbDataItem() { Name = "浓", Value = 2 });
-            list.Add(new CmbDataItem() { Name = "特浓", Value = 3 });
+            list.Add(new CmbDataItem(){Name = "浅",Value = 1});
+            list.Add(new CmbDataItem() { Name = "中", Value = 2 });
+            list.Add(new CmbDataItem() { Name = "浓", Value = 3 });
+            list.Add(new CmbDataItem() { Name = "特浓", Value = 4 });
             return list;
         }
 

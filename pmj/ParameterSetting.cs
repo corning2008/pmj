@@ -58,12 +58,7 @@ namespace pmj
             try
             {
                 var command = CommandFactory.GetDeviceTime();
-                var result = _pmjSerialPort.SendCommand(command, out DataResult dataR);
-                if (!result)
-                {
-                    MessageBox.Show("没有应答,请检查串口通讯");
-                    return;
-                }
+                var dataR = _pmjSerialPort.WriteForResult(command,4000);
 
                 var data = dataR.GetData();
                 var year = 2000 + data[6];
@@ -89,11 +84,7 @@ namespace pmj
                 //获取设置时间的命令
                 var command = CommandFactory.GetSetDeviceTime(DateTime.Now);
                 var flag = _pmjSerialPort.SendCommand(command, out DataResult result);
-                if (!flag)
-                {
-                    MessageBox.Show("同步时间失败");
-                    return;
-                }
+               
               
                 MessageBox.Show("同步时间成功");
                 return;
@@ -118,6 +109,7 @@ namespace pmj
                 }
                 //开始解析数据
                 ParseData(result.GetData());
+                //读取参数成功
             }
             catch (Exception ex)
             {
@@ -138,19 +130,42 @@ namespace pmj
             this.numberCount.Value = colsMotos;
             //脉冲宽度
             var pluseWidth = BitConverter.ToUInt16(dataList, 6);
+            SetCmboBoxValue(cmbPulseWidth, pluseWidth);
            //打印灰度
             var grayDelay = BitConverter.ToInt16(dataList, 8);
+            SetCmboBoxValue(cmbGrayList, grayDelay);
             //打印电压
             var voltage = BitConverter.ToUInt16(dataList, 12);
+            SetCmboBoxValue(cmbVList, voltage);
             //喷头的选择
             var printIndex = BitConverter.ToUInt16(dataList, 14);
+            SetCmboBoxValue(cmbPrintList, printIndex);
             //打印文件
             var fileModel = BitConverter.ToUInt16(dataList, 16);
+            SetCmboBoxValue(cmbFileList, fileModel);
             //自动关机设置
             var powerOff = BitConverter.ToUInt16(dataList, 22);
             //闲喷
             var idle = BitConverter.ToUInt16(dataList, 24);
+            SetCmboBoxValue(cmbLeaveTime, idle);
 
+        }
+
+        private void SetCmboBoxValue(ComboBox combobox, int value)
+        {
+            var dataList = combobox.DataSource as List<CmbDataItem>;
+            if(null == dataList)
+            {
+                return;
+            }
+            foreach(var item in dataList)
+            {
+                if(item.Value== value)
+                {
+                    combobox.SelectedItem = item;
+                    break;
+                }
+            }
 
         }
 
@@ -176,22 +191,17 @@ namespace pmj
                 //打印文件选择
                 var fileIndexBytes = BitConverter.GetBytes((ushort) (cmbFileList.SelectedItem as CmbDataItem).Value);
                 //自动关机
-                var powerOffBytes = BitConverter.GetBytes((ushort) (cmbShutdownList.SelectedItem as CmbDataItem).Value);
+                var powerOffBytes = new byte[] { 0x2c, 0x01 };/* BitConverter.GetBytes((ushort) (cmbShutdownList.SelectedItem as CmbDataItem).Value);*/
                 //闲喷
                 var idleBytes = BitConverter.GetBytes((ushort) (cmbLeaveTime.SelectedItem as CmbDataItem).Value);
 
                 var content = numberDelayBytes.Concat(colDelayBytes).Concat(numberCountBytes).Concat(pulseWidthBytes)
-                    .Concat(grayScaleBytes).Concat(new byte[] {0x00, 0x00}).Concat(vBytes)
+                    .Concat(grayScaleBytes).Concat(new byte[] {0x55, 0x00}).Concat(vBytes)
                     .Concat(printBytes).Concat(fileIndexBytes).Concat(new byte[] {0x00, 0x00})
-                    .Concat(new byte[] {0x00, 0x00}).Concat(powerOffBytes).Concat(idleBytes)
-                    .Concat(new byte[] {0x00, 0x00}).ToArray();
+                    .Concat(new byte[] {0x00, 0x00}).Concat(powerOffBytes).Concat(idleBytes).ToArray();
                 var command = CommandFactory.getSetPrintParameters(content);
                 var flag = _pmjSerialPort.SendCommand(command, out DataResult result);
-                if (!flag)
-                {
-                    MessageBox.Show("打印参数设备失败");
-                    return;
-                }
+              
 
                 MessageBox.Show("打印参数设置成功");
                 return;

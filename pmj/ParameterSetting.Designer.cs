@@ -268,6 +268,11 @@
             // numberDelay
             // 
             this.numberDelay.Location = new System.Drawing.Point(142, 135);
+            this.numberDelay.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.numberDelay.Name = "numberDelay";
             this.numberDelay.Size = new System.Drawing.Size(120, 21);
             this.numberDelay.TabIndex = 15;
