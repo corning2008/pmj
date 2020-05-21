@@ -40,12 +40,7 @@ namespace pmj
 
         private void ParseData(DataResult dataResult)
         {
-            //判断功能号,如果是0x21,并且内容是0x00就代表动态设置成功
-            if (dataResult.GetFunctionId() == 0x21)
-            {
-                Console.WriteLine("打印完成");
-                return;
-            }
+            
         }
     }
 }

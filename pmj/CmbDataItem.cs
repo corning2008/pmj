@@ -182,9 +182,9 @@ namespace pmj
         public static List<CmbDataItem> GetSizeList()
         {
             var list = new List<CmbDataItem>();
-            list.Add(new CmbDataItem(){Name = "小",Value = 40});
-            list.Add(new CmbDataItem(){Name = "中",Value = 50});
-            list.Add(new CmbDataItem(){Name = "大",Value = 70});
+            list.Add(new CmbDataItem(){Name = "小",Value = 30});
+            list.Add(new CmbDataItem(){Name = "中",Value = 40});
+            list.Add(new CmbDataItem(){Name = "大",Value = 50});
             return list;
         }
 

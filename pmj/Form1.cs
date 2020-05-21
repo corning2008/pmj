@@ -103,8 +103,7 @@ namespace pmj
 
         private List<PmjData> _pmjDataList = new List<PmjData>();
         private string _id;
-        //是否已经连接串口，并扫描到打印机
-        private bool _connectFlag = false;
+       
 
         private void SetItemEvent(Control label)
         {
@@ -185,17 +184,48 @@ namespace pmj
            
         }
 
+        /// <summary>
+        /// 判断是否已经打开
+        /// </summary>
+        /// <param name="printerName"></param>
+        /// <returns></returns>
+        private bool HasPrinter(out string printerName)
+        {
+            //首先关闭原来的串口
+            if(null != _pmjSerialPort)
+            {
+                var portName = _pmjSerialPort.GetPortName();
+                //比较端口的名称，如果端口名称已经改变，就需要重新建立连接
+                if (!portName.Equals(comboBoxPmj.Text))
+                {
+                    _pmjSerialPort.Close();
+                    _pmjSerialPort = new PmjSerialPort(comboBoxPmj.Text, new PmjDataRecv());
+                }
+            }
+            //如果不存在的话，也需要重新建立
+            if(null == _pmjSerialPort)
+            {
+                _pmjSerialPort = new PmjSerialPort(comboBoxPmj.Text, new PmjDataRecv());
+            }
+           
+            return _pmjSerialPort.HasPrinter(out printerName);
+        }
+
         private void btnFindDevice_Click(object sender, EventArgs e)
         {
             try
             {
-                var result = _pmjSerialPort.WriteForResult(CommandFactory.GetCheckDeviceCommand(), 2000);
-                var data = result.GetData();
-                Console.WriteLine(data.Length);
-                
-                var pmjName = Encoding.ASCII.GetString(result.GetData());
-                lbPmjStatus.Text = $"{pmjName}--已连接";
-                this._connectFlag = true;
+
+
+                var flag = HasPrinter(out string printerName);
+                if (!flag)
+                {
+                    MessageBox.Show("没有扫描到打印机");
+                    return;
+                }
+              
+                lbPmjStatus.Text = $"{printerName}";
+              
             }
             catch (Exception ex)
             {
@@ -208,6 +238,13 @@ namespace pmj
         {
             try
             {
+                //判断打印机是否存在
+                var flag = HasPrinter(out string printerName);
+                lbPmjStatus.Text = printerName;
+                if (!flag)
+                {
+                    return;
+                }
                 _pmjSerialPort.Write(CommandFactory.GetPrintOnceCommand());
             }
             catch (Exception ex)
@@ -260,9 +297,7 @@ namespace pmj
                 Console.WriteLine($"图片格式:{para.Bitmap.PixelFormat}");
                 pmjData.Control = pictureBox;
                 pmjData.DataSource = para;
-                pictureBox.Image = bitmap;
-                pictureBox.Width = bitmap.Width;
-                pictureBox.Height = bitmap.Height;
+                SetPictureBoxImage(pictureBox, bitmap);
                 pictureBox.Name = pmjData.Id;
                 pictureBox.DoubleClick += SetPmjDataClick;
                 panelTest.Controls.Add(pictureBox);
@@ -274,9 +309,8 @@ namespace pmj
             else
             {
                 var pictureBox = pmjData.Control as PictureBox;
-                pictureBox.Image = para.Bitmap;
-                pictureBox.Width = para.Bitmap.Width;
-                pictureBox.Height = para.Bitmap.Height;
+                pictureBox?.Image.Dispose();
+                SetPictureBoxImage(pictureBox, para.Bitmap);
                 pmjData.DataSource = para;
                 ResetLocation(pictureBox);
             }
@@ -584,6 +618,7 @@ namespace pmj
                 label.TextAlign = ContentAlignment.MiddleCenter;
                 label.Margin = new Padding(0);
                 label.Padding = new Padding(0);
+                
                 label.Name = guid;
                 label.AutoSize = true;
                 label.Font = new Font(FontFamily.GenericMonospace, para.Size,FontStyle.Regular,GraphicsUnit.Pixel);
@@ -645,9 +680,8 @@ namespace pmj
                     var picture = new PictureBox();
                     picture.Name = guid;
                     pmjData.Control = picture;
-                    picture.Image = bitmap;
-                    picture.Width = bitmap.Width;
-                    picture.Height = bitmap.Height;
+                    //设置组件的图片
+                    SetPictureBoxImage(picture, bitmap);
                     picture.DoubleClick += SetPmjDataClick;
                     panelTest.Controls.Add(picture);
                     pmjData.DataSource = para;
@@ -661,9 +695,7 @@ namespace pmj
                     var pic = pmjData.Control as PictureBox;
                     //销毁原来的bitmap数据
                     (pic.Image as Bitmap)?.Dispose();
-                    pic.Image = bitmap;
-                    pic.Width = bitmap.Width;
-                    pic.Height = bitmap.Height;
+                    SetPictureBoxImage(pic, bitmap);
                     //有可能会越界,如果越界的话,就直接重置top的数值
                     ResetLocation(pic);
 
@@ -686,7 +718,7 @@ namespace pmj
             QrCodeEncodingOptions option = new QrCodeEncodingOptions()
             {
                 CharacterSet = "utf8bom",
-                Width = 250,
+                Width = 50,
                 Height = para.PicSize
             };
             BarcodeWriter bw = new BarcodeWriter(){Options = option,Format = BarcodeFormat.CODABAR};
@@ -735,6 +767,14 @@ namespace pmj
             }
         }
 
+        private void SetPictureBoxImage(PictureBox pictureBox,Bitmap bitmap)
+        {
+            pictureBox.Image = bitmap;
+            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox.Width = bitmap.Width * 2;
+            pictureBox.Height = bitmap.Height * 2;
+        }
+
         public void DealBarcodeSetting(string guid, BarcodeSettingParameter para)
         {
             try
@@ -755,9 +795,7 @@ namespace pmj
                     var picture = new PictureBox();
                     picture.Name = guid;
                     pmjData.Control = picture;
-                    picture.Image = bitmap;
-                    picture.Width = bitmap.Width;
-                    picture.Height = bitmap.Height;
+                    SetPictureBoxImage(picture, bitmap);
                     picture.DoubleClick += SetPmjDataClick;
                     panelTest.Controls.Add(picture);
                     pmjData.DataSource = para;
@@ -771,9 +809,7 @@ namespace pmj
                     var pic = pmjData.Control as PictureBox;
                     //销毁原来的bitmap数据
                     (pic.Image as Bitmap)?.Dispose();
-                    pic.Image = bitmap;
-                    pic.Width = bitmap.Width;
-                    pic.Height = bitmap.Height;
+                    SetPictureBoxImage(pic, bitmap);
                     //有可能会越界,如果越界的话,就直接重置top的数值
                     ResetLocation(pic);
 
@@ -830,6 +866,18 @@ namespace pmj
         {
             try
             {
+                //执行下载之前，先扫描是否存在打印机， 如果存在就下发，如果不存在就提示用户
+                if(null == _pmjSerialPort)
+                {
+                    _pmjSerialPort = new PmjSerialPort(comboBoxPmj.Text, new PmjDataRecv());
+                }
+                var flagPrinter = _pmjSerialPort.HasPrinter(out string printerName);
+                lbPmjStatus.Text = printerName;
+                if (!flagPrinter)
+                {
+                    MessageBox.Show("没有扫描到打印机");
+                    return;
+                }
                 //判断下发对象是否存在
                 if(_pmjDataList.Count == 0)
                 {
@@ -838,12 +886,7 @@ namespace pmj
                 }
                 //获取File的列表
                 var cmbData = cmbFileList.SelectedItem as CmbDataItem;
-                //判断串口是否打开
-                if (!_connectFlag)
-                {
-                    MessageBox.Show("请先扫描喷码机设备");
-                    return;
-                }
+             
                 //下发下载的指令
                 var commandDownload = CommandFactory.GetDownloadCommand((byte)cmbData.Value);
                 var result = _pmjSerialPort.SendCommand(commandDownload,out DataResult dataResult);
@@ -862,7 +905,7 @@ namespace pmj
                         var label = item.Control as Label;
                         var settingPanel = (item.DataSource as TextSettingParameter).UserControl as TextSetting;
                         
-                        var commandText = CommandFactory.GetTextCommand((ushort)label.Left, (ushort)label.Top, Encoding.Default.GetBytes(label.Text),(ushort)settingPanel.GetSelectFont().Value);
+                        var commandText = CommandFactory.GetTextCommand((ushort)(label.Left/2), (ushort)(label.Top/2), Encoding.Default.GetBytes(label.Text),(ushort)settingPanel.GetSelectFont().Value);
                         var resultForSend = _pmjSerialPort.SendCommand(commandText,out DataResult resultF);
                         if (!resultForSend)
                         {
@@ -877,7 +920,7 @@ namespace pmj
                         var settingPanel =
                             (item.DataSource as SerialNumberParameter).UserControl as SerialNumberSetting;
                         var timeCommand = CommandFactory.GetSerialNumberCommand((ushort) lable.Text.Length,
-                            (ushort) settingPanel.GetFontValue(), (ushort) lable.Left, (ushort) lable.Top,
+                            (ushort) settingPanel.GetFontValue(), (ushort) (lable.Left/2), (ushort) (lable.Top/2),
                             (ushort) settingPanel.GetIntervalValue(), (uint)settingPanel.GetInitValue());
                         var resultForSend = _pmjSerialPort.SendCommand(timeCommand, out DataResult resultF);
                         if (!resultForSend)
@@ -895,7 +938,7 @@ namespace pmj
                         var fontSize = settingPanel.GetFongValue();
                         //获取时间的偏移量
                         var timeOffset = settingPanel.GetTimeOffSet();
-                        var commandTime = CommandFactory.GetTimeCommand(format, (ushort) fontSize, (ushort)label.Left, (ushort)label.Top,timeOffset);
+                        var commandTime = CommandFactory.GetTimeCommand(format, (ushort) fontSize, (ushort)(label.Left/2), (ushort)(label.Top/2),timeOffset);
                         var resultForSend = _pmjSerialPort.SendCommand(commandTime, out DataResult resultF);
                         if (!resultForSend)
                         {
@@ -908,7 +951,8 @@ namespace pmj
                     {
                         var control = (item.Control as PictureBox);
                         var bitmap = control.Image as Bitmap;
-                        var flagImage = _pmjSerialPort.WriteImageBuffer(bitmap, control.Left, control.Top);
+                        Console.WriteLine($"图片大小 width:{bitmap.Width} height:{bitmap.Height}");
+                        var flagImage = _pmjSerialPort.WriteImageBuffer(bitmap, control.Left/2, control.Top/2);
                         if (!flagImage)
                         {
                             MessageBox.Show("图片命令下发失败");
@@ -945,9 +989,9 @@ namespace pmj
             var x = 0;
             foreach(var item in _pmjDataList)
             {
-                if(item.Control.Left+item.Control.Width > x)
+                if((int)(item.Control.Left/2)+item.Control.Width > x)
                 {
-                    x = item.Control.Left + item.Control.Width;
+                    x = (int)(item.Control.Left/2) + item.Control.Width;
                 }
             }
             return x;
@@ -961,6 +1005,26 @@ namespace pmj
                 dialog.ShowDialog();
             }
             catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnCleanPrinter_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var flag = HasPrinter(out string printerName);
+                lbPmjStatus.Text = printerName;
+                if (!flag)
+                {
+                    return;
+                }
+                //开始清洗喷头
+                var command = CommandFactory.GetCleanPrinter(1);
+                var dataResult = _pmjSerialPort.WriteForResult(command, 2000);
+                
+            }catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }

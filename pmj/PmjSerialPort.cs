@@ -22,6 +22,35 @@ namespace pmj
         private IDataRecvPort _dataRecvPort;
         //发送命令返回的数据
         private byte[] _dataRecv = null;
+
+        /// <summary>
+        /// 是否存在打印机
+        /// </summary>
+        /// <param name="printerName"></param>
+        /// <returns></returns>
+        public bool HasPrinter(out string printerName)
+        {
+            //首先判断串口是否已经打开
+            if(null == _port || !_port.IsOpen)
+            {
+                //打开串口
+                var flag = Open();
+                if (!flag)
+                {
+                    throw new Exception("打开打印机串口失败");
+                }
+              
+            }
+            //如果串口正常，就检测是否存在打印机
+            var dataResult = WriteForResult(CommandFactory.GetCheckDeviceCommand(), 2000);
+            if(null == dataResult)
+            {
+                printerName = "没有扫描到打印机";
+                return false;
+            }
+            printerName = Encoding.Default.GetString(dataResult.GetData());
+            return true;
+        }
         
 
         public PmjSerialPort(string portName,IDataRecvPort dataRecvPort)
@@ -29,6 +58,15 @@ namespace pmj
             this._portName = portName;
             this._dataRecvPort = dataRecvPort;
           
+        }
+
+        /// <summary>
+        /// 获取串口的名称
+        /// </summary>
+        /// <returns></returns>
+        public string GetPortName()
+        {
+            return _portName;
         }
 
         /// <summary>

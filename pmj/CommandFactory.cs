@@ -271,10 +271,10 @@ namespace pmj
             var width = left + bitmap.Width > 2000 ? 2000 - left : bitmap.Width;
             var height = top + bitmap.Height > 50 ? 50 - top : bitmap.Height;
             //高度必须是8的倍数
-            while (height % 8 != 0)
-            {
-                height--;
-            }
+            //while (height % 8 != 0)
+            //{
+            //    height--;
+            //}
 
             if (height == 0)
             {
@@ -292,6 +292,7 @@ namespace pmj
                     var heightList = new List<byte>();
                     for (var j = 0; j < height; j++)
                     {
+                        
                         var color = bitmap.GetPixel(i, j);
 
                         var value = color.B;
@@ -449,6 +450,15 @@ namespace pmj
         private void Test3()
         {
           
+        }
+
+        /// <summary>
+        /// 获取清洗喷头的命令
+        /// </summary>
+        /// <returns></returns>
+        public static byte[] GetCleanPrintersCommand()
+        {
+            return GetCommand(0x40, new byte[] { 0x01, 0x00 });
         }
 
         /// <summary>

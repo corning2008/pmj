@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.serialPort = new System.IO.Ports.SerialPort(this.components);
             this.comboBoxPmj = new System.Windows.Forms.ComboBox();
-            this.btnOpenPortPmj = new System.Windows.Forms.Button();
             this.panelTest = new System.Windows.Forms.Panel();
             this.btnFindDevice = new System.Windows.Forms.Button();
             this.panelBottom = new System.Windows.Forms.Panel();
@@ -39,7 +38,6 @@
             this.lbPmjStatus = new System.Windows.Forms.Label();
             this.btnPrintOnce = new System.Windows.Forms.Button();
             this.panelTop = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelRight = new System.Windows.Forms.Panel();
             this.btnBarcode = new System.Windows.Forms.Button();
@@ -55,6 +53,7 @@
             this.btnDownload = new System.Windows.Forms.Button();
             this.cmbFileList = new System.Windows.Forms.ComboBox();
             this.panelSetting = new System.Windows.Forms.Panel();
+            this.btnCleanPrinter = new System.Windows.Forms.Button();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
@@ -72,28 +71,18 @@
             this.comboBoxPmj.Size = new System.Drawing.Size(121, 20);
             this.comboBoxPmj.TabIndex = 0;
             // 
-            // btnOpenPortPmj
-            // 
-            this.btnOpenPortPmj.Location = new System.Drawing.Point(151, 12);
-            this.btnOpenPortPmj.Name = "btnOpenPortPmj";
-            this.btnOpenPortPmj.Size = new System.Drawing.Size(75, 23);
-            this.btnOpenPortPmj.TabIndex = 1;
-            this.btnOpenPortPmj.Text = "打开串口";
-            this.btnOpenPortPmj.UseVisualStyleBackColor = true;
-            this.btnOpenPortPmj.Click += new System.EventHandler(this.btnOpenPortPmj_Click);
-            // 
             // panelTest
             // 
             this.panelTest.BackColor = System.Drawing.Color.Transparent;
             this.panelTest.Location = new System.Drawing.Point(0, 0);
             this.panelTest.Name = "panelTest";
-            this.panelTest.Size = new System.Drawing.Size(2000, 50);
+            this.panelTest.Size = new System.Drawing.Size(4000, 100);
             this.panelTest.TabIndex = 5;
             this.panelTest.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTest_Paint);
             // 
             // btnFindDevice
             // 
-            this.btnFindDevice.Location = new System.Drawing.Point(232, 12);
+            this.btnFindDevice.Location = new System.Drawing.Point(162, 12);
             this.btnFindDevice.Name = "btnFindDevice";
             this.btnFindDevice.Size = new System.Drawing.Size(75, 23);
             this.btnFindDevice.TabIndex = 7;
@@ -108,7 +97,7 @@
             this.panelBottom.Controls.Add(this.btnPmjDelete);
             this.panelBottom.Controls.Add(this.lbPmjStatus);
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottom.Location = new System.Drawing.Point(0, 410);
+            this.panelBottom.Location = new System.Drawing.Point(0, 500);
             this.panelBottom.Name = "panelBottom";
             this.panelBottom.Size = new System.Drawing.Size(941, 44);
             this.panelBottom.TabIndex = 8;
@@ -134,7 +123,7 @@
             // 
             // btnPrintOnce
             // 
-            this.btnPrintOnce.Location = new System.Drawing.Point(313, 12);
+            this.btnPrintOnce.Location = new System.Drawing.Point(243, 12);
             this.btnPrintOnce.Name = "btnPrintOnce";
             this.btnPrintOnce.Size = new System.Drawing.Size(87, 23);
             this.btnPrintOnce.TabIndex = 9;
@@ -145,10 +134,9 @@
             // panelTop
             // 
             this.panelTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelTop.Controls.Add(this.button1);
+            this.panelTop.Controls.Add(this.btnCleanPrinter);
             this.panelTop.Controls.Add(this.panel1);
             this.panelTop.Controls.Add(this.comboBoxPmj);
-            this.panelTop.Controls.Add(this.btnOpenPortPmj);
             this.panelTop.Controls.Add(this.btnFindDevice);
             this.panelTop.Controls.Add(this.btnPrintOnce);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
@@ -157,16 +145,6 @@
             this.panelTop.Size = new System.Drawing.Size(941, 48);
             this.panelTop.TabIndex = 10;
             this.panelTop.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTop_Paint);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(723, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel1
             // 
@@ -187,7 +165,7 @@
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelRight.Location = new System.Drawing.Point(778, 48);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(163, 362);
+            this.panelRight.Size = new System.Drawing.Size(163, 452);
             this.panelRight.TabIndex = 11;
             // 
             // btnBarcode
@@ -263,7 +241,7 @@
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeft.Location = new System.Drawing.Point(0, 48);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(156, 362);
+            this.panelLeft.Size = new System.Drawing.Size(156, 452);
             this.panelLeft.TabIndex = 12;
             // 
             // btnParameter
@@ -323,15 +301,25 @@
             this.panelSetting.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSetting.Location = new System.Drawing.Point(156, 240);
             this.panelSetting.Name = "panelSetting";
-            this.panelSetting.Size = new System.Drawing.Size(622, 170);
+            this.panelSetting.Size = new System.Drawing.Size(622, 260);
             this.panelSetting.TabIndex = 15;
+            // 
+            // btnCleanPrinter
+            // 
+            this.btnCleanPrinter.Location = new System.Drawing.Point(336, 12);
+            this.btnCleanPrinter.Name = "btnCleanPrinter";
+            this.btnCleanPrinter.Size = new System.Drawing.Size(87, 23);
+            this.btnCleanPrinter.TabIndex = 12;
+            this.btnCleanPrinter.Text = "清洗喷头";
+            this.btnCleanPrinter.UseVisualStyleBackColor = true;
+            this.btnCleanPrinter.Click += new System.EventHandler(this.btnCleanPrinter_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(941, 454);
+            this.ClientSize = new System.Drawing.Size(941, 544);
             this.Controls.Add(this.panelSetting);
             this.Controls.Add(this.panelTip);
             this.Controls.Add(this.panel2);
@@ -358,7 +346,6 @@
 
         private System.IO.Ports.SerialPort serialPort;
         private System.Windows.Forms.ComboBox comboBoxPmj;
-        private System.Windows.Forms.Button btnOpenPortPmj;
         private System.Windows.Forms.Panel panelTest;
         private System.Windows.Forms.Button btnFindDevice;
         private System.Windows.Forms.Panel panelBottom;
@@ -378,10 +365,10 @@
         private System.Windows.Forms.Button btnText;
         private System.Windows.Forms.Button btnQrcode;
         private System.Windows.Forms.Button btnBarcode;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnDownload;
         private System.Windows.Forms.ComboBox cmbFileList;
         private System.Windows.Forms.Button btnParameter;
+        private System.Windows.Forms.Button btnCleanPrinter;
     }
 }
 
