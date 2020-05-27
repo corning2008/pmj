@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panelPicSetting = new System.Windows.Forms.Panel();
+            this.numberScale = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
             this.picHeight = new System.Windows.Forms.NumericUpDown();
             this.picWidth = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
@@ -38,6 +40,7 @@
             this.btnSize = new System.Windows.Forms.Button();
             this.picBitmap = new System.Windows.Forms.PictureBox();
             this.panelPicSetting.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numberScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picWidth)).BeginInit();
             this.panelBitmap.SuspendLayout();
@@ -48,6 +51,8 @@
             // panelPicSetting
             // 
             this.panelPicSetting.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelPicSetting.Controls.Add(this.numberScale);
+            this.panelPicSetting.Controls.Add(this.label3);
             this.panelPicSetting.Controls.Add(this.picHeight);
             this.panelPicSetting.Controls.Add(this.picWidth);
             this.panelPicSetting.Controls.Add(this.label2);
@@ -58,6 +63,38 @@
             this.panelPicSetting.Size = new System.Drawing.Size(135, 323);
             this.panelPicSetting.TabIndex = 0;
             this.panelPicSetting.Paint += new System.Windows.Forms.PaintEventHandler(this.panelPicSetting_Paint);
+            // 
+            // numberScale
+            // 
+            this.numberScale.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numberScale.Location = new System.Drawing.Point(16, 181);
+            this.numberScale.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numberScale.Name = "numberScale";
+            this.numberScale.Size = new System.Drawing.Size(95, 21);
+            this.numberScale.TabIndex = 5;
+            this.numberScale.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numberScale.ValueChanged += new System.EventHandler(this.numberScale_ValueChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(14, 157);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 12);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "百分比";
             // 
             // picHeight
             // 
@@ -154,6 +191,7 @@
             this.picBitmap.Location = new System.Drawing.Point(34, 109);
             this.picBitmap.Name = "picBitmap";
             this.picBitmap.Size = new System.Drawing.Size(100, 50);
+            this.picBitmap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picBitmap.TabIndex = 0;
             this.picBitmap.TabStop = false;
             // 
@@ -167,6 +205,7 @@
             this.Size = new System.Drawing.Size(641, 323);
             this.panelPicSetting.ResumeLayout(false);
             this.panelPicSetting.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numberScale)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picWidth)).EndInit();
             this.panelBitmap.ResumeLayout(false);
@@ -187,5 +226,7 @@
         private System.Windows.Forms.PictureBox picBitmap;
         private System.Windows.Forms.Panel panelBack;
         private System.Windows.Forms.Button btnSize;
+        private System.Windows.Forms.NumericUpDown numberScale;
+        private System.Windows.Forms.Label label3;
     }
 }

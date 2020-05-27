@@ -16,7 +16,7 @@ namespace pmj
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public static Bitmap GetGrayPic(string fileName)
+        public static Bitmap GetGrayPic(string fileName,decimal scale)
         {
            
             Bitmap ImageBaseOriginal = new Bitmap(fileName);
@@ -26,8 +26,12 @@ namespace pmj
             //阈值化操作
             var matThreadHold = mat.Threshold(125, 255, ThresholdTypes.Binary);
             //mat = mat.CvtColor(ColorConversionCodes.BGRA2YUV_IYUV);
-            //
-            var newBitmap = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(matThreadHold);
+            //调整图片的大小
+            OpenCvSharp.Size size = new OpenCvSharp.Size((int)(ImageBaseOriginal.Width * scale), (int)(ImageBaseOriginal.Height * scale));
+            var matSize = new Mat();
+            Cv2.Resize(matThreadHold, matSize, size);
+            var newBitmap = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(matSize);
+            matSize.Dispose();
             mat.Dispose();
             matThreadHold.Dispose();
             ImageBaseOriginal.Dispose();
@@ -64,13 +68,20 @@ namespace pmj
             Mat mat = OpenCvSharp.Extensions.BitmapConverter.ToMat(bitmap);
 
             mat = mat.CvtColor(ColorConversionCodes.BGR2GRAY);
-            
+        
             //mat = mat.CvtColor(ColorConversionCodes.BGRA2YUV_IYUV);
             var newBitmap = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(mat);
             mat.Dispose();
             bitmap.Dispose();
             return newBitmap;
         }
+
+
+        public static Bitmap Scale(Bitmap bitmap,decimal scale)
+        {
+            return null;
+        }
+
 
         /// <summary>
         /// 对图片进行裁剪

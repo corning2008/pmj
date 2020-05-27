@@ -266,7 +266,7 @@ namespace pmj
                     Console.WriteLine(filePath);
                     //加载图片设置的类
                     this.panelSetting.Controls.Clear();
-                    var pictureSetting = new PictureSetting(Guid.NewGuid().ToString("N"),ImageTool.GetGrayPic(filePath),this);
+                    var pictureSetting = new PictureSetting(Guid.NewGuid().ToString("N"),ImageTool.GetGrayPic(filePath,1),this,filePath);
                     pictureSetting.Dock = DockStyle.Fill;
                     this.panelSetting.Controls.Add(pictureSetting);
                 }

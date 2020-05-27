@@ -15,11 +15,13 @@ namespace pmj
 {
     public partial class PictureSetting : UserControl
     {
+        private string _filePath = null;
         
-        public PictureSetting(string guid,Bitmap bitmap,ICutPicture iCutPicture)
+        public PictureSetting(string guid,Bitmap bitmap,ICutPicture iCutPicture,string filePath)
         {
             InitializeComponent();
             this.bitmap = bitmap;
+            this._filePath = filePath;
             panelBack.Width = bitmap.Width;
             panelBack.Height = bitmap.Height;
 
@@ -134,6 +136,31 @@ namespace pmj
         private void panelPicSetting_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void numberScale_ValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                var value = numberScale.Value;
+                var scale = value / 100m;
+                //获取新的图片
+                var newBitmap = ImageTool.GetGrayPic(this._filePath, scale);
+                //删除原来的图片
+                if(null != this.bitmap)
+                {
+                    bitmap.Dispose();
+                }
+                //
+                picBitmap.Image = newBitmap;
+                picBitmap.Width = newBitmap.Width;
+                picBitmap.Height = newBitmap.Height;
+                this.bitmap = newBitmap;
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 
