@@ -109,16 +109,32 @@ namespace pmj
 
         private void picWidth_ValueChanged(object sender, EventArgs e)
         {
-            btnSize.Width = (int)picWidth.Value;
-            var newBitmap = ImageTool.GetCutPic(bitmap, btnSize.Left, btnSize.Top, btnSize.Width, btnSize.Height);
-            _iCutPicture?.GetCutPicture(_guid, new PictureSettingParameter() { Bitmap = newBitmap, UserControl = this });
+            try
+            {
+                btnSize.Width = (int) picWidth.Value;
+                var newBitmap = ImageTool.GetCutPic(bitmap, btnSize.Left, btnSize.Top, btnSize.Width, btnSize.Height);
+                _iCutPicture?.GetCutPicture(_guid,
+                    new PictureSettingParameter() {Bitmap = newBitmap, UserControl = this});
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void picHeight_ValueChanged(object sender, EventArgs e)
         {
-            btnSize.Height = (int) picHeight.Value;
-            var newBitmap = ImageTool.GetCutPic(bitmap, btnSize.Left, btnSize.Top, btnSize.Width, btnSize.Height);
-            _iCutPicture?.GetCutPicture(_guid, new PictureSettingParameter() { Bitmap = newBitmap, UserControl = this });
+            try
+            {
+                btnSize.Height = (int) picHeight.Value;
+                var newBitmap = ImageTool.GetCutPic(bitmap, btnSize.Left, btnSize.Top, btnSize.Width, btnSize.Height);
+                _iCutPicture?.GetCutPicture(_guid,
+                    new PictureSettingParameter() {Bitmap = newBitmap, UserControl = this});
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
 
@@ -156,6 +172,8 @@ namespace pmj
                 picBitmap.Image = newBitmap;
                 picBitmap.Width = newBitmap.Width;
                 picBitmap.Height = newBitmap.Height;
+                panelBack.Height = picBitmap.Height;
+                panelBack.Width = picBitmap.Width;
                 this.bitmap = newBitmap;
             }
             catch (Exception ex) {

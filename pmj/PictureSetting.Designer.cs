@@ -176,7 +176,7 @@
             // 
             // btnSize
             // 
-            this.btnSize.BackColor = System.Drawing.Color.Transparent;
+            this.btnSize.BackColor = System.Drawing.Color.Red;
             this.btnSize.FlatAppearance.BorderColor = System.Drawing.Color.Red;
             this.btnSize.ForeColor = System.Drawing.Color.Transparent;
             this.btnSize.Location = new System.Drawing.Point(65, 26);
