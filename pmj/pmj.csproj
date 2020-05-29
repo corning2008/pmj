@@ -115,6 +115,8 @@
     <Compile Include="PictureSetting.Designer.cs">
       <DependentUpon>PictureSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="PLCCommandFactory.cs" />
+    <Compile Include="PLCSerialPort.cs" />
     <Compile Include="PmjData.cs" />
     <Compile Include="PmjDataRecv.cs" />
     <Compile Include="PmjSerialPort.cs" />

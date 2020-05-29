@@ -38,6 +38,7 @@
             this.lbPmjStatus = new System.Windows.Forms.Label();
             this.btnPrintOnce = new System.Windows.Forms.Button();
             this.panelTop = new System.Windows.Forms.Panel();
+            this.btnCleanPrinter = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelRight = new System.Windows.Forms.Panel();
             this.btnBarcode = new System.Windows.Forms.Button();
@@ -53,7 +54,8 @@
             this.btnDownload = new System.Windows.Forms.Button();
             this.cmbFileList = new System.Windows.Forms.ComboBox();
             this.panelSetting = new System.Windows.Forms.Panel();
-            this.btnCleanPrinter = new System.Windows.Forms.Button();
+            this.comboPlcList = new System.Windows.Forms.ComboBox();
+            this.btnOpenPlc = new System.Windows.Forms.Button();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
@@ -134,6 +136,8 @@
             // panelTop
             // 
             this.panelTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTop.Controls.Add(this.btnOpenPlc);
+            this.panelTop.Controls.Add(this.comboPlcList);
             this.panelTop.Controls.Add(this.btnCleanPrinter);
             this.panelTop.Controls.Add(this.panel1);
             this.panelTop.Controls.Add(this.comboBoxPmj);
@@ -145,6 +149,16 @@
             this.panelTop.Size = new System.Drawing.Size(941, 48);
             this.panelTop.TabIndex = 10;
             this.panelTop.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTop_Paint);
+            // 
+            // btnCleanPrinter
+            // 
+            this.btnCleanPrinter.Location = new System.Drawing.Point(336, 12);
+            this.btnCleanPrinter.Name = "btnCleanPrinter";
+            this.btnCleanPrinter.Size = new System.Drawing.Size(87, 23);
+            this.btnCleanPrinter.TabIndex = 12;
+            this.btnCleanPrinter.Text = "清洗喷头";
+            this.btnCleanPrinter.UseVisualStyleBackColor = true;
+            this.btnCleanPrinter.Click += new System.EventHandler(this.btnCleanPrinter_Click);
             // 
             // panel1
             // 
@@ -304,15 +318,24 @@
             this.panelSetting.Size = new System.Drawing.Size(622, 260);
             this.panelSetting.TabIndex = 15;
             // 
-            // btnCleanPrinter
+            // comboPlcList
             // 
-            this.btnCleanPrinter.Location = new System.Drawing.Point(336, 12);
-            this.btnCleanPrinter.Name = "btnCleanPrinter";
-            this.btnCleanPrinter.Size = new System.Drawing.Size(87, 23);
-            this.btnCleanPrinter.TabIndex = 12;
-            this.btnCleanPrinter.Text = "清洗喷头";
-            this.btnCleanPrinter.UseVisualStyleBackColor = true;
-            this.btnCleanPrinter.Click += new System.EventHandler(this.btnCleanPrinter_Click);
+            this.comboPlcList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboPlcList.FormattingEnabled = true;
+            this.comboPlcList.Location = new System.Drawing.Point(656, 15);
+            this.comboPlcList.Name = "comboPlcList";
+            this.comboPlcList.Size = new System.Drawing.Size(121, 20);
+            this.comboPlcList.TabIndex = 13;
+            // 
+            // btnOpenPlc
+            // 
+            this.btnOpenPlc.Location = new System.Drawing.Point(783, 13);
+            this.btnOpenPlc.Name = "btnOpenPlc";
+            this.btnOpenPlc.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenPlc.TabIndex = 14;
+            this.btnOpenPlc.Text = "打开plc串口";
+            this.btnOpenPlc.UseVisualStyleBackColor = true;
+            this.btnOpenPlc.Click += new System.EventHandler(this.btnOpenPlc_Click);
             // 
             // Form1
             // 
@@ -369,6 +392,8 @@
         private System.Windows.Forms.ComboBox cmbFileList;
         private System.Windows.Forms.Button btnParameter;
         private System.Windows.Forms.Button btnCleanPrinter;
+        private System.Windows.Forms.Button btnOpenPlc;
+        private System.Windows.Forms.ComboBox comboPlcList;
     }
 }
 

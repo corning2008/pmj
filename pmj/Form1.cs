@@ -49,6 +49,8 @@ namespace pmj
         }
 
         private PmjSerialPort _pmjSerialPort;
+        //plc的串口
+        private PLCSerialPort _plcSerialPort;
 
         private void btnOpenPortPmj_Click(object sender, EventArgs e)
         {
@@ -1025,6 +1027,28 @@ namespace pmj
                 var dataResult = _pmjSerialPort.WriteForResult(command, 2000);
                 
             }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnOpenPlc_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (null == _plcSerialPort)
+                {
+                    _plcSerialPort = new PLCSerialPort(cmbFileList.Text, null);
+                }
+
+                //判断是否应打开串口,如果没有打开的话,就打开串口服务
+                if (!_plcSerialPort.IsOpen())
+                {
+                    _plcSerialPort.Open();
+                }
+
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
