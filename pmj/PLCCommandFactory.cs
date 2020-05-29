@@ -24,6 +24,23 @@ namespace pmj
         }
 
         /// <summary>
+        /// 进行未操作
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="reset"></param>
+        /// <returns></returns>
+        public static byte[] SetBitCommand(int address,bool reset)
+        {
+            byte command = 0x37;
+            if (reset)
+            {
+                command = 0x38;
+            }
+            var addressBytes = Encoding.ASCII.GetBytes((address/8 + Convert.ToUInt32("100", 16)).ToString("X4"));
+            return GetCommand(new byte[] {command}, addressBytes, null);
+        }
+
+        /// <summary>
         /// 对接受到的数据进行校验
         /// </summary>
         /// <param name="dataBytes"></param>
@@ -75,7 +92,11 @@ namespace pmj
         {
             var stx = new byte[] {0x02};
             var etx = new byte[] {0x03};
-            var command = stx.Concat(commandId).Concat(address).Concat(bytes).ToArray();
+            var command = stx.Concat(commandId).Concat(address).ToArray();
+            if (null != bytes)
+            {
+                command = commandId.Concat(bytes).ToArray();
+            }
             command = command.Concat(etx).ToArray();
             var sum = GetSum(command);
             return command.Concat(sum).ToArray();
@@ -95,8 +116,7 @@ namespace pmj
 
         private void Test()
         {
-            var command = GetWriteCommand(123, new byte[] {0x12, 0x34, 0xAB, 0xCD});
-            CommandFactory.PrintBytes(command);
+          
         }
     }
 }

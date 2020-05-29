@@ -25,6 +25,36 @@ namespace pmj
         }
 
         /// <summary>
+        /// 设置命令
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool SetBitValue(int address, int value)
+        {
+            //获取设置的命令
+            var command = PLCCommandFactory.SetBitCommand(address, value != 1);
+            return WriteDatas(command, 2000);
+        }
+
+        /// <summary>
+        /// 获取D10的状态
+        /// </summary>
+        /// <returns></returns>
+        public byte GetD10Status()
+        {
+            var bytes = ReadDataFromPLC(10, 1, 1000);
+            return bytes[1];
+        }
+
+        public GodSerialPort GetSerialPort()
+        {
+            return _port;
+        }
+
+      
+
+        /// <summary>
         /// 是否已经打开
         /// </summary>
         /// <returns></returns>
@@ -77,7 +107,7 @@ namespace pmj
         /// </summary>
         private readonly object _flag = new object();
 
-        public bool WriteDatas(int address, byte[] bytes, int timeOut)
+        public bool WriteDatas(byte[] command, int timeOut)
         {
             if (!Monitor.TryEnter(_flag))
             {
@@ -88,7 +118,6 @@ namespace pmj
                 _dataRecv = null;
                 if (null != _port && _port.IsOpen)
                 {
-                    var command = PLCCommandFactory.GetWriteCommand(address, bytes);
                     _port.Write(command);
                     Console.WriteLine($"向PLC发送数据");
                     CommandFactory.PrintBytes(command);

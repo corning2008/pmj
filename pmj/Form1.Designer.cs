@@ -56,6 +56,7 @@
             this.panelSetting = new System.Windows.Forms.Panel();
             this.comboPlcList = new System.Windows.Forms.ComboBox();
             this.btnOpenPlc = new System.Windows.Forms.Button();
+            this.btnPlcPrint = new System.Windows.Forms.Button();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
@@ -136,6 +137,7 @@
             // panelTop
             // 
             this.panelTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTop.Controls.Add(this.btnPlcPrint);
             this.panelTop.Controls.Add(this.btnOpenPlc);
             this.panelTop.Controls.Add(this.comboPlcList);
             this.panelTop.Controls.Add(this.btnCleanPrinter);
@@ -337,6 +339,16 @@
             this.btnOpenPlc.UseVisualStyleBackColor = true;
             this.btnOpenPlc.Click += new System.EventHandler(this.btnOpenPlc_Click);
             // 
+            // btnPlcPrint
+            // 
+            this.btnPlcPrint.Location = new System.Drawing.Point(476, 13);
+            this.btnPlcPrint.Name = "btnPlcPrint";
+            this.btnPlcPrint.Size = new System.Drawing.Size(87, 23);
+            this.btnPlcPrint.TabIndex = 15;
+            this.btnPlcPrint.Text = "PLC打印";
+            this.btnPlcPrint.UseVisualStyleBackColor = true;
+            this.btnPlcPrint.Click += new System.EventHandler(this.btnPlcPrint_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -394,6 +406,7 @@
         private System.Windows.Forms.Button btnCleanPrinter;
         private System.Windows.Forms.Button btnOpenPlc;
         private System.Windows.Forms.ComboBox comboPlcList;
+        private System.Windows.Forms.Button btnPlcPrint;
     }
 }
 

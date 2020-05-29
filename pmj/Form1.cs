@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GodSharp.SerialPort;
 using Newtonsoft.Json;
 using ZXing;
 using ZXing.QrCode;
@@ -47,6 +48,7 @@ namespace pmj
 
             return list;
         }
+
 
         private PmjSerialPort _pmjSerialPort;
         //plc的串口
@@ -184,6 +186,44 @@ namespace pmj
             }
            
            
+        }
+
+        /// <summary>
+        /// 是否连接到PLC
+        /// </summary>
+        /// <returns></returns>
+        private bool HasCheckPLC()
+        {
+           
+            if (null != _plcSerialPort)
+            {
+                if (!_pmjSerialPort.GetPortName().Equals(comboPlcList.Text))
+                {
+                    _plcSerialPort.GetSerialPort().Close();
+                    _plcSerialPort = null;
+                }
+                else
+                {
+                    if (_plcSerialPort.IsOpen())
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            if (null == _plcSerialPort)
+            {
+                _plcSerialPort = new PLCSerialPort(comboPlcList.Text, null);
+            }
+
+
+            //判断是否应打开串口,如果没有打开的话,就打开串口服务
+            if (!_plcSerialPort.IsOpen())
+            {
+                _plcSerialPort.Open();
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -1036,16 +1076,28 @@ namespace pmj
         {
             try
             {
-                if (null == _plcSerialPort)
-                {
-                    _plcSerialPort = new PLCSerialPort(cmbFileList.Text, null);
-                }
+               
 
-                //判断是否应打开串口,如果没有打开的话,就打开串口服务
-                if (!_plcSerialPort.IsOpen())
-                {
-                    _plcSerialPort.Open();
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// plc 打印
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPlcPrint_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //检测是否存在打印进
+                var hasPrinter = HasPrinter(out string printName);
+                //检查是否连接plc
+                var hasPlc = HasCheckPLC();
 
             }
             catch (Exception ex)
