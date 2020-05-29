@@ -38,6 +38,9 @@
             this.lbPmjStatus = new System.Windows.Forms.Label();
             this.btnPrintOnce = new System.Windows.Forms.Button();
             this.panelTop = new System.Windows.Forms.Panel();
+            this.btnPlcPrint = new System.Windows.Forms.Button();
+            this.btnOpenPlc = new System.Windows.Forms.Button();
+            this.comboPlcList = new System.Windows.Forms.ComboBox();
             this.btnCleanPrinter = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelRight = new System.Windows.Forms.Panel();
@@ -54,9 +57,9 @@
             this.btnDownload = new System.Windows.Forms.Button();
             this.cmbFileList = new System.Windows.Forms.ComboBox();
             this.panelSetting = new System.Windows.Forms.Panel();
-            this.comboPlcList = new System.Windows.Forms.ComboBox();
-            this.btnOpenPlc = new System.Windows.Forms.Button();
-            this.btnPlcPrint = new System.Windows.Forms.Button();
+            this.listBoxFileList = new System.Windows.Forms.ListBox();
+            this.btnAddFile = new System.Windows.Forms.Button();
+            this.btnDeleteFile = new System.Windows.Forms.Button();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
@@ -151,6 +154,35 @@
             this.panelTop.Size = new System.Drawing.Size(941, 48);
             this.panelTop.TabIndex = 10;
             this.panelTop.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTop_Paint);
+            // 
+            // btnPlcPrint
+            // 
+            this.btnPlcPrint.Location = new System.Drawing.Point(476, 13);
+            this.btnPlcPrint.Name = "btnPlcPrint";
+            this.btnPlcPrint.Size = new System.Drawing.Size(87, 23);
+            this.btnPlcPrint.TabIndex = 15;
+            this.btnPlcPrint.Text = "PLC打印";
+            this.btnPlcPrint.UseVisualStyleBackColor = true;
+            this.btnPlcPrint.Click += new System.EventHandler(this.btnPlcPrint_Click);
+            // 
+            // btnOpenPlc
+            // 
+            this.btnOpenPlc.Location = new System.Drawing.Point(783, 13);
+            this.btnOpenPlc.Name = "btnOpenPlc";
+            this.btnOpenPlc.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenPlc.TabIndex = 14;
+            this.btnOpenPlc.Text = "打开plc串口";
+            this.btnOpenPlc.UseVisualStyleBackColor = true;
+            this.btnOpenPlc.Click += new System.EventHandler(this.btnOpenPlc_Click);
+            // 
+            // comboPlcList
+            // 
+            this.comboPlcList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboPlcList.FormattingEnabled = true;
+            this.comboPlcList.Location = new System.Drawing.Point(656, 15);
+            this.comboPlcList.Name = "comboPlcList";
+            this.comboPlcList.Size = new System.Drawing.Size(121, 20);
+            this.comboPlcList.TabIndex = 13;
             // 
             // btnCleanPrinter
             // 
@@ -253,6 +285,9 @@
             // panelLeft
             // 
             this.panelLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelLeft.Controls.Add(this.btnDeleteFile);
+            this.panelLeft.Controls.Add(this.btnAddFile);
+            this.panelLeft.Controls.Add(this.listBoxFileList);
             this.panelLeft.Controls.Add(this.btnParameter);
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeft.Location = new System.Drawing.Point(0, 48);
@@ -320,34 +355,34 @@
             this.panelSetting.Size = new System.Drawing.Size(622, 260);
             this.panelSetting.TabIndex = 15;
             // 
-            // comboPlcList
+            // listBoxFileList
             // 
-            this.comboPlcList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboPlcList.FormattingEnabled = true;
-            this.comboPlcList.Location = new System.Drawing.Point(656, 15);
-            this.comboPlcList.Name = "comboPlcList";
-            this.comboPlcList.Size = new System.Drawing.Size(121, 20);
-            this.comboPlcList.TabIndex = 13;
+            this.listBoxFileList.FormattingEnabled = true;
+            this.listBoxFileList.ItemHeight = 12;
+            this.listBoxFileList.Location = new System.Drawing.Point(-1, 127);
+            this.listBoxFileList.Name = "listBoxFileList";
+            this.listBoxFileList.Size = new System.Drawing.Size(120, 124);
+            this.listBoxFileList.TabIndex = 2;
             // 
-            // btnOpenPlc
+            // btnAddFile
             // 
-            this.btnOpenPlc.Location = new System.Drawing.Point(783, 13);
-            this.btnOpenPlc.Name = "btnOpenPlc";
-            this.btnOpenPlc.Size = new System.Drawing.Size(75, 23);
-            this.btnOpenPlc.TabIndex = 14;
-            this.btnOpenPlc.Text = "打开plc串口";
-            this.btnOpenPlc.UseVisualStyleBackColor = true;
-            this.btnOpenPlc.Click += new System.EventHandler(this.btnOpenPlc_Click);
+            this.btnAddFile.Location = new System.Drawing.Point(0, 265);
+            this.btnAddFile.Name = "btnAddFile";
+            this.btnAddFile.Size = new System.Drawing.Size(116, 23);
+            this.btnAddFile.TabIndex = 2;
+            this.btnAddFile.Text = "添加到打印列表";
+            this.btnAddFile.UseVisualStyleBackColor = true;
+            this.btnAddFile.Click += new System.EventHandler(this.btnAddFile_Click);
             // 
-            // btnPlcPrint
+            // btnDeleteFile
             // 
-            this.btnPlcPrint.Location = new System.Drawing.Point(476, 13);
-            this.btnPlcPrint.Name = "btnPlcPrint";
-            this.btnPlcPrint.Size = new System.Drawing.Size(87, 23);
-            this.btnPlcPrint.TabIndex = 15;
-            this.btnPlcPrint.Text = "PLC打印";
-            this.btnPlcPrint.UseVisualStyleBackColor = true;
-            this.btnPlcPrint.Click += new System.EventHandler(this.btnPlcPrint_Click);
+            this.btnDeleteFile.Location = new System.Drawing.Point(-1, 294);
+            this.btnDeleteFile.Name = "btnDeleteFile";
+            this.btnDeleteFile.Size = new System.Drawing.Size(116, 23);
+            this.btnDeleteFile.TabIndex = 3;
+            this.btnDeleteFile.Text = "删除打印文件";
+            this.btnDeleteFile.UseVisualStyleBackColor = true;
+            this.btnDeleteFile.Click += new System.EventHandler(this.btnDeleteFile_Click);
             // 
             // Form1
             // 
@@ -407,6 +442,9 @@
         private System.Windows.Forms.Button btnOpenPlc;
         private System.Windows.Forms.ComboBox comboPlcList;
         private System.Windows.Forms.Button btnPlcPrint;
+        private System.Windows.Forms.ListBox listBoxFileList;
+        private System.Windows.Forms.Button btnAddFile;
+        private System.Windows.Forms.Button btnDeleteFile;
     }
 }
 

@@ -36,6 +36,8 @@ namespace pmj
             //加载文件列表
             var fileList = CmbDataItemFactory.GetFileList();
             cmbFileList.DataSource = fileList;
+            //要打印的文件列表
+           
         }
 
         private List<String> GetSerialPortList()
@@ -287,7 +289,15 @@ namespace pmj
                 {
                     return;
                 }
-                _pmjSerialPort.Write(CommandFactory.GetPrintOnceCommand());
+                var result = _pmjSerialPort.Print();
+                if(null != result)
+                {
+                    MessageBox.Show("打印完成");
+                }
+                else
+                {
+                    MessageBox.Show("打印返回状态异常");
+                }
             }
             catch (Exception ex)
             {
@@ -1101,6 +1111,51 @@ namespace pmj
 
             }
             catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnAddFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var data = cmbFileList.SelectedItem as CmbDataItem;
+                //获取打印列表
+                var list = listBoxFileList.Items.Cast<CmbDataItem>().ToList();
+                var dataSelect = list.FirstOrDefault(item => item.Value == data.Value);
+                if(null == dataSelect)
+                {
+                    this.Invoke((Action)(()=>{
+                        listBoxFileList.Items.Add(data);
+                    }));
+                       
+                    
+                }
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void Invoke(Func<object> p)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void btnDeleteFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var data = listBoxFileList.SelectedItem as CmbDataItem;
+                if(null == data)
+                {
+                    MessageBox.Show("请选中要删除的文件");
+                    return;
+                }
+                listBoxFileList.Items.Remove(data);
+                return;
+            }catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }

@@ -61,6 +61,15 @@ namespace pmj
         }
 
         /// <summary>
+        /// 打印文件，如果收到数据就代表打印完成
+        /// </summary>
+        public DataResult Print()
+        {
+            var command = CommandFactory.GetPrintOnceCommand();
+            return WriteForResult(command, 2000);
+        }
+
+        /// <summary>
         /// 获取串口的名称
         /// </summary>
         /// <returns></returns>
