@@ -86,6 +86,8 @@ namespace pmj
             {
                 //关闭串口
                 _pmjSerialPort?.Close();
+                //
+                _plcSerialPort?.Close();
             }
             catch (Exception ex)
             {
@@ -1066,15 +1068,7 @@ namespace pmj
         {
             try
             {
-                var flag = HasPrinter(out string printerName);
-                lbPmjStatus.Text = printerName;
-                if (!flag)
-                {
-                    return;
-                }
-                //开始清洗喷头
-                var command = CommandFactory.GetCleanPrinter(1);
-                var dataResult = _pmjSerialPort.WriteForResult(command, 2000);
+                _pmjSerialPort.SetParameter(1);
                 
             }catch(Exception ex)
             {
@@ -1104,11 +1098,14 @@ namespace pmj
         {
             try
             {
-                //检测是否存在打印进
-                var hasPrinter = HasPrinter(out string printName);
-                //检查是否连接plc
-                var hasPlc = HasCheckPLC();
-
+                var list = (listBoxFileList.DataSource as List<CmbDataItem>).Select(item => item.Value).ToList();
+                if (list.Count == 0)
+                {
+                    MessageBox.Show("请选择要打印的文件");
+                    return;
+                }
+                //
+                PLCPrinter.PrintList(_pmjSerialPort, _plcSerialPort, list, 2000);
             }
             catch (Exception ex)
             {

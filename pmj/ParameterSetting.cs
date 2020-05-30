@@ -11,6 +11,8 @@ using System.Windows.Forms;
 
 namespace pmj
 {
+
+
     public partial class ParameterSetting : UserControl
     {
         private PmjSerialPort _pmjSerialPort;
@@ -99,16 +101,10 @@ namespace pmj
         {
             try
             {
-                //查询参数的命令
-                var command = CommandFactory.GetPrintParameters();
-                var result = _pmjSerialPort.WriteForResult(command,4000);
-                if (null == result || null== result.GetData())
-                {
-                    MessageBox.Show("没有接受到应答数据");
-                    return;
-                }
+              
+                _pmjSerialPort.ReadParameter();
                 //开始解析数据
-                ParseData(result.GetData());
+                ParseData();
                 //读取参数成功
             }
             catch (Exception ex)
@@ -117,36 +113,35 @@ namespace pmj
             }
         }
 
-        private void ParseData(byte[] dataList)
+        private void ParseData()
         {
             //打印延迟
-            var delayValue = BitConverter.ToUInt16(dataList, 0);
+            var delayValue = Parameters.DelayValue;
             this.numberDelay.Value = delayValue;
             //列间延迟
-            var colDelay = BitConverter.ToUInt16(dataList, 2);
+            var colDelay = Parameters.ColDelay;
             this.numberColDelay.Value = colDelay;
             //编码器计数
-            var colsMotos = BitConverter.ToUInt16(dataList, 4);
+            var colsMotos = Parameters.ColMoto;
             this.numberCount.Value = colsMotos;
             //脉冲宽度
-            var pluseWidth = BitConverter.ToUInt16(dataList, 6);
+            var pluseWidth = Parameters.PluseWidth;
             SetCmboBoxValue(cmbPulseWidth, pluseWidth);
            //打印灰度
-            var grayDelay = BitConverter.ToInt16(dataList, 8);
+            var grayDelay = Parameters.GrayDelay;
             SetCmboBoxValue(cmbGrayList, grayDelay);
             //打印电压
-            var voltage = BitConverter.ToUInt16(dataList, 12);
+            var voltage = Parameters.Voltage;
             SetCmboBoxValue(cmbVList, voltage);
             //喷头的选择
-            var printIndex = BitConverter.ToUInt16(dataList, 14);
+            var printIndex = Parameters.PrintIndex;
             SetCmboBoxValue(cmbPrintList, printIndex);
             //打印文件
-            var fileModel = BitConverter.ToUInt16(dataList, 16);
+            var fileModel = Parameters.FileModel;
             SetCmboBoxValue(cmbFileList, fileModel);
-            //自动关机设置
-            var powerOff = BitConverter.ToUInt16(dataList, 22);
+        
             //闲喷
-            var idle = BitConverter.ToUInt16(dataList, 24);
+            var idle = Parameters.Idle;
             SetCmboBoxValue(cmbLeaveTime, idle);
 
         }

@@ -103,6 +103,14 @@ namespace pmj
         }
 
         /// <summary>
+        /// 关闭串口通讯
+        /// </summary>
+        internal void Close()
+        {
+            _port?.Close();
+        }
+
+        /// <summary>
         /// 用于进程间同步
         /// </summary>
         private readonly object _flag = new object();

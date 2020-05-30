@@ -51,15 +51,16 @@
             this.btnTimeSetting = new System.Windows.Forms.Button();
             this.btnPicture = new System.Windows.Forms.Button();
             this.panelLeft = new System.Windows.Forms.Panel();
+            this.btnDeleteFile = new System.Windows.Forms.Button();
+            this.btnAddFile = new System.Windows.Forms.Button();
+            this.listBoxFileList = new System.Windows.Forms.ListBox();
             this.btnParameter = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelTip = new System.Windows.Forms.Panel();
             this.btnDownload = new System.Windows.Forms.Button();
             this.cmbFileList = new System.Windows.Forms.ComboBox();
             this.panelSetting = new System.Windows.Forms.Panel();
-            this.listBoxFileList = new System.Windows.Forms.ListBox();
-            this.btnAddFile = new System.Windows.Forms.Button();
-            this.btnDeleteFile = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
@@ -285,6 +286,7 @@
             // panelLeft
             // 
             this.panelLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelLeft.Controls.Add(this.label1);
             this.panelLeft.Controls.Add(this.btnDeleteFile);
             this.panelLeft.Controls.Add(this.btnAddFile);
             this.panelLeft.Controls.Add(this.listBoxFileList);
@@ -294,6 +296,36 @@
             this.panelLeft.Name = "panelLeft";
             this.panelLeft.Size = new System.Drawing.Size(156, 452);
             this.panelLeft.TabIndex = 12;
+            // 
+            // btnDeleteFile
+            // 
+            this.btnDeleteFile.Location = new System.Drawing.Point(-1, 294);
+            this.btnDeleteFile.Name = "btnDeleteFile";
+            this.btnDeleteFile.Size = new System.Drawing.Size(156, 23);
+            this.btnDeleteFile.TabIndex = 3;
+            this.btnDeleteFile.Text = "删除打印文件";
+            this.btnDeleteFile.UseVisualStyleBackColor = true;
+            this.btnDeleteFile.Click += new System.EventHandler(this.btnDeleteFile_Click);
+            // 
+            // btnAddFile
+            // 
+            this.btnAddFile.Location = new System.Drawing.Point(0, 265);
+            this.btnAddFile.Name = "btnAddFile";
+            this.btnAddFile.Size = new System.Drawing.Size(154, 23);
+            this.btnAddFile.TabIndex = 2;
+            this.btnAddFile.Text = "添加到打印列表";
+            this.btnAddFile.UseVisualStyleBackColor = true;
+            this.btnAddFile.Click += new System.EventHandler(this.btnAddFile_Click);
+            // 
+            // listBoxFileList
+            // 
+            this.listBoxFileList.FormattingEnabled = true;
+            this.listBoxFileList.ItemHeight = 12;
+            this.listBoxFileList.Location = new System.Drawing.Point(-1, 127);
+            this.listBoxFileList.Margin = new System.Windows.Forms.Padding(3, 300, 3, 3);
+            this.listBoxFileList.Name = "listBoxFileList";
+            this.listBoxFileList.Size = new System.Drawing.Size(155, 124);
+            this.listBoxFileList.TabIndex = 2;
             // 
             // btnParameter
             // 
@@ -355,34 +387,14 @@
             this.panelSetting.Size = new System.Drawing.Size(622, 260);
             this.panelSetting.TabIndex = 15;
             // 
-            // listBoxFileList
+            // label1
             // 
-            this.listBoxFileList.FormattingEnabled = true;
-            this.listBoxFileList.ItemHeight = 12;
-            this.listBoxFileList.Location = new System.Drawing.Point(-1, 127);
-            this.listBoxFileList.Name = "listBoxFileList";
-            this.listBoxFileList.Size = new System.Drawing.Size(120, 124);
-            this.listBoxFileList.TabIndex = 2;
-            // 
-            // btnAddFile
-            // 
-            this.btnAddFile.Location = new System.Drawing.Point(0, 265);
-            this.btnAddFile.Name = "btnAddFile";
-            this.btnAddFile.Size = new System.Drawing.Size(116, 23);
-            this.btnAddFile.TabIndex = 2;
-            this.btnAddFile.Text = "添加到打印列表";
-            this.btnAddFile.UseVisualStyleBackColor = true;
-            this.btnAddFile.Click += new System.EventHandler(this.btnAddFile_Click);
-            // 
-            // btnDeleteFile
-            // 
-            this.btnDeleteFile.Location = new System.Drawing.Point(-1, 294);
-            this.btnDeleteFile.Name = "btnDeleteFile";
-            this.btnDeleteFile.Size = new System.Drawing.Size(116, 23);
-            this.btnDeleteFile.TabIndex = 3;
-            this.btnDeleteFile.Text = "删除打印文件";
-            this.btnDeleteFile.UseVisualStyleBackColor = true;
-            this.btnDeleteFile.Click += new System.EventHandler(this.btnDeleteFile_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(-1, 114);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "打印列表";
             // 
             // Form1
             // 
@@ -406,6 +418,7 @@
             this.panelTop.ResumeLayout(false);
             this.panelRight.ResumeLayout(false);
             this.panelLeft.ResumeLayout(false);
+            this.panelLeft.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panelTip.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -445,6 +458,7 @@
         private System.Windows.Forms.ListBox listBoxFileList;
         private System.Windows.Forms.Button btnAddFile;
         private System.Windows.Forms.Button btnDeleteFile;
+        private System.Windows.Forms.Label label1;
     }
 }
 

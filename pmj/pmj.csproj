@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="ImageTool.cs" />
     <Compile Include="LockBitmap.cs" />
+    <Compile Include="Parameters.cs" />
     <Compile Include="ParameterSetting.cs">
       <SubType>UserControl</SubType>
     </Compile>

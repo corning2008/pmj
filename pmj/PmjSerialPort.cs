@@ -23,6 +23,36 @@ namespace pmj
         //发送命令返回的数据
         private byte[] _dataRecv = null;
 
+        public void ReOpen()
+        {
+
+        }
+
+        /// <summary>
+        /// 判断是否连接到打印机
+        /// </summary>
+        /// <returns></returns>
+        public bool HasConnectPrinter()
+        {
+            //首先判断串口是否已经打开
+            if (null == _port || !_port.IsOpen)
+            {
+                //打开串口
+                var flag = Open();
+                if (!flag)
+                {
+                    return false;
+                }
+            }
+            //如果串口正常，就检测是否存在打印机
+            var dataResult = WriteForResult(CommandFactory.GetCheckDeviceCommand(), 100);
+            if (null == dataResult)
+            {
+                return false;
+            }
+            return true;
+        }
+
         /// <summary>
         /// 是否存在打印机
         /// </summary>
@@ -39,10 +69,9 @@ namespace pmj
                 {
                     throw new Exception("打开打印机串口失败");
                 }
-              
             }
             //如果串口正常，就检测是否存在打印机
-            var dataResult = WriteForResult(CommandFactory.GetCheckDeviceCommand(), 2000);
+            var dataResult = WriteForResult(CommandFactory.GetCheckDeviceCommand(), 100);
             if(null == dataResult)
             {
                 printerName = "没有扫描到打印机";
@@ -52,6 +81,97 @@ namespace pmj
             return true;
         }
         
+
+        public void ReadParameter()
+        {
+            //查询参数的命令
+            var command = CommandFactory.GetPrintParameters();
+            var result = WriteForResult(command, 4000);
+            if (null == result || null == result.GetData())
+            {
+
+                throw new Exception("读取设备参数失败");
+            }
+            //开始解析数据
+            ParseData(result.GetData());
+        }
+
+        /// <summary>
+        /// 设置参数
+        /// </summary>
+        /// <param name="fileModel">设置第几个文件进行打印，默认0：第一个文件， 3：第四个文件</param>
+        public void SetParameter(ushort fileModel=0)
+        {
+            //第一步首先读取系统的参数
+            ReadParameter();
+            Parameters.FileModel = fileModel;
+
+            //设置打印延迟
+            var numberDelayBytes = BitConverter.GetBytes(Parameters.DelayValue);
+            //列间延迟
+            var colDelayBytes = BitConverter.GetBytes((ushort)Parameters.ColDelay);
+            //编码器基数
+            var numberCountBytes = BitConverter.GetBytes((ushort)Parameters.ColMoto);
+            //脉冲宽度
+            var pulseWidthBytes =
+                BitConverter.GetBytes((ushort)Parameters.PluseWidth);
+            //打印灰度
+            var grayScaleBytes = BitConverter.GetBytes((ushort)Parameters.GrayDelay);
+            //打印电压
+            var vBytes = BitConverter.GetBytes((ushort)Parameters.Voltage);
+            //左右喷头选择
+            var printBytes = BitConverter.GetBytes((ushort)Parameters.PrintIndex);
+            //打印文件选择
+            var fileIndexBytes = BitConverter.GetBytes((ushort)Parameters.FileModel);
+            //自动关机
+            var powerOffBytes = new byte[] { 0x2c, 0x01 };/* BitConverter.GetBytes((ushort) (cmbShutdownList.SelectedItem as CmbDataItem).Value);*/
+                                                          //闲喷
+            var idleBytes = BitConverter.GetBytes((ushort)Parameters.Idle);
+
+            var content = numberDelayBytes.Concat(colDelayBytes).Concat(numberCountBytes).Concat(pulseWidthBytes)
+                .Concat(grayScaleBytes).Concat(new byte[] { 0x55, 0x00 }).Concat(vBytes)
+                .Concat(printBytes).Concat(fileIndexBytes).Concat(new byte[] { 0x00, 0x00 })
+                .Concat(new byte[] { 0x00, 0x00 }).Concat(powerOffBytes).Concat(idleBytes).ToArray();
+            var command = CommandFactory.getSetPrintParameters(content);
+            //发送命令
+            SendCommand(command, out DataResult result);
+
+        }
+
+
+        private void ParseData(byte[] dataList)
+        {
+            //打印延迟
+            var delayValue = BitConverter.ToUInt16(dataList, 0);
+            Parameters.DelayValue = delayValue;
+            //列间延迟
+            var colDelay = BitConverter.ToUInt16(dataList, 2);
+            Parameters.ColDelay = colDelay;
+            //编码器计数
+            var colsMotos = BitConverter.ToUInt16(dataList, 4);
+            Parameters.ColMoto = colsMotos;
+            //脉冲宽度
+            var pluseWidth = BitConverter.ToUInt16(dataList, 6);
+            Parameters.PluseWidth = pluseWidth;
+            //打印灰度
+            var grayDelay = BitConverter.ToInt16(dataList, 8);
+            Parameters.GrayDelay = grayDelay;
+            //打印电压
+            var voltage = BitConverter.ToUInt16(dataList, 12);
+            Parameters.Voltage = voltage;
+            //喷头的选择
+            var printIndex = BitConverter.ToUInt16(dataList, 14);
+            Parameters.PrintIndex = printIndex;
+            //打印文件
+            var fileModel = BitConverter.ToUInt16(dataList, 16);
+            Parameters.FileModel = fileModel;
+            //自动关机设置
+            var powerOff = BitConverter.ToUInt16(dataList, 22);
+            //闲喷
+            var idle = BitConverter.ToUInt16(dataList, 24);
+            Parameters.Idle = idle;
+            return;
+        }
 
         public PmjSerialPort(string portName,IDataRecvPort dataRecvPort)
         {
