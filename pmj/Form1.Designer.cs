@@ -51,6 +51,7 @@
             this.btnTimeSetting = new System.Windows.Forms.Button();
             this.btnPicture = new System.Windows.Forms.Button();
             this.panelLeft = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnDeleteFile = new System.Windows.Forms.Button();
             this.btnAddFile = new System.Windows.Forms.Button();
             this.listBoxFileList = new System.Windows.Forms.ListBox();
@@ -60,7 +61,6 @@
             this.btnDownload = new System.Windows.Forms.Button();
             this.cmbFileList = new System.Windows.Forms.ComboBox();
             this.panelSetting = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
@@ -288,7 +288,6 @@
             this.panelLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelLeft.Controls.Add(this.label1);
             this.panelLeft.Controls.Add(this.btnDeleteFile);
-            this.panelLeft.Controls.Add(this.btnAddFile);
             this.panelLeft.Controls.Add(this.listBoxFileList);
             this.panelLeft.Controls.Add(this.btnParameter);
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
@@ -297,9 +296,18 @@
             this.panelLeft.Size = new System.Drawing.Size(156, 452);
             this.panelLeft.TabIndex = 12;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(-1, 83);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "打印列表";
+            // 
             // btnDeleteFile
             // 
-            this.btnDeleteFile.Location = new System.Drawing.Point(-1, 294);
+            this.btnDeleteFile.Location = new System.Drawing.Point(-1, 234);
             this.btnDeleteFile.Name = "btnDeleteFile";
             this.btnDeleteFile.Size = new System.Drawing.Size(156, 23);
             this.btnDeleteFile.TabIndex = 3;
@@ -309,7 +317,7 @@
             // 
             // btnAddFile
             // 
-            this.btnAddFile.Location = new System.Drawing.Point(0, 265);
+            this.btnAddFile.Location = new System.Drawing.Point(214, 25);
             this.btnAddFile.Name = "btnAddFile";
             this.btnAddFile.Size = new System.Drawing.Size(154, 23);
             this.btnAddFile.TabIndex = 2;
@@ -321,7 +329,7 @@
             // 
             this.listBoxFileList.FormattingEnabled = true;
             this.listBoxFileList.ItemHeight = 12;
-            this.listBoxFileList.Location = new System.Drawing.Point(-1, 127);
+            this.listBoxFileList.Location = new System.Drawing.Point(-1, 96);
             this.listBoxFileList.Margin = new System.Windows.Forms.Padding(3, 300, 3, 3);
             this.listBoxFileList.Name = "listBoxFileList";
             this.listBoxFileList.Size = new System.Drawing.Size(155, 124);
@@ -353,6 +361,7 @@
             this.panelTip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelTip.Controls.Add(this.btnDownload);
             this.panelTip.Controls.Add(this.cmbFileList);
+            this.panelTip.Controls.Add(this.btnAddFile);
             this.panelTip.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTip.Location = new System.Drawing.Point(156, 176);
             this.panelTip.Name = "panelTip";
@@ -386,15 +395,6 @@
             this.panelSetting.Name = "panelSetting";
             this.panelSetting.Size = new System.Drawing.Size(622, 260);
             this.panelSetting.TabIndex = 15;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(-1, 114);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "打印列表";
             // 
             // Form1
             // 

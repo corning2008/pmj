@@ -40,6 +40,7 @@ namespace pmj
             {
                 PrintFile(pmjSerialPort, pLCSerialPort, pageList[i], i, 2000);
             }
+            //
         }
 
         public static bool PrintFile(PmjSerialPort pmjSerialPort, PLCSerialPort plcSerialPort, int fileIndex,int index,int timeOut)

@@ -36,8 +36,8 @@ namespace pmj
             //加载文件列表
             var fileList = CmbDataItemFactory.GetFileList();
             cmbFileList.DataSource = fileList;
-            //要打印的文件列表
-           
+            //plc的文件列表
+            comboPlcList.DataSource = serialPortList;
         }
 
         private List<String> GetSerialPortList()
