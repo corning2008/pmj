@@ -29,8 +29,15 @@ namespace pmj
                 }
                 //查询状态
                 var status = pLCSerialPort.GetD10Status();
+                //如果状态时2的话，就直接跳出
+                if(2 == status)
+                {
+                    break;
+                }
+                //如果是等于0的话，就设置100的状态为1
                 if(0 == status)
                 {
+                    Console.WriteLine("plc 初始化命令");
                     pLCSerialPort.SetBitValue(100, 1);
                     break;
                 }
@@ -45,45 +52,55 @@ namespace pmj
 
         public static bool PrintFile(PmjSerialPort pmjSerialPort, PLCSerialPort plcSerialPort, int fileIndex,int index,int timeOut)
         {
-            var timeIndex = 0;
-            //设置打印的文件
-            pmjSerialPort.SetParameter((ushort)(fileIndex - 1));
+             //设置打印的文件
+            pmjSerialPort.SetParameter((ushort)(fileIndex));
             //设置打印机重启
-            plcSerialPort.SetBitValue(200, 1);
+            plcSerialPort.SetBitValue(105, 1);
             //重新连接打印机
-            Thread.Sleep(100);
+            Thread.Sleep(500);
+            var indexSum = 0;
+            while (true)
+            {
+                var status = plcSerialPort.GetD10Status();
+                if(status == 2)
+                {
+                    break;
+                }
+                Thread.Sleep(100);
+                Console.WriteLine("等待喷码机重启成功");
+                indexSum += 100;
+                if(indexSum > 3000)
+                {
+                    throw new Exception("重启后无法检测到02信号");
+                }
+            }
             //重新连接
             if (!pmjSerialPort.HasConnectPrinter())
             {
-                throw new Exception("无法查询到打印机");
+                throw new Exception("重启后无法重新连接打印机");
             }
             
-            while (true)
+           
+            Thread.Sleep(200);
+
+            //通知plc开始执行打印的指令
+            var flag = plcSerialPort.SetBitValue(100 + index + 1, 1);
+            //等待plc的执行
+
+            if (!flag)
             {
-                Thread.Sleep(1);
-                timeIndex++;
-                if (timeIndex > timeOut)
-                {
-                    throw new Exception("打印时间超时");
-                }
-                var status = plcSerialPort.GetD10Status();
-                if ((2+index) == status)
-                {
-                    //通知plc开始执行打印的指令
-                    var flag = plcSerialPort.SetBitValue(100 + index+1, 1);
-                    if (!flag)
-                    {
-                        throw new Exception("写入PLC指令失败");
-                    }
-                    //开始执行打印
-                    var dataResult = pmjSerialPort.Print();
-                    //打印完成之后，写入M20X指令
-                    if (!plcSerialPort.SetBitValue(200 + index+1, 1))
-                    {
-                        throw new Exception("写入PLC状态指令失败");
-                    }
-                }
+                throw new Exception("写入PLC指令失败");
             }
+            //开始执行打印
+            var dataResult = pmjSerialPort.Print();
+            //打印完成之后，写入M20X指令
+            if (!plcSerialPort.SetBitValue(200 + index + 1, 1))
+            {
+                throw new Exception("写入PLC状态指令失败");
+            }
+            Thread.Sleep(200);
+            return true;
+
         }
     }
 }

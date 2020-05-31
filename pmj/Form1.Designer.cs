@@ -53,14 +53,15 @@
             this.panelLeft = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.btnDeleteFile = new System.Windows.Forms.Button();
-            this.btnAddFile = new System.Windows.Forms.Button();
             this.listBoxFileList = new System.Windows.Forms.ListBox();
             this.btnParameter = new System.Windows.Forms.Button();
+            this.btnAddFile = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelTip = new System.Windows.Forms.Panel();
             this.btnDownload = new System.Windows.Forms.Button();
             this.cmbFileList = new System.Windows.Forms.ComboBox();
             this.panelSetting = new System.Windows.Forms.Panel();
+            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
@@ -315,16 +316,6 @@
             this.btnDeleteFile.UseVisualStyleBackColor = true;
             this.btnDeleteFile.Click += new System.EventHandler(this.btnDeleteFile_Click);
             // 
-            // btnAddFile
-            // 
-            this.btnAddFile.Location = new System.Drawing.Point(214, 25);
-            this.btnAddFile.Name = "btnAddFile";
-            this.btnAddFile.Size = new System.Drawing.Size(154, 23);
-            this.btnAddFile.TabIndex = 2;
-            this.btnAddFile.Text = "添加到打印列表";
-            this.btnAddFile.UseVisualStyleBackColor = true;
-            this.btnAddFile.Click += new System.EventHandler(this.btnAddFile_Click);
-            // 
             // listBoxFileList
             // 
             this.listBoxFileList.FormattingEnabled = true;
@@ -345,6 +336,16 @@
             this.btnParameter.Text = "参数";
             this.btnParameter.UseVisualStyleBackColor = true;
             this.btnParameter.Click += new System.EventHandler(this.btnParameter_Click);
+            // 
+            // btnAddFile
+            // 
+            this.btnAddFile.Location = new System.Drawing.Point(214, 25);
+            this.btnAddFile.Name = "btnAddFile";
+            this.btnAddFile.Size = new System.Drawing.Size(154, 23);
+            this.btnAddFile.TabIndex = 2;
+            this.btnAddFile.Text = "添加到打印列表";
+            this.btnAddFile.UseVisualStyleBackColor = true;
+            this.btnAddFile.Click += new System.EventHandler(this.btnAddFile_Click);
             // 
             // panel2
             // 
@@ -459,6 +460,7 @@
         private System.Windows.Forms.Button btnAddFile;
         private System.Windows.Forms.Button btnDeleteFile;
         private System.Windows.Forms.Label label1;
+        private System.IO.Ports.SerialPort serialPort1;
     }
 }
 

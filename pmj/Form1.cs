@@ -37,10 +37,22 @@ namespace pmj
             var fileList = CmbDataItemFactory.GetFileList();
             cmbFileList.DataSource = fileList;
             //plc的文件列表
-            comboPlcList.DataSource = serialPortList;
+            comboPlcList.DataSource = GetSerialPortList1();
         }
 
         private List<String> GetSerialPortList()
+        {
+            var list = new List<String>();
+            foreach (var name in SerialPort.GetPortNames())
+            {
+                list.Add(name);
+            }
+
+            return list;
+        }
+
+
+        private List<string> GetSerialPortList1()
         {
             var list = new List<String>();
             foreach (var name in SerialPort.GetPortNames())
@@ -1068,7 +1080,7 @@ namespace pmj
         {
             try
             {
-                _pmjSerialPort.SetParameter(1);
+                _plcSerialPort.SetBitValue(100, 1);
                 
             }catch(Exception ex)
             {
@@ -1080,8 +1092,12 @@ namespace pmj
         {
             try
             {
-               
-
+                _plcSerialPort = new PLCSerialPort(comboPlcList.Text, null);
+                var flag = _plcSerialPort.Open();
+                if (flag)
+                {
+                    MessageBox.Show("打开PLC串口成功");
+                }
             }
             catch (Exception ex)
             {
@@ -1098,7 +1114,9 @@ namespace pmj
         {
             try
             {
-                var list = (listBoxFileList.DataSource as List<CmbDataItem>).Select(item => item.Value).ToList();
+                var list = new List<int>();
+                list.Add(0);
+                list.Add(1);
                 if (list.Count == 0)
                 {
                     MessageBox.Show("请选择要打印的文件");

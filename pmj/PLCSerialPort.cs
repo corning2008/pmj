@@ -44,7 +44,7 @@ namespace pmj
         public byte GetD10Status()
         {
             var bytes = ReadDataFromPLC(10, 1, 1000);
-            return bytes[1];
+            return bytes[0];
         }
 
         public GodSerialPort GetSerialPort()
@@ -79,7 +79,7 @@ namespace pmj
         {
             if (null == _port)
             {
-                _port = new GodSerialPort(this._portName, 9600, Parity.Even, 8, StopBits.One, Handshake.None);
+                _port = new GodSerialPort(this._portName, 9600, Parity.Even, 7, StopBits.One, Handshake.None);
                 _port.UseDataReceived(true, (sp, bytes) =>
                 {
                     StringBuilder sb = new StringBuilder();
@@ -200,19 +200,19 @@ namespace pmj
                         Array.Copy(_dataRecv, 0, newBuffer, 0, _dataRecv.Length);
                         //接受到应答数据
                         Console.WriteLine($"接受到PLC应答数据:{GetHexString(newBuffer)}");
-                        if (length + 3 != newBuffer.Length)
+                        if ((length*2) + 4 != newBuffer.Length)
                         {
                             throw new Exception("接受到PLC应答数据的长度不对");
                         }
                         //对接受到的数据进行解析
-                        if (!PLCCommandFactory.ValidateData(newBuffer))
-                        {
-                            throw new Exception("接受到的数据校验失败");
-                        }
+                        //if (!PLCCommandFactory.ValidateData(newBuffer))
+                        //{
+                        //    throw new Exception("接受到的数据校验失败");
+                        //}
 
-                        var datas = new byte[newBuffer.Length - 3];
+                        var datas = new byte[newBuffer.Length - 4];
                         Array.Copy(newBuffer,1,datas,0,datas.Length);
-                        return datas;
+                        return HexStrToByteArray(Encoding.ASCII.GetString(datas));
                     }
                 }
 
@@ -221,8 +221,24 @@ namespace pmj
 
         }
 
+        private static byte[] HexStrToByteArray(string hexString)
 
-        public static string GetHexString(byte[] dataList)
+        {
+            hexString = hexString.Replace(" ", "");
+            if ((hexString.Length % 2) != 0)
+                throw new ArgumentException("十六进制字符串长度不对");
+            byte[] buffer = new byte[hexString.Length / 2];
+            for (int i = 0; i<buffer.Length; i++)
+
+            {
+                buffer[i] = Convert.ToByte(hexString.Substring(i* 2, 2).Trim(), 0x10);
+            }
+            return buffer;
+        }
+
+
+
+public static string GetHexString(byte[] dataList)
         {
             StringBuilder sb = new StringBuilder();
             foreach (var item in dataList)

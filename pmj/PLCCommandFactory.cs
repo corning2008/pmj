@@ -36,7 +36,15 @@ namespace pmj
             {
                 command = 0x38;
             }
-            var addressBytes = Encoding.ASCII.GetBytes((address/8 + Convert.ToUInt32("100", 16)).ToString("X4"));
+            var value = (int)(address) + 2048;
+            var strValue = value.ToString("X4");
+            var sb = new StringBuilder();
+            sb.Append(strValue.Substring(2));
+            sb.Append(strValue.Substring(0, 2));
+          
+            var addressBytes = Encoding.ASCII.GetBytes(sb.ToString());
+
+            Console.WriteLine("地址：" + Encoding.ASCII.GetString(addressBytes));
             return GetCommand(new byte[] {command}, addressBytes, null);
         }
 
@@ -54,6 +62,7 @@ namespace pmj
             var dataSum = new byte[dataBytes.Length - 3];
             Array.Copy(dataBytes,1,dataSum,0,dataSum.Length);
             var sum = GetSum(dataSum);
+            CommandFactory.PrintBytes(sum);
             if (sum[0] == dataBytes[dataBytes.Length - 2] && sum[1] == dataBytes[dataBytes.Length - 1])
             {
                 return true;
@@ -95,7 +104,7 @@ namespace pmj
             var command = stx.Concat(commandId).Concat(address).ToArray();
             if (null != bytes)
             {
-                command = commandId.Concat(bytes).ToArray();
+                command = command.Concat(bytes).ToArray();
             }
             command = command.Concat(etx).ToArray();
             var sum = GetSum(command);
@@ -116,7 +125,9 @@ namespace pmj
 
         private void Test()
         {
-          
+            var cmd = new byte[] { 0x02, 0x30, 0x30, 0x03, 0x36, 0x33 };
+            var command = ValidateData(cmd);
+           
         }
     }
 }
