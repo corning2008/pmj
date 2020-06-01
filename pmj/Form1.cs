@@ -1114,6 +1114,13 @@ namespace pmj
         {
             try
             {
+                //把内容下载到打印机中
+                if (string.IsNullOrEmpty(tbBankSerial.Text))
+                {
+                    MessageBox.Show("请输入银行卡号");
+                    return;
+                }
+                _pmjSerialPort.SendBankSerial(tbBankSerial.Text.Trim());
                 var list = new List<int>();
                 list.Add(0);
                 list.Add(1);

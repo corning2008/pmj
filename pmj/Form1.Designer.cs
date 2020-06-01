@@ -36,13 +36,11 @@
             this.panelBottom = new System.Windows.Forms.Panel();
             this.btnPmjDelete = new System.Windows.Forms.Button();
             this.lbPmjStatus = new System.Windows.Forms.Label();
-            this.btnPrintOnce = new System.Windows.Forms.Button();
             this.panelTop = new System.Windows.Forms.Panel();
             this.btnPlcPrint = new System.Windows.Forms.Button();
             this.btnOpenPlc = new System.Windows.Forms.Button();
             this.comboPlcList = new System.Windows.Forms.ComboBox();
             this.btnCleanPrinter = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.panelRight = new System.Windows.Forms.Panel();
             this.btnBarcode = new System.Windows.Forms.Button();
             this.btnQrcode = new System.Windows.Forms.Button();
@@ -52,16 +50,17 @@
             this.btnPicture = new System.Windows.Forms.Button();
             this.panelLeft = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnDeleteFile = new System.Windows.Forms.Button();
-            this.listBoxFileList = new System.Windows.Forms.ListBox();
             this.btnParameter = new System.Windows.Forms.Button();
-            this.btnAddFile = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelTip = new System.Windows.Forms.Panel();
             this.btnDownload = new System.Windows.Forms.Button();
             this.cmbFileList = new System.Windows.Forms.ComboBox();
             this.panelSetting = new System.Windows.Forms.Panel();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.tbBankSerial = new System.Windows.Forms.TextBox();
+            this.btnDownloadFile = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
@@ -74,7 +73,7 @@
             // 
             this.comboBoxPmj.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPmj.FormattingEnabled = true;
-            this.comboBoxPmj.Location = new System.Drawing.Point(12, 12);
+            this.comboBoxPmj.Location = new System.Drawing.Point(75, 10);
             this.comboBoxPmj.Name = "comboBoxPmj";
             this.comboBoxPmj.Size = new System.Drawing.Size(121, 20);
             this.comboBoxPmj.TabIndex = 0;
@@ -90,7 +89,7 @@
             // 
             // btnFindDevice
             // 
-            this.btnFindDevice.Location = new System.Drawing.Point(162, 12);
+            this.btnFindDevice.Location = new System.Drawing.Point(649, 13);
             this.btnFindDevice.Name = "btnFindDevice";
             this.btnFindDevice.Size = new System.Drawing.Size(75, 23);
             this.btnFindDevice.TabIndex = 7;
@@ -129,37 +128,29 @@
             this.lbPmjStatus.TabIndex = 0;
             this.lbPmjStatus.Text = "未连接";
             // 
-            // btnPrintOnce
-            // 
-            this.btnPrintOnce.Location = new System.Drawing.Point(243, 12);
-            this.btnPrintOnce.Name = "btnPrintOnce";
-            this.btnPrintOnce.Size = new System.Drawing.Size(87, 23);
-            this.btnPrintOnce.TabIndex = 9;
-            this.btnPrintOnce.Text = "执行一次打印";
-            this.btnPrintOnce.UseVisualStyleBackColor = true;
-            this.btnPrintOnce.Click += new System.EventHandler(this.btnPrintOnce_Click);
-            // 
             // panelTop
             // 
             this.panelTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTop.Controls.Add(this.label3);
+            this.panelTop.Controls.Add(this.tbBankSerial);
+            this.panelTop.Controls.Add(this.label2);
+            this.panelTop.Controls.Add(this.label1);
             this.panelTop.Controls.Add(this.btnPlcPrint);
             this.panelTop.Controls.Add(this.btnOpenPlc);
             this.panelTop.Controls.Add(this.comboPlcList);
             this.panelTop.Controls.Add(this.btnCleanPrinter);
-            this.panelTop.Controls.Add(this.panel1);
             this.panelTop.Controls.Add(this.comboBoxPmj);
             this.panelTop.Controls.Add(this.btnFindDevice);
-            this.panelTop.Controls.Add(this.btnPrintOnce);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(941, 48);
+            this.panelTop.Size = new System.Drawing.Size(941, 137);
             this.panelTop.TabIndex = 10;
             this.panelTop.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTop_Paint);
             // 
             // btnPlcPrint
             // 
-            this.btnPlcPrint.Location = new System.Drawing.Point(476, 13);
+            this.btnPlcPrint.Location = new System.Drawing.Point(313, 77);
             this.btnPlcPrint.Name = "btnPlcPrint";
             this.btnPlcPrint.Size = new System.Drawing.Size(87, 23);
             this.btnPlcPrint.TabIndex = 15;
@@ -181,27 +172,20 @@
             // 
             this.comboPlcList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboPlcList.FormattingEnabled = true;
-            this.comboPlcList.Location = new System.Drawing.Point(656, 15);
+            this.comboPlcList.Location = new System.Drawing.Point(75, 44);
             this.comboPlcList.Name = "comboPlcList";
             this.comboPlcList.Size = new System.Drawing.Size(121, 20);
             this.comboPlcList.TabIndex = 13;
             // 
             // btnCleanPrinter
             // 
-            this.btnCleanPrinter.Location = new System.Drawing.Point(336, 12);
+            this.btnCleanPrinter.Location = new System.Drawing.Point(649, 47);
             this.btnCleanPrinter.Name = "btnCleanPrinter";
             this.btnCleanPrinter.Size = new System.Drawing.Size(87, 23);
             this.btnCleanPrinter.TabIndex = 12;
             this.btnCleanPrinter.Text = "清洗喷头";
             this.btnCleanPrinter.UseVisualStyleBackColor = true;
             this.btnCleanPrinter.Click += new System.EventHandler(this.btnCleanPrinter_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Location = new System.Drawing.Point(866, 54);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 100);
-            this.panel1.TabIndex = 11;
             // 
             // panelRight
             // 
@@ -213,9 +197,9 @@
             this.panelRight.Controls.Add(this.btnTimeSetting);
             this.panelRight.Controls.Add(this.btnPicture);
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelRight.Location = new System.Drawing.Point(778, 48);
+            this.panelRight.Location = new System.Drawing.Point(778, 137);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(163, 452);
+            this.panelRight.Size = new System.Drawing.Size(163, 363);
             this.panelRight.TabIndex = 11;
             // 
             // btnBarcode
@@ -287,44 +271,21 @@
             // panelLeft
             // 
             this.panelLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelLeft.Controls.Add(this.label1);
-            this.panelLeft.Controls.Add(this.btnDeleteFile);
-            this.panelLeft.Controls.Add(this.listBoxFileList);
             this.panelLeft.Controls.Add(this.btnParameter);
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelLeft.Location = new System.Drawing.Point(0, 48);
+            this.panelLeft.Location = new System.Drawing.Point(0, 137);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(156, 452);
+            this.panelLeft.Size = new System.Drawing.Size(156, 363);
             this.panelLeft.TabIndex = 12;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(-1, 83);
+            this.label1.Location = new System.Drawing.Point(4, 13);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 4;
-            this.label1.Text = "打印列表";
-            // 
-            // btnDeleteFile
-            // 
-            this.btnDeleteFile.Location = new System.Drawing.Point(-1, 234);
-            this.btnDeleteFile.Name = "btnDeleteFile";
-            this.btnDeleteFile.Size = new System.Drawing.Size(156, 23);
-            this.btnDeleteFile.TabIndex = 3;
-            this.btnDeleteFile.Text = "删除打印文件";
-            this.btnDeleteFile.UseVisualStyleBackColor = true;
-            this.btnDeleteFile.Click += new System.EventHandler(this.btnDeleteFile_Click);
-            // 
-            // listBoxFileList
-            // 
-            this.listBoxFileList.FormattingEnabled = true;
-            this.listBoxFileList.ItemHeight = 12;
-            this.listBoxFileList.Location = new System.Drawing.Point(-1, 96);
-            this.listBoxFileList.Margin = new System.Windows.Forms.Padding(3, 300, 3, 3);
-            this.listBoxFileList.Name = "listBoxFileList";
-            this.listBoxFileList.Size = new System.Drawing.Size(155, 124);
-            this.listBoxFileList.TabIndex = 2;
+            this.label1.Text = "打印机串口";
             // 
             // btnParameter
             // 
@@ -337,22 +298,12 @@
             this.btnParameter.UseVisualStyleBackColor = true;
             this.btnParameter.Click += new System.EventHandler(this.btnParameter_Click);
             // 
-            // btnAddFile
-            // 
-            this.btnAddFile.Location = new System.Drawing.Point(214, 25);
-            this.btnAddFile.Name = "btnAddFile";
-            this.btnAddFile.Size = new System.Drawing.Size(154, 23);
-            this.btnAddFile.TabIndex = 2;
-            this.btnAddFile.Text = "添加到打印列表";
-            this.btnAddFile.UseVisualStyleBackColor = true;
-            this.btnAddFile.Click += new System.EventHandler(this.btnAddFile_Click);
-            // 
             // panel2
             // 
             this.panel2.AutoScroll = true;
             this.panel2.Controls.Add(this.panelTest);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(156, 48);
+            this.panel2.Location = new System.Drawing.Point(156, 137);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(622, 128);
             this.panel2.TabIndex = 13;
@@ -360,13 +311,13 @@
             // panelTip
             // 
             this.panelTip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTip.Controls.Add(this.btnDownloadFile);
             this.panelTip.Controls.Add(this.btnDownload);
             this.panelTip.Controls.Add(this.cmbFileList);
-            this.panelTip.Controls.Add(this.btnAddFile);
             this.panelTip.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTip.Location = new System.Drawing.Point(156, 176);
+            this.panelTip.Location = new System.Drawing.Point(156, 265);
             this.panelTip.Name = "panelTip";
-            this.panelTip.Size = new System.Drawing.Size(622, 64);
+            this.panelTip.Size = new System.Drawing.Size(622, 113);
             this.panelTip.TabIndex = 14;
             this.panelTip.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTip_Paint);
             // 
@@ -392,10 +343,44 @@
             // 
             this.panelSetting.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelSetting.Location = new System.Drawing.Point(156, 240);
+            this.panelSetting.Location = new System.Drawing.Point(156, 378);
             this.panelSetting.Name = "panelSetting";
-            this.panelSetting.Size = new System.Drawing.Size(622, 260);
+            this.panelSetting.Size = new System.Drawing.Size(622, 122);
             this.panelSetting.TabIndex = 15;
+            // 
+            // tbBankSerial
+            // 
+            this.tbBankSerial.Location = new System.Drawing.Point(75, 79);
+            this.tbBankSerial.Name = "tbBankSerial";
+            this.tbBankSerial.Size = new System.Drawing.Size(202, 21);
+            this.tbBankSerial.TabIndex = 3;
+            // 
+            // btnDownloadFile
+            // 
+            this.btnDownloadFile.Location = new System.Drawing.Point(293, 69);
+            this.btnDownloadFile.Name = "btnDownloadFile";
+            this.btnDownloadFile.Size = new System.Drawing.Size(75, 23);
+            this.btnDownloadFile.TabIndex = 4;
+            this.btnDownloadFile.Text = "下载到PMJ";
+            this.btnDownloadFile.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(22, 47);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(47, 12);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "PLC串口";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(16, 82);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 12);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "银行卡号";
             // 
             // Form1
             // 
@@ -417,9 +402,9 @@
             this.panelBottom.ResumeLayout(false);
             this.panelBottom.PerformLayout();
             this.panelTop.ResumeLayout(false);
+            this.panelTop.PerformLayout();
             this.panelRight.ResumeLayout(false);
             this.panelLeft.ResumeLayout(false);
-            this.panelLeft.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panelTip.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -434,9 +419,7 @@
         private System.Windows.Forms.Button btnFindDevice;
         private System.Windows.Forms.Panel panelBottom;
         private System.Windows.Forms.Label lbPmjStatus;
-        private System.Windows.Forms.Button btnPrintOnce;
         private System.Windows.Forms.Panel panelTop;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panelRight;
         private System.Windows.Forms.Panel panelLeft;
         private System.Windows.Forms.Panel panel2;
@@ -456,11 +439,12 @@
         private System.Windows.Forms.Button btnOpenPlc;
         private System.Windows.Forms.ComboBox comboPlcList;
         private System.Windows.Forms.Button btnPlcPrint;
-        private System.Windows.Forms.ListBox listBoxFileList;
-        private System.Windows.Forms.Button btnAddFile;
-        private System.Windows.Forms.Button btnDeleteFile;
         private System.Windows.Forms.Label label1;
         private System.IO.Ports.SerialPort serialPort1;
+        private System.Windows.Forms.TextBox tbBankSerial;
+        private System.Windows.Forms.Button btnDownloadFile;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
     }
 }
 

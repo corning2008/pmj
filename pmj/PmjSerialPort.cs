@@ -181,6 +181,90 @@ namespace pmj
         }
 
         /// <summary>
+        /// 设置文本的命令
+        /// </summary>
+        /// <param name="fileIndex">0:第一个文件  3：第四个文件</param>
+        /// <param name="text">文本的内容</param>
+        /// <param name="fontModel">文本的类型0-5：</param>
+        /// <param name="left">left距离</param>
+        /// <param name="top">top距离</param>
+        /// <param name="xEnd">最右边的距离</param>
+        public void SendTextCommand(byte fileIndex,string text,int fontModel=3,ushort left=0,ushort top=25,ushort xEnd=300)
+        {
+            var commandDownload = CommandFactory.GetDownloadCommand((byte)fileIndex);
+            var flag = SendCommand(commandDownload, out DataResult result);
+            if (!flag)
+            {
+                throw new Exception("下发写入指令失败");
+            }
+            var commandText = CommandFactory.GetTextCommand((ushort)left, (ushort)top, Encoding.Default.GetBytes(text), (ushort)fontModel);
+            var resultForSend = SendCommand(commandText, out DataResult resultF);
+            if (!resultForSend)
+            {
+                throw new Exception("下发文本下载失败");
+            }
+            //结束写入
+            var command = CommandFactory.GetFinishDownloadCommand(0, (ushort)xEnd);
+            var flagEnd = SendCommand(command, out DataResult p);
+            if (!flagEnd)
+            {
+                throw new Exception("下发结束下载命令失败");
+            }
+        }
+
+        /// <summary>
+        /// 设置银行的卡号
+        /// </summary>
+        /// <param name="bankNumber"></param>
+        public void SendBankSerial(string bankNumber)
+        {
+            //设置第一个文件的内容
+            SendTextCommand(0, bankNumber);
+            //设置第二个文件的内容
+            SendTimeCommand(1);
+        }
+
+
+        public void SendTimeCommand(byte fileIndex,ushort left=100 ,ushort top=25,string format= "Yy/Mm/Dd", ushort fontSize=1,ushort xEnd=250)
+        {
+            var commandDownload = CommandFactory.GetDownloadCommand((byte)fileIndex);
+            var flag = SendCommand(commandDownload, out DataResult result);
+            if (!flag)
+            {
+                throw new Exception("下发写入指令失败");
+            }
+            var timeOffset = GetTimeOffSet();
+            var commandTime = CommandFactory.GetTimeCommand(format, (ushort)fontSize, (ushort)left, (ushort)top, timeOffset);
+            var resultForSend = SendCommand(commandTime, out DataResult resultF);
+            if (!resultForSend)
+            {
+                throw new Exception("下发时间设置命令失败");
+            }
+            //结束写入
+            var command = CommandFactory.GetFinishDownloadCommand(0, (ushort)xEnd);
+            var flagEnd = SendCommand(command, out DataResult p);
+            if (!flagEnd)
+            {
+                throw new Exception("下发结束下载命令失败");
+            }
+        }
+
+        /// <summary>
+        /// 获取时间的偏移量
+        /// </summary>
+        /// <returns></returns>
+        public byte[] GetTimeOffSet(byte yearOffset=0,byte monthOffset=0,byte dayOffset=0,byte hourOffset=0)
+        {
+            var yearValue = (byte)yearOffset;
+            var monthValue = (byte)monthOffset;
+            var dayValue = (byte)dayOffset;
+            var hourValue = (byte)hourOffset;
+            return new byte[] { 0x00, 0x00, hourValue, dayValue, monthValue, yearValue };
+        }
+
+
+
+        /// <summary>
         /// 打印文件，如果收到数据就代表打印完成
         /// </summary>
         public DataResult Print()
