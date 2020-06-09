@@ -41,6 +41,7 @@ namespace pmj
                     pLCSerialPort.SetBitValue(100, 1);
                     break;
                 }
+                Thread.Sleep(1);
             }
             //开始打印文件
             for(var i = 0; i < pageList.Count; i++)
@@ -59,6 +60,7 @@ namespace pmj
             //重新连接打印机
             Thread.Sleep(500);
             var indexSum = 0;
+            //重新检测PLC的状态，知道获取到02状态
             while (true)
             {
                 var status = plcSerialPort.GetD10Status();
@@ -66,23 +68,20 @@ namespace pmj
                 {
                     break;
                 }
-                Thread.Sleep(100);
-                Console.WriteLine("等待喷码机重启成功");
-                indexSum += 100;
+                Thread.Sleep(200);
+                
+                indexSum += 200;
                 if(indexSum > 3000)
                 {
                     throw new Exception("重启后无法检测到02信号");
                 }
             }
             //重新连接
-            if (!pmjSerialPort.HasConnectPrinter())
+            if (!pmjSerialPort.ReConnectPrinter())
             {
                 throw new Exception("重启后无法重新连接打印机");
             }
-            
-           
             Thread.Sleep(200);
-
             //通知plc开始执行打印的指令
             var flag = plcSerialPort.SetBitValue(100 + index + 1, 1);
             //等待plc的执行
@@ -98,6 +97,8 @@ namespace pmj
             {
                 throw new Exception("写入PLC状态指令失败");
             }
+            Console.WriteLine($"成功打印第{fileIndex + 1}个文件");
+            //打印完之后，等待200毫秒
             Thread.Sleep(200);
             return true;
 

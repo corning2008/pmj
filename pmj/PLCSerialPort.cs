@@ -43,7 +43,7 @@ namespace pmj
         /// <returns></returns>
         public byte GetD10Status()
         {
-            var bytes = ReadDataFromPLC(10, 1, 1000);
+            var bytes = ReadDataFromPLC(10, 1, 500);
             return bytes[0];
         }
 
@@ -238,7 +238,7 @@ namespace pmj
 
 
 
-public static string GetHexString(byte[] dataList)
+        public static string GetHexString(byte[] dataList)
         {
             StringBuilder sb = new StringBuilder();
             foreach (var item in dataList)

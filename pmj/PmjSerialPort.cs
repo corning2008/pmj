@@ -23,26 +23,18 @@ namespace pmj
         //发送命令返回的数据
         private byte[] _dataRecv = null;
 
-        public void ReOpen()
-        {
-
-        }
 
         /// <summary>
         /// 判断是否连接到打印机
         /// </summary>
         /// <returns></returns>
-        public bool HasConnectPrinter()
+        public bool ReConnectPrinter()
         {
-            //首先判断串口是否已经打开
-            if (null == _port || !_port.IsOpen)
+            this.Close();
+            var openFlag = this.Open();
+            if (!openFlag)
             {
-                //打开串口
-                var flag = Open();
-                if (!flag)
-                {
-                    return false;
-                }
+                throw new Exception("打开打印机串口失败");
             }
             //如果串口正常，就检测是否存在打印机
             var dataResult = WriteForResult(CommandFactory.GetCheckDeviceCommand(), 100);
@@ -527,7 +519,7 @@ namespace pmj
         /// </summary>
         public void Close()
         {
-            if (null != _port && _port.IsOpen)
+            if (null != _port)
             {
                 _port.Close();
                 _port = null;

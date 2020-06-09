@@ -1115,12 +1115,12 @@ namespace pmj
             try
             {
                 //把内容下载到打印机中
-                if (string.IsNullOrEmpty(tbBankSerial.Text))
-                {
-                    MessageBox.Show("请输入银行卡号");
-                    return;
-                }
-                _pmjSerialPort.SendBankSerial(tbBankSerial.Text.Trim());
+                //if (string.IsNullOrEmpty(tbBankSerial.Text))
+                //{
+                //    MessageBox.Show("请输入银行卡号");
+                //    return;
+                //}
+                //_pmjSerialPort.SendBankSerial(tbBankSerial.Text.Trim());
                 var list = new List<int>();
                 list.Add(0);
                 list.Add(1);
@@ -1135,6 +1135,7 @@ namespace pmj
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                Log.Error(ex);
             }
         }
 
@@ -1142,18 +1143,7 @@ namespace pmj
         {
             try
             {
-                var data = cmbFileList.SelectedItem as CmbDataItem;
-                //获取打印列表
-                var list = listBoxFileList.Items.Cast<CmbDataItem>().ToList();
-                var dataSelect = list.FirstOrDefault(item => item.Value == data.Value);
-                if(null == dataSelect)
-                {
-                    this.Invoke((Action)(()=>{
-                        listBoxFileList.Items.Add(data);
-                    }));
-                       
-                    
-                }
+              
             }catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -1169,13 +1159,7 @@ namespace pmj
         {
             try
             {
-                var data = listBoxFileList.SelectedItem as CmbDataItem;
-                if(null == data)
-                {
-                    MessageBox.Show("请选中要删除的文件");
-                    return;
-                }
-                listBoxFileList.Items.Remove(data);
+               
                 return;
             }catch(Exception ex)
             {

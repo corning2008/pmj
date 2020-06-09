@@ -37,6 +37,10 @@
             this.btnPmjDelete = new System.Windows.Forms.Button();
             this.lbPmjStatus = new System.Windows.Forms.Label();
             this.panelTop = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tbBankSerial = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnPlcPrint = new System.Windows.Forms.Button();
             this.btnOpenPlc = new System.Windows.Forms.Button();
             this.comboPlcList = new System.Windows.Forms.ComboBox();
@@ -49,18 +53,14 @@
             this.btnTimeSetting = new System.Windows.Forms.Button();
             this.btnPicture = new System.Windows.Forms.Button();
             this.panelLeft = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.btnParameter = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelTip = new System.Windows.Forms.Panel();
+            this.btnDownloadFile = new System.Windows.Forms.Button();
             this.btnDownload = new System.Windows.Forms.Button();
             this.cmbFileList = new System.Windows.Forms.ComboBox();
             this.panelSetting = new System.Windows.Forms.Panel();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-            this.tbBankSerial = new System.Windows.Forms.TextBox();
-            this.btnDownloadFile = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelRight.SuspendLayout();
@@ -89,7 +89,7 @@
             // 
             // btnFindDevice
             // 
-            this.btnFindDevice.Location = new System.Drawing.Point(649, 13);
+            this.btnFindDevice.Location = new System.Drawing.Point(325, 8);
             this.btnFindDevice.Name = "btnFindDevice";
             this.btnFindDevice.Size = new System.Drawing.Size(75, 23);
             this.btnFindDevice.TabIndex = 7;
@@ -148,6 +148,40 @@
             this.panelTop.TabIndex = 10;
             this.panelTop.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTop_Paint);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(16, 82);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 12);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "银行卡号";
+            // 
+            // tbBankSerial
+            // 
+            this.tbBankSerial.Location = new System.Drawing.Point(75, 79);
+            this.tbBankSerial.Name = "tbBankSerial";
+            this.tbBankSerial.Size = new System.Drawing.Size(202, 21);
+            this.tbBankSerial.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(22, 47);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(47, 12);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "PLC串口";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(4, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 12);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "打印机串口";
+            // 
             // btnPlcPrint
             // 
             this.btnPlcPrint.Location = new System.Drawing.Point(313, 77);
@@ -160,7 +194,7 @@
             // 
             // btnOpenPlc
             // 
-            this.btnOpenPlc.Location = new System.Drawing.Point(783, 13);
+            this.btnOpenPlc.Location = new System.Drawing.Point(325, 36);
             this.btnOpenPlc.Name = "btnOpenPlc";
             this.btnOpenPlc.Size = new System.Drawing.Size(75, 23);
             this.btnOpenPlc.TabIndex = 14;
@@ -179,7 +213,7 @@
             // 
             // btnCleanPrinter
             // 
-            this.btnCleanPrinter.Location = new System.Drawing.Point(649, 47);
+            this.btnCleanPrinter.Location = new System.Drawing.Point(849, 13);
             this.btnCleanPrinter.Name = "btnCleanPrinter";
             this.btnCleanPrinter.Size = new System.Drawing.Size(87, 23);
             this.btnCleanPrinter.TabIndex = 12;
@@ -278,15 +312,6 @@
             this.panelLeft.Size = new System.Drawing.Size(156, 363);
             this.panelLeft.TabIndex = 12;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 12);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "打印机串口";
-            // 
             // btnParameter
             // 
             this.btnParameter.Dock = System.Windows.Forms.DockStyle.Top;
@@ -321,6 +346,15 @@
             this.panelTip.TabIndex = 14;
             this.panelTip.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTip_Paint);
             // 
+            // btnDownloadFile
+            // 
+            this.btnDownloadFile.Location = new System.Drawing.Point(293, 69);
+            this.btnDownloadFile.Name = "btnDownloadFile";
+            this.btnDownloadFile.Size = new System.Drawing.Size(75, 23);
+            this.btnDownloadFile.TabIndex = 4;
+            this.btnDownloadFile.Text = "下载到PMJ";
+            this.btnDownloadFile.UseVisualStyleBackColor = true;
+            // 
             // btnDownload
             // 
             this.btnDownload.Location = new System.Drawing.Point(133, 25);
@@ -347,40 +381,6 @@
             this.panelSetting.Name = "panelSetting";
             this.panelSetting.Size = new System.Drawing.Size(622, 122);
             this.panelSetting.TabIndex = 15;
-            // 
-            // tbBankSerial
-            // 
-            this.tbBankSerial.Location = new System.Drawing.Point(75, 79);
-            this.tbBankSerial.Name = "tbBankSerial";
-            this.tbBankSerial.Size = new System.Drawing.Size(202, 21);
-            this.tbBankSerial.TabIndex = 3;
-            // 
-            // btnDownloadFile
-            // 
-            this.btnDownloadFile.Location = new System.Drawing.Point(293, 69);
-            this.btnDownloadFile.Name = "btnDownloadFile";
-            this.btnDownloadFile.Size = new System.Drawing.Size(75, 23);
-            this.btnDownloadFile.TabIndex = 4;
-            this.btnDownloadFile.Text = "下载到PMJ";
-            this.btnDownloadFile.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(22, 47);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 12);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "PLC串口";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 82);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 12);
-            this.label3.TabIndex = 17;
-            this.label3.Text = "银行卡号";
             // 
             // Form1
             // 
