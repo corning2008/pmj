@@ -277,6 +277,10 @@ namespace pmj
         /// <returns></returns>
         private bool OpenPmj(out string printerName)
         {
+            if (string.IsNullOrEmpty(comboBoxPmj.Text))
+            {
+                throw new Exception("喷码机端口不能为空");
+            }
             //首先关闭原来的串口
             if(null != _pmjSerialPort)
             {
@@ -1118,6 +1122,10 @@ namespace pmj
 
         private void OpenPlc()
         {
+            if (string.IsNullOrEmpty(comboPlcList.Text))
+            {
+                throw new Exception("PLC端口不能为空");
+            }
             if (null == _plcSerialPort)
             {
                 _plcSerialPort = new PLCSerialPort(comboPlcList.Text, null);
@@ -1161,8 +1169,8 @@ namespace pmj
         {
             try
             {
-               // OpenPlc();
-               // OpenPmj(out string printName);
+                OpenPlc();
+                OpenPmj(out string printName);
                 //把内容下载到打印机中
                 //if (string.IsNullOrEmpty(tbBankSerial.Text))
                 //{
@@ -1248,6 +1256,20 @@ namespace pmj
         private void btnDownloadFile_Click(object sender, EventArgs e)
         {
             SavePort();
+        }
+
+        private void 参数ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var dialog = new FormSetting(this._pmjSerialPort);
+                dialog.ShowDialog();
+            }
+            catch(Exception ex)
+            {
+                Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
