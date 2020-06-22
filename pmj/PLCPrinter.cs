@@ -25,7 +25,7 @@ namespace pmj
                 timeOutIndex++;
                 if(timeOutIndex> timeOut)
                 {
-                    return;
+                    throw new Exception("等待PLC的状态超时");
                 }
                 //查询状态
                 var status = pLCSerialPort.GetD10Status();
@@ -39,7 +39,7 @@ namespace pmj
                 {
                     Console.WriteLine("plc 初始化命令");
                     pLCSerialPort.SetBitValue(100, 1);
-                    break;
+                    //继续等待PLC初始化完成
                 }
                 Thread.Sleep(1);
             }
@@ -48,39 +48,39 @@ namespace pmj
             {
                 PrintFile(pmjSerialPort, pLCSerialPort, pageList[i], i, 2000);
             }
-            //
+           
         }
 
         public static bool PrintFile(PmjSerialPort pmjSerialPort, PLCSerialPort plcSerialPort, int fileIndex,int index,int timeOut)
         {
              //设置打印的文件
             pmjSerialPort.SetParameter((ushort)(fileIndex));
-            //设置打印机重启
-            plcSerialPort.SetBitValue(105, 1);
+            //设置打印机重启,现在修改了设备之后可能就不需要重启了,直接开始打印
+            //plcSerialPort.SetBitValue(105, 1);
             //重新连接打印机
-            Thread.Sleep(500);
-            var indexSum = 0;
+            //Thread.Sleep(500);
+            //var indexSum = 0;
             //重新检测PLC的状态，知道获取到02状态
-            while (true)
-            {
-                var status = plcSerialPort.GetD10Status();
-                if(status == 2)
-                {
-                    break;
-                }
-                Thread.Sleep(200);
+            //while (true)
+            //{
+            //    var status = plcSerialPort.GetD10Status();
+            //    if(status == 2)
+            //    {
+            //        break;
+            //    }
+            //    Thread.Sleep(200);
                 
-                indexSum += 200;
-                if(indexSum > 3000)
-                {
-                    throw new Exception("重启后无法检测到02信号");
-                }
-            }
+            //    indexSum += 200;
+            //    if(indexSum > 3000)
+            //    {
+            //        throw new Exception("无法检测到02信号");
+            //    }
+            //}
             //重新连接
-            if (!pmjSerialPort.ReConnectPrinter())
-            {
-                throw new Exception("重启后无法重新连接打印机");
-            }
+            //if (!pmjSerialPort.ReConnectPrinter())
+            //{
+            //    throw new Exception("重启后无法重新连接打印机");
+            //}
             Thread.Sleep(200);
             //通知plc开始执行打印的指令
             var flag = plcSerialPort.SetBitValue(100 + index + 1, 1);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -38,6 +39,33 @@ namespace pmj
             cmbFileList.DataSource = fileList;
             //plc的文件列表
             comboPlcList.DataSource = GetSerialPortList1();
+            //获取选中的端口,从配置文件中直接读取,如果不存在的话,就默认第一项
+            SetPort();
+        }
+
+        private void SetPort()
+        {
+            var configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            //查询pmj的端口
+            if (null == configuration.AppSettings.Settings["pmjport"])
+            {
+                comboBoxPmj.SelectedIndex = 0;
+            }
+            else
+            {
+                var selectPort = configuration.AppSettings.Settings["pmjport"].Value;
+                comboBoxPmj.SelectedItem = selectPort;
+            }
+            //查询plc的端口
+            if (null == configuration.AppSettings.Settings["plcport"])
+            {
+                comboPlcList.SelectedIndex = 0;
+            }
+            else
+            {
+                var selectPort = configuration.AppSettings.Settings["plcport"].Value;
+                comboPlcList.SelectedItem = selectPort;
+            }
         }
 
         private List<String> GetSerialPortList()
@@ -247,7 +275,7 @@ namespace pmj
         /// </summary>
         /// <param name="printerName"></param>
         /// <returns></returns>
-        private bool HasPrinter(out string printerName)
+        private bool OpenPmj(out string printerName)
         {
             //首先关闭原来的串口
             if(null != _pmjSerialPort)
@@ -275,7 +303,7 @@ namespace pmj
             {
 
 
-                var flag = HasPrinter(out string printerName);
+                var flag = OpenPmj(out string printerName);
                 if (!flag)
                 {
                     MessageBox.Show("没有扫描到打印机");
@@ -297,7 +325,7 @@ namespace pmj
             try
             {
                 //判断打印机是否存在
-                var flag = HasPrinter(out string printerName);
+                var flag = OpenPmj(out string printerName);
                 lbPmjStatus.Text = printerName;
                 if (!flag)
                 {
@@ -1088,16 +1116,35 @@ namespace pmj
             }
         }
 
+        private void OpenPlc()
+        {
+            if (null == _plcSerialPort)
+            {
+                _plcSerialPort = new PLCSerialPort(comboPlcList.Text, null);
+            }
+            else
+            {
+                var portName = _plcSerialPort.GetPortName();
+                if (!portName.Equals(comboPlcList.Text))
+                {
+                    //如果端口不通的话,就先关闭原来的port
+                    _plcSerialPort.Close();
+                    _plcSerialPort = new PLCSerialPort(comboPlcList.Text,null);
+                }
+            }
+
+            var flag = _plcSerialPort.Open();
+            if (!flag)
+            {
+                throw new Exception("打开PLC失败");
+            }
+        }
+
         private void btnOpenPlc_Click(object sender, EventArgs e)
         {
             try
             {
-                _plcSerialPort = new PLCSerialPort(comboPlcList.Text, null);
-                var flag = _plcSerialPort.Open();
-                if (flag)
-                {
-                    MessageBox.Show("打开PLC串口成功");
-                }
+               OpenPlc();
             }
             catch (Exception ex)
             {
@@ -1114,6 +1161,8 @@ namespace pmj
         {
             try
             {
+               // OpenPlc();
+               // OpenPmj(out string printName);
                 //把内容下载到打印机中
                 //if (string.IsNullOrEmpty(tbBankSerial.Text))
                 //{
@@ -1131,12 +1180,41 @@ namespace pmj
                 }
                 //
                 PLCPrinter.PrintList(_pmjSerialPort, _plcSerialPort, list, 2000);
+                //保存配置的端口
+                SavePort();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 Log.Error(ex);
             }
+        }
+
+        private void SavePort()
+        {
+            //保存喷码机的端口
+            var configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            if (configuration.AppSettings.Settings["pmjport"] == null)
+            {
+                configuration.AppSettings.Settings.Add("pmjport",comboBoxPmj.Text);
+            }
+            else
+            {
+                configuration.AppSettings.Settings["pmjport"].Value = comboBoxPmj.Text;
+            }
+            //保存plc的端口
+            if (configuration.AppSettings.Settings["plcport"] == null)
+            {
+                configuration.AppSettings.Settings.Add("plcport",comboPlcList.Text);
+            }
+            else
+            {
+                configuration.AppSettings.Settings["plcport"].Value = comboPlcList.Text;
+            }
+
+            configuration.Save(ConfigurationSaveMode.Modified);
+            //重新加载配置文件
+            ConfigurationManager.RefreshSection("appSettings");
         }
 
         private void btnAddFile_Click(object sender, EventArgs e)
@@ -1165,6 +1243,11 @@ namespace pmj
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void btnDownloadFile_Click(object sender, EventArgs e)
+        {
+            SavePort();
         }
     }
 }

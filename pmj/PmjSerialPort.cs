@@ -66,8 +66,7 @@ namespace pmj
             var dataResult = WriteForResult(CommandFactory.GetCheckDeviceCommand(), 100);
             if(null == dataResult)
             {
-                printerName = "没有扫描到打印机";
-                return false;
+               throw new Exception("没有扫描到喷码机");
             }
             printerName = Encoding.Default.GetString(dataResult.GetData());
             return true;

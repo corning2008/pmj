@@ -354,6 +354,7 @@
             this.btnDownloadFile.TabIndex = 4;
             this.btnDownloadFile.Text = "下载到PMJ";
             this.btnDownloadFile.UseVisualStyleBackColor = true;
+            this.btnDownloadFile.Click += new System.EventHandler(this.btnDownloadFile_Click);
             // 
             // btnDownload
             // 
