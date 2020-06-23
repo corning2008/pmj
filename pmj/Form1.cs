@@ -959,7 +959,9 @@ namespace pmj
             return x;
         }
 
-
+        /// <summary>
+        /// 打开PLC
+        /// </summary>
         private void OpenPlc()
         {
             if (string.IsNullOrEmpty(comboPlcList.Text))
@@ -993,7 +995,7 @@ namespace pmj
             try
             {
                OpenPlc();
-                MessageBox.Show("PLC端口打开成功");
+               MessageBox.Show("PLC端口打开成功");
             }
             catch (Exception ex)
             {
@@ -1082,6 +1084,37 @@ namespace pmj
                 dialog.ShowDialog();
             }
             catch(Exception ex)
+            {
+                Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void page1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (1 == page1.SelectedIndex)
+                {
+                    OpenPmj(out string printerName);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("请先打开串口");
+                Log.Error(ex);
+            }
+        }
+
+        private void tbBankSerial_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                var text = tbBankSerial.Text;
+                tbBankSerial.Text = BanSerialTool.GetFormatString(text);
+                tbBankSerial.Select(tbBankSerial.TextLength,0);
+            }
+            catch (Exception ex)
             {
                 Log.Error(ex);
                 MessageBox.Show(ex.Message);

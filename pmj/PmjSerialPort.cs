@@ -192,7 +192,7 @@ namespace pmj
         /// <param name="left">left距离</param>
         /// <param name="top">top距离</param>
         /// <param name="xEnd">最右边的距离</param>
-        public void SendTextCommand(byte fileIndex,string text,int fontModel=3,ushort left=0,ushort top=25,ushort xEnd=300)
+        public void SendTextCommand(byte fileIndex,string text,int fontModel=3,ushort left=0,ushort top=25,ushort xEnd=400)
         {
             var commandDownload = CommandFactory.GetDownloadCommand((byte)fileIndex);
             var flag = SendCommand(commandDownload, out DataResult result);

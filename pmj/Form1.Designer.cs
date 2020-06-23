@@ -87,7 +87,7 @@
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelBottom.Location = new System.Drawing.Point(0, 421);
             this.panelBottom.Name = "panelBottom";
-            this.panelBottom.Size = new System.Drawing.Size(936, 44);
+            this.panelBottom.Size = new System.Drawing.Size(927, 44);
             this.panelBottom.TabIndex = 8;
             // 
             // btnPmjDelete
@@ -115,7 +115,7 @@
             this.参数ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(936, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(927, 25);
             this.menuStrip1.TabIndex = 16;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -134,8 +134,9 @@
             this.page1.Location = new System.Drawing.Point(0, 0);
             this.page1.Name = "page1";
             this.page1.SelectedIndex = 0;
-            this.page1.Size = new System.Drawing.Size(934, 394);
+            this.page1.Size = new System.Drawing.Size(925, 394);
             this.page1.TabIndex = 18;
+            this.page1.SelectedIndexChanged += new System.EventHandler(this.page1_SelectedIndexChanged);
             // 
             // tabPage1
             // 
@@ -148,7 +149,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(926, 368);
+            this.tabPage1.Size = new System.Drawing.Size(917, 368);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "首页";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -179,6 +180,8 @@
             this.tbBankSerial.Name = "tbBankSerial";
             this.tbBankSerial.Size = new System.Drawing.Size(202, 21);
             this.tbBankSerial.TabIndex = 3;
+            this.tbBankSerial.Text = "6216 6161 0400 0321 698";
+            this.tbBankSerial.TextChanged += new System.EventHandler(this.tbBankSerial_TextChanged);
             // 
             // groupBox1
             // 
@@ -231,7 +234,7 @@
             // 
             // btnDownloadFile
             // 
-            this.btnDownloadFile.Location = new System.Drawing.Point(679, 363);
+            this.btnDownloadFile.Location = new System.Drawing.Point(687, 294);
             this.btnDownloadFile.Name = "btnDownloadFile";
             this.btnDownloadFile.Size = new System.Drawing.Size(75, 23);
             this.btnDownloadFile.TabIndex = 4;
@@ -277,7 +280,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1035, 447);
+            this.tabPage2.Size = new System.Drawing.Size(917, 368);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "喷码机";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -289,7 +292,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 103);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(866, 341);
+            this.panel1.Size = new System.Drawing.Size(776, 262);
             this.panel1.TabIndex = 15;
             // 
             // panelSetting
@@ -299,7 +302,7 @@
             this.panelSetting.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSetting.Location = new System.Drawing.Point(0, 26);
             this.panelSetting.Name = "panelSetting";
-            this.panelSetting.Size = new System.Drawing.Size(866, 315);
+            this.panelSetting.Size = new System.Drawing.Size(776, 236);
             this.panelSetting.TabIndex = 15;
             // 
             // panelTip
@@ -310,9 +313,9 @@
             this.panelTip.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTip.Location = new System.Drawing.Point(0, 0);
             this.panelTip.Name = "panelTip";
-            this.panelTip.Size = new System.Drawing.Size(866, 26);
+            this.panelTip.Size = new System.Drawing.Size(776, 26);
             this.panelTip.TabIndex = 14;
-           
+            // 
             // btnDownload
             // 
             this.btnDownload.Location = new System.Drawing.Point(126, 1);
@@ -338,7 +341,7 @@
             this.panelTest.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTest.Location = new System.Drawing.Point(3, 3);
             this.panelTest.Name = "panelTest";
-            this.panelTest.Size = new System.Drawing.Size(866, 100);
+            this.panelTest.Size = new System.Drawing.Size(776, 100);
             this.panelTest.TabIndex = 5;
             this.panelTest.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTest_Paint);
             // 
@@ -352,9 +355,9 @@
             this.panelRight.Controls.Add(this.btnTimeSetting);
             this.panelRight.Controls.Add(this.btnPicture);
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelRight.Location = new System.Drawing.Point(869, 3);
+            this.panelRight.Location = new System.Drawing.Point(779, 3);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(163, 441);
+            this.panelRight.Size = new System.Drawing.Size(135, 362);
             this.panelRight.TabIndex = 11;
             // 
             // btnBarcode
@@ -362,7 +365,7 @@
             this.btnBarcode.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnBarcode.Location = new System.Drawing.Point(0, 240);
             this.btnBarcode.Name = "btnBarcode";
-            this.btnBarcode.Size = new System.Drawing.Size(161, 48);
+            this.btnBarcode.Size = new System.Drawing.Size(133, 48);
             this.btnBarcode.TabIndex = 5;
             this.btnBarcode.Text = "条码";
             this.btnBarcode.UseVisualStyleBackColor = true;
@@ -373,7 +376,7 @@
             this.btnQrcode.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnQrcode.Location = new System.Drawing.Point(0, 192);
             this.btnQrcode.Name = "btnQrcode";
-            this.btnQrcode.Size = new System.Drawing.Size(161, 48);
+            this.btnQrcode.Size = new System.Drawing.Size(133, 48);
             this.btnQrcode.TabIndex = 4;
             this.btnQrcode.Text = "二维码";
             this.btnQrcode.UseVisualStyleBackColor = true;
@@ -384,7 +387,7 @@
             this.btnText.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnText.Location = new System.Drawing.Point(0, 144);
             this.btnText.Name = "btnText";
-            this.btnText.Size = new System.Drawing.Size(161, 48);
+            this.btnText.Size = new System.Drawing.Size(133, 48);
             this.btnText.TabIndex = 3;
             this.btnText.Text = "文本";
             this.btnText.UseVisualStyleBackColor = true;
@@ -395,7 +398,7 @@
             this.btnSerialNumber.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnSerialNumber.Location = new System.Drawing.Point(0, 96);
             this.btnSerialNumber.Name = "btnSerialNumber";
-            this.btnSerialNumber.Size = new System.Drawing.Size(161, 48);
+            this.btnSerialNumber.Size = new System.Drawing.Size(133, 48);
             this.btnSerialNumber.TabIndex = 2;
             this.btnSerialNumber.Text = "序号";
             this.btnSerialNumber.UseVisualStyleBackColor = true;
@@ -406,7 +409,7 @@
             this.btnTimeSetting.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnTimeSetting.Location = new System.Drawing.Point(0, 48);
             this.btnTimeSetting.Name = "btnTimeSetting";
-            this.btnTimeSetting.Size = new System.Drawing.Size(161, 48);
+            this.btnTimeSetting.Size = new System.Drawing.Size(133, 48);
             this.btnTimeSetting.TabIndex = 1;
             this.btnTimeSetting.Text = "时间";
             this.btnTimeSetting.UseVisualStyleBackColor = true;
@@ -417,7 +420,7 @@
             this.btnPicture.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnPicture.Location = new System.Drawing.Point(0, 0);
             this.btnPicture.Name = "btnPicture";
-            this.btnPicture.Size = new System.Drawing.Size(161, 48);
+            this.btnPicture.Size = new System.Drawing.Size(133, 48);
             this.btnPicture.TabIndex = 0;
             this.btnPicture.Text = "图片";
             this.btnPicture.UseVisualStyleBackColor = true;
@@ -430,16 +433,15 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTop.Location = new System.Drawing.Point(0, 25);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(936, 396);
+            this.panelTop.Size = new System.Drawing.Size(927, 396);
             this.panelTop.TabIndex = 10;
-          
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(936, 465);
+            this.ClientSize = new System.Drawing.Size(927, 465);
             this.Controls.Add(this.panelTop);
             this.Controls.Add(this.panelBottom);
             this.Controls.Add(this.menuStrip1);

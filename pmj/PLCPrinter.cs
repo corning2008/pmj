@@ -19,24 +19,36 @@ namespace pmj
         public static void PrintList(PmjSerialPort pmjSerialPort,PLCSerialPort pLCSerialPort, List<int> pageList,int timeOut)
         {
             //初始化
+            WaitStatus2(pLCSerialPort,2000);
+            //开始打印文件
+            for(var i = 0; i < pageList.Count; i++)
+            {
+                PrintFile(pmjSerialPort, pLCSerialPort, pageList[i], i, 2000);
+            }
+           
+        }
+
+        private static void WaitStatus2(PLCSerialPort pLCSerialPort, int timeOut)
+        {
+            //初始化
             var timeOutIndex = 0;
             while (true)
             {
-                timeOutIndex+=10;
-                if(timeOutIndex> timeOut)
+                timeOutIndex += 10;
+                if (timeOutIndex > timeOut)
                 {
                     throw new Exception("等待PLC的状态超时,请检查PLC");
                 }
                 //查询状态
                 var status = pLCSerialPort.GetD10Status();
                 //如果状态时2的话，就直接跳出
-                if(2 == status)
+                if (2 == status)
                 {
                     Console.WriteLine($"检查到PLC的状态是2");
                     break;
                 }
                 //如果是等于0的话，就设置100的状态为1
-                if(0 == status)
+                if (0 == status)
                 {
                     Console.WriteLine("plc状态是0,开始初始化命令设置");
                     pLCSerialPort.SetBitValue(100, 1);
@@ -44,12 +56,6 @@ namespace pmj
                 }
                 Thread.Sleep(10);
             }
-            //开始打印文件
-            for(var i = 0; i < pageList.Count; i++)
-            {
-                PrintFile(pmjSerialPort, pLCSerialPort, pageList[i], i, 2000);
-            }
-           
         }
 
         public static bool PrintFile(PmjSerialPort pmjSerialPort, PLCSerialPort plcSerialPort, int fileIndex,int index,int timeOut)

@@ -80,6 +80,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BanSerialTool.cs" />
     <Compile Include="BarcodeSetting.cs">
       <SubType>UserControl</SubType>
     </Compile>
