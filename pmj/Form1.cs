@@ -29,6 +29,8 @@ namespace pmj
             Log.Error("test");
         }
 
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
             //加载串口
@@ -202,7 +204,38 @@ namespace pmj
            
         }
 
-      
+        /// <summary>
+        /// 用于外部调用打开喷码机
+        /// </summary>
+        public void OpenPmjEx()
+        {
+            OpenPmj(out string printerName);
+            lbPmjStatus.Text = $"{printerName}";
+            MessageBox.Show("打开喷码机成功");
+        }
+
+        /// <summary>
+        /// 获取喷码机串口
+        /// </summary>
+        /// <returns></returns>
+        public PmjSerialPort GetPmjSerialPort()
+        {
+            return this._pmjSerialPort;
+        }
+
+        public PLCSerialPort GetPLCSerialPort()
+        {
+            return this._plcSerialPort;
+        }
+
+        /// <summary>
+        /// 用于外部调用打开plc
+        /// </summary>
+        public void OpenPlcEx()
+        {
+            OpenPlc();
+            MessageBox.Show("打开PLC成功");
+        }
 
         /// <summary>
         /// 判断是否已经打开
@@ -1093,7 +1126,7 @@ namespace pmj
                 {
                     return;
                 }
-                var dialog = new FormSetting(this._pmjSerialPort,comboBoxPmj.Text,this._plcSerialPort,comboPlcList.Text);
+                var dialog = new FormSetting(this);
                 dialog.ShowDialog();
             }
             catch(Exception ex)

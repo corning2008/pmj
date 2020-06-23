@@ -15,18 +15,13 @@ namespace pmj
 
     public partial class ParameterSetting : UserControl
     {
-        private PmjSerialPort _pmjSerialPort;
-        private PLCSerialPort _plcSerialPort;
-        private string _pmjPort;
-        private string _plcPort;
-
-        public ParameterSetting(PmjSerialPort pmjSerialPort,string pmjPort,PLCSerialPort pLCSerialPort,string plcPort)
+        Form1 _form;
+      
+        public ParameterSetting(Form1 form)
         {
             InitializeComponent();
-            this._pmjSerialPort = pmjSerialPort;
-            this._plcSerialPort = pLCSerialPort;
-            this._pmjPort = pmjPort;
-            this._plcPort = plcPort;
+            this._form = form;
+         
         }
 
         private void btnGetSystemTime_Click(object sender, EventArgs e)
@@ -66,7 +61,7 @@ namespace pmj
             try
             {
                 var command = CommandFactory.GetDeviceTime();
-                var dataR = _pmjSerialPort.WriteForResult(command,4000);
+                var dataR = _form.GetPmjSerialPort().WriteForResult(command,4000);
 
                 var data = dataR.GetData();
                 var year = 2000 + data[6];
@@ -91,7 +86,7 @@ namespace pmj
             {
                 //获取设置时间的命令
                 var command = CommandFactory.GetSetDeviceTime(DateTime.Now);
-                var flag = _pmjSerialPort.SendCommand(command, out DataResult result);
+                var flag = _form.GetPmjSerialPort().SendCommand(command, out DataResult result);
                
               
                 MessageBox.Show("同步时间成功");
@@ -108,7 +103,7 @@ namespace pmj
             try
             {
               
-                _pmjSerialPort.ReadParameter();
+                _form.GetPmjSerialPort().ReadParameter();
                 //开始解析数据
                 ParseData();
                 //读取参数成功
@@ -201,7 +196,7 @@ namespace pmj
                     .Concat(printBytes).Concat(fileIndexBytes).Concat(new byte[] {0x00, 0x00})
                     .Concat(new byte[] {0x00, 0x00}).Concat(powerOffBytes).Concat(idleBytes).ToArray();
                 var command = CommandFactory.getSetPrintParameters(content);
-                var flag = _pmjSerialPort.SendCommand(command, out DataResult result);
+                var flag = _form.GetPmjSerialPort().SendCommand(command, out DataResult result);
               
 
                 MessageBox.Show("打印参数设置成功");
@@ -217,8 +212,8 @@ namespace pmj
         {
             try
             {
-                OpenPmj(this._pmjPort, out string printerName);
-                MessageBox.Show("打开喷码机成功");
+                _form.OpenPmjEx();
+             
             }catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -229,82 +224,23 @@ namespace pmj
         {
             try
             {
-                OpenPlc(this._plcPort);
-                MessageBox.Show("打开PLC串口成功");
+                _form.OpenPlcEx();
+              
             }catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
-        /// <summary>
-        /// 判断是否已经打开
-        /// </summary>
-        /// <param name="printerName"></param>
-        /// <returns></returns>
-        private bool OpenPmj(string portName,out string printerName)
-        {
-            if (string.IsNullOrEmpty(portName))
-            {
-                throw new Exception("喷码机端口不能为空");
-            }
-            //首先关闭原来的串口
-            if (null != _pmjSerialPort)
-            {
-                var portName1 = _pmjSerialPort.GetPortName();
-                //比较端口的名称，如果端口名称已经改变，就需要重新建立连接
-                if (!portName.Equals(portName1))
-                {
-                    _pmjSerialPort.Close();
-                    _pmjSerialPort = new PmjSerialPort(portName, new PmjDataRecv());
-                }
-            }
-            //如果不存在的话，也需要重新建立
-            if (null == _pmjSerialPort)
-            {
-                _pmjSerialPort = new PmjSerialPort(portName, new PmjDataRecv());
-            }
-
-            return _pmjSerialPort.HasPrinter(out printerName);
-        }
-
-        /// <summary>
-        /// 打开PLC
-        /// </summary>
-        private void OpenPlc(string portName)
-        {
-            if (string.IsNullOrEmpty(portName))
-            {
-                throw new Exception("PLC端口不能为空");
-            }
-            if (null == _plcSerialPort)
-            {
-                _plcSerialPort = new PLCSerialPort(portName, null);
-            }
-            else
-            {
-                var portName1 = _plcSerialPort.GetPortName();
-                if (!portName.Equals(portName1))
-                {
-                    //如果端口不通的话,就先关闭原来的port
-                    _plcSerialPort.Close();
-                    _plcSerialPort = new PLCSerialPort(portName, null);
-                }
-            }
-
-            var flag = _plcSerialPort.Open();
-            if (!flag)
-            {
-                throw new Exception("打开PLC失败");
-            }
-        }
+      
+       
 
         private void btnReadPLC_Click(object sender, EventArgs e)
         {
             try
             {
-                
-                number610.Value  = BitConverter.ToInt16(_plcSerialPort.GetByteStatus(610,2),0);
+                var _plcSerialPort = _form.GetPLCSerialPort();
+                number610.Value  = BitConverter.ToInt16(_form.GetPLCSerialPort().GetByteStatus(610,2),0);
                 number611.Value = BitConverter.ToInt16(_plcSerialPort.GetByteStatus(611,2),0);
                 number612.Value = BitConverter.ToInt16(_plcSerialPort.GetByteStatus(612,2),0);
             }
@@ -318,6 +254,7 @@ namespace pmj
         {
             try
             {
+                var _plcSerialPort = _form.GetPLCSerialPort();
                 var value610 = BitConverter.GetBytes((short)number610.Value);
                 _plcSerialPort.WriteDatasEx(610, value610, 500);
                 var value611 = BitConverter.GetBytes((short)number611.Value);

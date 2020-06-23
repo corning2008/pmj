@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnPlc = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.btnReadDeviceTime = new System.Windows.Forms.Button();
             this.btnGetSystemTime = new System.Windows.Forms.Button();
@@ -61,8 +63,6 @@
             this.cmbLeaveTime = new System.Windows.Forms.ComboBox();
             this.cmbPulseWidth = new System.Windows.Forms.ComboBox();
             this.cmbParameter2 = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.btnPlc = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
@@ -96,6 +96,26 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(719, 76);
             this.panel1.TabIndex = 0;
+            // 
+            // btnPlc
+            // 
+            this.btnPlc.Location = new System.Drawing.Point(305, 25);
+            this.btnPlc.Name = "btnPlc";
+            this.btnPlc.Size = new System.Drawing.Size(75, 23);
+            this.btnPlc.TabIndex = 6;
+            this.btnPlc.Text = "打开PLC";
+            this.btnPlc.UseVisualStyleBackColor = true;
+            this.btnPlc.Click += new System.EventHandler(this.btnPlc_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(224, 25);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "打开喷码机";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -249,7 +269,7 @@
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(53, 12);
             this.label13.TabIndex = 11;
-            this.label13.Text = "闲置设置";
+            this.label13.Text = "闲喷设置";
             // 
             // label14
             // 
@@ -399,26 +419,6 @@
             this.cmbParameter2.Name = "cmbParameter2";
             this.cmbParameter2.Size = new System.Drawing.Size(121, 20);
             this.cmbParameter2.TabIndex = 26;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(224, 25);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "打开喷码机";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // btnPlc
-            // 
-            this.btnPlc.Location = new System.Drawing.Point(305, 25);
-            this.btnPlc.Name = "btnPlc";
-            this.btnPlc.Size = new System.Drawing.Size(75, 23);
-            this.btnPlc.TabIndex = 6;
-            this.btnPlc.Text = "打开PLC";
-            this.btnPlc.UseVisualStyleBackColor = true;
-            this.btnPlc.Click += new System.EventHandler(this.btnPlc_Click);
             // 
             // label15
             // 

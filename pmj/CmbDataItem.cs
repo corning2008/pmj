@@ -45,12 +45,12 @@ namespace pmj
         public static List<CmbDataItem> GetLeaveTimeList()
         {
             var list = new List<CmbDataItem>();
-            list.Add(new CmbDataItem(){Name = "闲喷无效"});
-            list.Add(new CmbDataItem() { Name = "1分钟" });
-            list.Add(new CmbDataItem() { Name = "2分钟" });
-            list.Add(new CmbDataItem() { Name = "5分钟" });
-            list.Add(new CmbDataItem() { Name = "10分钟" });
-            list.Add(new CmbDataItem() { Name = "30分钟" });
+            list.Add(new CmbDataItem(){Name = "闲喷无效",Value=0});
+            list.Add(new CmbDataItem() { Name = "1分钟",Value=60 });
+            list.Add(new CmbDataItem() { Name = "2分钟",Value=120 });
+            list.Add(new CmbDataItem() { Name = "5分钟",Value=300 });
+            list.Add(new CmbDataItem() { Name = "10分钟",Value=600 });
+            list.Add(new CmbDataItem() { Name = "30分钟",Value=1800 });
             return list;
         }
 

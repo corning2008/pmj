@@ -12,19 +12,11 @@ namespace pmj
 {
     public partial class FormSetting : Form
     {
-        private PmjSerialPort _serialPort;
+        Form1 _form;
 
-        public PLCSerialPort _plcSerialPort { get; private set; }
-
-        private string _pmjPort;
-        private string _plcPort;
-
-        public FormSetting(PmjSerialPort serialPort,string pmjPort,PLCSerialPort plcSerialPort,string plcPort)
+        public FormSetting(Form1 form)
         {
-            this._serialPort = serialPort;
-            this._plcSerialPort = plcSerialPort;
-            this._pmjPort = pmjPort;
-            this._plcPort = plcPort;
+            this._form = form;
             InitializeComponent();
         }
 
@@ -35,7 +27,7 @@ namespace pmj
 
         private void FormSetting_Load(object sender, EventArgs e)
         {
-            var setting = new ParameterSetting(_serialPort,_pmjPort,_plcSerialPort,_plcPort);
+            var setting = new ParameterSetting(_form);
             setting.Dock = DockStyle.Fill;
             panel1.Controls.Add(setting);
         }
