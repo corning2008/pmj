@@ -38,15 +38,16 @@
             this.参数ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.page1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnDownloadFile = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnFindDevice = new System.Windows.Forms.Button();
             this.tbBankSerial = new System.Windows.Forms.TextBox();
-            this.comboBoxPmj = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btnCleanPrinter = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.comboPlcList = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBoxPmj = new System.Windows.Forms.ComboBox();
+            this.btnDownloadFile = new System.Windows.Forms.Button();
+            this.btnFindDevice = new System.Windows.Forms.Button();
             this.btnPlcPrint = new System.Windows.Forms.Button();
             this.btnOpenPlc = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -64,19 +65,17 @@
             this.btnTimeSetting = new System.Windows.Forms.Button();
             this.btnPicture = new System.Windows.Forms.Button();
             this.panelTop = new System.Windows.Forms.Panel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panelBottom.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.page1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelTip.SuspendLayout();
             this.panelRight.SuspendLayout();
             this.panelTop.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelBottom
@@ -86,9 +85,9 @@
             this.panelBottom.Controls.Add(this.btnPmjDelete);
             this.panelBottom.Controls.Add(this.lbPmjStatus);
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottom.Location = new System.Drawing.Point(0, 500);
+            this.panelBottom.Location = new System.Drawing.Point(0, 421);
             this.panelBottom.Name = "panelBottom";
-            this.panelBottom.Size = new System.Drawing.Size(1045, 44);
+            this.panelBottom.Size = new System.Drawing.Size(936, 44);
             this.panelBottom.TabIndex = 8;
             // 
             // btnPmjDelete
@@ -116,7 +115,7 @@
             this.参数ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1045, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(936, 25);
             this.menuStrip1.TabIndex = 16;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -135,7 +134,7 @@
             this.page1.Location = new System.Drawing.Point(0, 0);
             this.page1.Name = "page1";
             this.page1.SelectedIndex = 0;
-            this.page1.Size = new System.Drawing.Size(1043, 473);
+            this.page1.Size = new System.Drawing.Size(934, 394);
             this.page1.TabIndex = 18;
             // 
             // tabPage1
@@ -144,16 +143,91 @@
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Controls.Add(this.btnDownloadFile);
             this.tabPage1.Controls.Add(this.btnFindDevice);
-            this.tabPage1.Controls.Add(this.btnCleanPrinter);
             this.tabPage1.Controls.Add(this.btnPlcPrint);
             this.tabPage1.Controls.Add(this.btnOpenPlc);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1035, 447);
+            this.tabPage1.Size = new System.Drawing.Size(926, 368);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "首页";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.tbBankSerial);
+            this.groupBox2.Location = new System.Drawing.Point(467, 40);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(334, 100);
+            this.groupBox2.TabIndex = 19;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "打印信息";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 37);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 12);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "银行卡号";
+            // 
+            // tbBankSerial
+            // 
+            this.tbBankSerial.Location = new System.Drawing.Point(65, 34);
+            this.tbBankSerial.Name = "tbBankSerial";
+            this.tbBankSerial.Size = new System.Drawing.Size(202, 21);
+            this.tbBankSerial.TabIndex = 3;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.comboPlcList);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.comboBoxPmj);
+            this.groupBox1.Location = new System.Drawing.Point(199, 40);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(220, 100);
+            this.groupBox1.TabIndex = 18;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "端口选择";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 31);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 12);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "打印机串口";
+            // 
+            // comboPlcList
+            // 
+            this.comboPlcList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboPlcList.FormattingEnabled = true;
+            this.comboPlcList.Location = new System.Drawing.Point(77, 62);
+            this.comboPlcList.Name = "comboPlcList";
+            this.comboPlcList.Size = new System.Drawing.Size(95, 20);
+            this.comboPlcList.TabIndex = 13;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(24, 65);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(47, 12);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "PLC串口";
+            // 
+            // comboBoxPmj
+            // 
+            this.comboBoxPmj.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxPmj.FormattingEnabled = true;
+            this.comboBoxPmj.Location = new System.Drawing.Point(77, 28);
+            this.comboBoxPmj.Name = "comboBoxPmj";
+            this.comboBoxPmj.Size = new System.Drawing.Size(95, 20);
+            this.comboBoxPmj.TabIndex = 0;
             // 
             // btnDownloadFile
             // 
@@ -165,24 +239,6 @@
             this.btnDownloadFile.UseVisualStyleBackColor = true;
             this.btnDownloadFile.Click += new System.EventHandler(this.btnDownloadFile_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 31);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 12);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "打印机串口";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 37);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 12);
-            this.label3.TabIndex = 17;
-            this.label3.Text = "银行卡号";
-            // 
             // btnFindDevice
             // 
             this.btnFindDevice.Location = new System.Drawing.Point(458, 206);
@@ -192,50 +248,6 @@
             this.btnFindDevice.Text = "扫描打印机";
             this.btnFindDevice.UseVisualStyleBackColor = true;
             this.btnFindDevice.Click += new System.EventHandler(this.btnFindDevice_Click);
-            // 
-            // tbBankSerial
-            // 
-            this.tbBankSerial.Location = new System.Drawing.Point(65, 34);
-            this.tbBankSerial.Name = "tbBankSerial";
-            this.tbBankSerial.Size = new System.Drawing.Size(202, 21);
-            this.tbBankSerial.TabIndex = 3;
-            // 
-            // comboBoxPmj
-            // 
-            this.comboBoxPmj.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxPmj.FormattingEnabled = true;
-            this.comboBoxPmj.Location = new System.Drawing.Point(77, 28);
-            this.comboBoxPmj.Name = "comboBoxPmj";
-            this.comboBoxPmj.Size = new System.Drawing.Size(95, 20);
-            this.comboBoxPmj.TabIndex = 0;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 65);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 12);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "PLC串口";
-            // 
-            // btnCleanPrinter
-            // 
-            this.btnCleanPrinter.Location = new System.Drawing.Point(539, 206);
-            this.btnCleanPrinter.Name = "btnCleanPrinter";
-            this.btnCleanPrinter.Size = new System.Drawing.Size(87, 23);
-            this.btnCleanPrinter.TabIndex = 12;
-            this.btnCleanPrinter.Text = "清洗喷头";
-            this.btnCleanPrinter.UseVisualStyleBackColor = true;
-            this.btnCleanPrinter.Click += new System.EventHandler(this.btnCleanPrinter_Click);
-            // 
-            // comboPlcList
-            // 
-            this.comboPlcList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboPlcList.FormattingEnabled = true;
-            this.comboPlcList.Location = new System.Drawing.Point(77, 62);
-            this.comboPlcList.Name = "comboPlcList";
-            this.comboPlcList.Size = new System.Drawing.Size(95, 20);
-            this.comboPlcList.TabIndex = 13;
             // 
             // btnPlcPrint
             // 
@@ -300,8 +312,7 @@
             this.panelTip.Name = "panelTip";
             this.panelTip.Size = new System.Drawing.Size(866, 26);
             this.panelTip.TabIndex = 14;
-            this.panelTip.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTip_Paint);
-            // 
+           
             // btnDownload
             // 
             this.btnDownload.Location = new System.Drawing.Point(126, 1);
@@ -419,40 +430,16 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTop.Location = new System.Drawing.Point(0, 25);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(1045, 475);
+            this.panelTop.Size = new System.Drawing.Size(936, 396);
             this.panelTop.TabIndex = 10;
-            this.panelTop.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTop_Paint);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.comboPlcList);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.comboBoxPmj);
-            this.groupBox1.Location = new System.Drawing.Point(199, 40);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(220, 100);
-            this.groupBox1.TabIndex = 18;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "端口选择";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.tbBankSerial);
-            this.groupBox2.Location = new System.Drawing.Point(467, 40);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(334, 100);
-            this.groupBox2.TabIndex = 19;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "打印信息";
+          
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1045, 544);
+            this.ClientSize = new System.Drawing.Size(936, 465);
             this.Controls.Add(this.panelTop);
             this.Controls.Add(this.panelBottom);
             this.Controls.Add(this.menuStrip1);
@@ -467,15 +454,15 @@
             this.menuStrip1.PerformLayout();
             this.page1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panelTip.ResumeLayout(false);
             this.panelRight.ResumeLayout(false);
             this.panelTop.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -499,7 +486,6 @@
         private System.Windows.Forms.TextBox tbBankSerial;
         private System.Windows.Forms.ComboBox comboBoxPmj;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnCleanPrinter;
         private System.Windows.Forms.ComboBox comboPlcList;
         private System.Windows.Forms.Button btnPlcPrint;
         private System.Windows.Forms.Button btnOpenPlc;

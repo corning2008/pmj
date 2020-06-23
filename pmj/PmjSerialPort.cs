@@ -23,6 +23,18 @@ namespace pmj
         //发送命令返回的数据
         private byte[] _dataRecv = null;
 
+        /// <summary>
+        /// 判断端口是否已经打开
+        /// </summary>
+        /// <returns></returns>
+        public bool IsOpen()
+        {
+            if (null == _port)
+            {
+                return false;
+            }
+            return _port.IsOpen;
+        }
 
         /// <summary>
         /// 判断是否连接到打印机
@@ -222,7 +234,7 @@ namespace pmj
             var flag = SendCommand(commandDownload, out DataResult result);
             if (!flag)
             {
-                throw new Exception("下发写入指令失败");
+                throw new Exception("下发写入文件指令失败");
             }
             var timeOffset = GetTimeOffSet();
             var commandTime = CommandFactory.GetTimeCommand(format, (ushort)fontSize, (ushort)left, (ushort)top, timeOffset);

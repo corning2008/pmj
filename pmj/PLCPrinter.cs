@@ -22,26 +22,27 @@ namespace pmj
             var timeOutIndex = 0;
             while (true)
             {
-                timeOutIndex++;
+                timeOutIndex+=10;
                 if(timeOutIndex> timeOut)
                 {
-                    throw new Exception("等待PLC的状态超时");
+                    throw new Exception("等待PLC的状态超时,请检查PLC");
                 }
                 //查询状态
                 var status = pLCSerialPort.GetD10Status();
                 //如果状态时2的话，就直接跳出
                 if(2 == status)
                 {
+                    Console.WriteLine($"检查到PLC的状态是2");
                     break;
                 }
                 //如果是等于0的话，就设置100的状态为1
                 if(0 == status)
                 {
-                    Console.WriteLine("plc 初始化命令");
+                    Console.WriteLine("plc状态是0,开始初始化命令设置");
                     pLCSerialPort.SetBitValue(100, 1);
                     //继续等待PLC初始化完成
                 }
-                Thread.Sleep(1);
+                Thread.Sleep(10);
             }
             //开始打印文件
             for(var i = 0; i < pageList.Count; i++)
@@ -83,15 +84,12 @@ namespace pmj
             //}
             Thread.Sleep(200);
             //通知plc开始执行打印的指令
-            var flag = plcSerialPort.SetBitValue(100 + index + 1, 1);
-            //等待plc的执行
-
-            if (!flag)
+            if (!plcSerialPort.SetBitValue(100 + index + 1, 1))
             {
                 throw new Exception("写入PLC指令失败");
             }
             //开始执行打印
-            var dataResult = pmjSerialPort.Print();
+            pmjSerialPort.Print();
             //打印完成之后，写入M20X指令
             if (!plcSerialPort.SetBitValue(200 + index + 1, 1))
             {

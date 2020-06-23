@@ -196,6 +196,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="文档\三菱FX-PLC 的通讯协议参考%281%29.pdf" />
+    <None Include="文档\在线喷码机说明书.pdf" />
+    <None Include="文档\在线喷码机说明书200502.pdf" />
     <None Include="文档\通信协议20190326%281%29.pdf" />
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +208,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="文档\command.txt" />
+    <Content Include="文档\新建文本文档.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

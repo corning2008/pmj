@@ -62,6 +62,10 @@ namespace pmj
         /// <returns></returns>
         public bool IsOpen()
         {
+            if (null == _port)
+            {
+                return false;
+            }
             return _port.IsOpen;
         }
 
