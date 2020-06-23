@@ -14,10 +14,17 @@ namespace pmj
     {
         private PmjSerialPort _serialPort;
 
-        public FormSetting(PmjSerialPort serialPort)
+        public PLCSerialPort _plcSerialPort { get; private set; }
+
+        private string _pmjPort;
+        private string _plcPort;
+
+        public FormSetting(PmjSerialPort serialPort,string pmjPort,PLCSerialPort plcSerialPort,string plcPort)
         {
             this._serialPort = serialPort;
-           
+            this._plcSerialPort = plcSerialPort;
+            this._pmjPort = pmjPort;
+            this._plcPort = plcPort;
             InitializeComponent();
         }
 
@@ -28,7 +35,7 @@ namespace pmj
 
         private void FormSetting_Load(object sender, EventArgs e)
         {
-            var setting = new ParameterSetting(_serialPort);
+            var setting = new ParameterSetting(_serialPort,_pmjPort,_plcSerialPort,_plcPort);
             setting.Dock = DockStyle.Fill;
             panel1.Controls.Add(setting);
         }

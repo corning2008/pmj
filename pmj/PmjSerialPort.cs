@@ -219,12 +219,14 @@ namespace pmj
         /// 设置银行的卡号
         /// </summary>
         /// <param name="bankNumber"></param>
-        public void SendBankSerial(string bankNumber)
+        public void SendBankSerial(string bankNumber,string tbDate)
         {
             //设置第一个文件的内容
-            SendTextCommand(0, bankNumber);
+            SendTextCommand(0, bankNumber,4);
+            Thread.Sleep(100);
             //设置第二个文件的内容
-            SendTimeCommand(1);
+            SendTextCommand(1, tbDate, 3,150);
+         
         }
 
 

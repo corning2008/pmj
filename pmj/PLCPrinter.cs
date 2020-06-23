@@ -18,8 +18,7 @@ namespace pmj
         /// <param name="timeOut"></param>
         public static void PrintList(PmjSerialPort pmjSerialPort,PLCSerialPort pLCSerialPort, List<int> pageList,int timeOut)
         {
-            //初始化
-            WaitStatus2(pLCSerialPort,2000);
+           
             //开始打印文件
             for(var i = 0; i < pageList.Count; i++)
             {
@@ -89,6 +88,8 @@ namespace pmj
             //    throw new Exception("重启后无法重新连接打印机");
             //}
             Thread.Sleep(200);
+            //初始化
+            WaitStatus2(plcSerialPort, 10000);
             //通知plc开始执行打印的指令
             if (!plcSerialPort.SetBitValue(100 + index + 1, 1))
             {
@@ -96,6 +97,8 @@ namespace pmj
             }
             //开始执行打印
             pmjSerialPort.Print();
+            //初始化
+            WaitStatus2(plcSerialPort, 10000);
             //打印完成之后，写入M20X指令
             if (!plcSerialPort.SetBitValue(200 + index + 1, 1))
             {

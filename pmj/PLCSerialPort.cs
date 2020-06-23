@@ -49,12 +49,71 @@ namespace pmj
             return bytes[0];
         }
 
+        /// <summary>
+        /// 读取一个字节的数据，根据地址
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        public byte[] GetByteStatus(int address,int length)
+        {
+            var bytes = ReadDataFromPLC(address, length, 500);
+            return bytes;
+        }
+
         public GodSerialPort GetSerialPort()
         {
             return _port;
         }
 
-      
+
+        public bool WriteDatasEx(int address, byte[] bytes, int timeOut)
+        {
+            if (!Monitor.TryEnter(_flag))
+            {
+                throw new Exception("串口正在执行命令,请稍后");
+            }
+            lock (_flag)
+            {
+                _dataRecv = null;
+                if (null != _port && _port.IsOpen)
+                {
+                    var command = PLCCommandFactory.GetWriteCommand(address, bytes);
+                    _port.Write(command);
+                    Console.WriteLine($"向PLC发送数据");
+                    CommandFactory.PrintBytes(command);
+                }
+                else
+                {
+                    throw new Exception("请先打开串口");
+                }
+
+                var index = 1;
+                while (index < timeOut)
+                {
+                    Thread.Sleep(1);
+                    index++;
+                    if (null != _dataRecv && _dataRecv.Length > 0)
+                    {
+                        var newBuffer = new byte[_dataRecv.Length];
+                        Array.Copy(_dataRecv, 0, newBuffer, 0, _dataRecv.Length);
+                        //接受到应答数据
+                        Console.WriteLine($"接受到PLC应答数据 0x06--true 0x15---false :{GetHexString(newBuffer)}");
+
+                        if (newBuffer[0] == 0x06)
+                        {
+                            return true;
+                        }
+
+                        return false;
+
+                    }
+                }
+
+                throw new Exception("执行命令超时");
+            }
+        }
+
+
 
         /// <summary>
         /// 是否已经打开
@@ -85,7 +144,7 @@ namespace pmj
         {
             if (null == _port)
             {
-                _port = new GodSerialPort(this._portName, 9600, Parity.Even, 7, StopBits.One, Handshake.None);
+                _port = new GodSerialPort(this._portName, 19200, Parity.Even, 7, StopBits.One, Handshake.None);
                 _port.UseDataReceived(true, (sp, bytes) =>
                 {
                     StringBuilder sb = new StringBuilder();

@@ -46,10 +46,8 @@
             this.comboPlcList = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxPmj = new System.Windows.Forms.ComboBox();
-            this.btnDownloadFile = new System.Windows.Forms.Button();
             this.btnFindDevice = new System.Windows.Forms.Button();
             this.btnPlcPrint = new System.Windows.Forms.Button();
-            this.btnOpenPlc = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelSetting = new System.Windows.Forms.Panel();
@@ -65,6 +63,8 @@
             this.btnTimeSetting = new System.Windows.Forms.Button();
             this.btnPicture = new System.Windows.Forms.Button();
             this.panelTop = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tbDate = new System.Windows.Forms.TextBox();
             this.panelBottom.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.page1.SuspendLayout();
@@ -82,17 +82,16 @@
             // 
             this.panelBottom.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.panelBottom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelBottom.Controls.Add(this.btnPmjDelete);
             this.panelBottom.Controls.Add(this.lbPmjStatus);
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottom.Location = new System.Drawing.Point(0, 421);
+            this.panelBottom.Location = new System.Drawing.Point(0, 437);
             this.panelBottom.Name = "panelBottom";
-            this.panelBottom.Size = new System.Drawing.Size(927, 44);
+            this.panelBottom.Size = new System.Drawing.Size(878, 44);
             this.panelBottom.TabIndex = 8;
             // 
             // btnPmjDelete
             // 
-            this.btnPmjDelete.Location = new System.Drawing.Point(155, 8);
+            this.btnPmjDelete.Location = new System.Drawing.Point(548, 0);
             this.btnPmjDelete.Name = "btnPmjDelete";
             this.btnPmjDelete.Size = new System.Drawing.Size(75, 23);
             this.btnPmjDelete.TabIndex = 1;
@@ -115,7 +114,7 @@
             this.参数ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(927, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(878, 25);
             this.menuStrip1.TabIndex = 16;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -134,7 +133,7 @@
             this.page1.Location = new System.Drawing.Point(0, 0);
             this.page1.Name = "page1";
             this.page1.SelectedIndex = 0;
-            this.page1.Size = new System.Drawing.Size(925, 394);
+            this.page1.Size = new System.Drawing.Size(876, 410);
             this.page1.TabIndex = 18;
             this.page1.SelectedIndexChanged += new System.EventHandler(this.page1_SelectedIndexChanged);
             // 
@@ -142,20 +141,19 @@
             // 
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Controls.Add(this.btnDownloadFile);
-            this.tabPage1.Controls.Add(this.btnFindDevice);
             this.tabPage1.Controls.Add(this.btnPlcPrint);
-            this.tabPage1.Controls.Add(this.btnOpenPlc);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(917, 368);
+            this.tabPage1.Size = new System.Drawing.Size(868, 384);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "首页";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.tbDate);
+            this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.tbBankSerial);
             this.groupBox2.Location = new System.Drawing.Point(467, 40);
@@ -180,7 +178,7 @@
             this.tbBankSerial.Name = "tbBankSerial";
             this.tbBankSerial.Size = new System.Drawing.Size(202, 21);
             this.tbBankSerial.TabIndex = 3;
-            this.tbBankSerial.Text = "6216 6161 0400 0321 698";
+            this.tbBankSerial.Text = "8888 8888 8888 8888 888";
             this.tbBankSerial.TextChanged += new System.EventHandler(this.tbBankSerial_TextChanged);
             // 
             // groupBox1
@@ -232,19 +230,9 @@
             this.comboBoxPmj.Size = new System.Drawing.Size(95, 20);
             this.comboBoxPmj.TabIndex = 0;
             // 
-            // btnDownloadFile
-            // 
-            this.btnDownloadFile.Location = new System.Drawing.Point(687, 294);
-            this.btnDownloadFile.Name = "btnDownloadFile";
-            this.btnDownloadFile.Size = new System.Drawing.Size(75, 23);
-            this.btnDownloadFile.TabIndex = 4;
-            this.btnDownloadFile.Text = "test";
-            this.btnDownloadFile.UseVisualStyleBackColor = true;
-            this.btnDownloadFile.Click += new System.EventHandler(this.btnDownloadFile_Click);
-            // 
             // btnFindDevice
             // 
-            this.btnFindDevice.Location = new System.Drawing.Point(458, 206);
+            this.btnFindDevice.Location = new System.Drawing.Point(629, 0);
             this.btnFindDevice.Name = "btnFindDevice";
             this.btnFindDevice.Size = new System.Drawing.Size(75, 23);
             this.btnFindDevice.TabIndex = 7;
@@ -254,23 +242,13 @@
             // 
             // btnPlcPrint
             // 
-            this.btnPlcPrint.Location = new System.Drawing.Point(284, 206);
+            this.btnPlcPrint.Location = new System.Drawing.Point(399, 216);
             this.btnPlcPrint.Name = "btnPlcPrint";
             this.btnPlcPrint.Size = new System.Drawing.Size(87, 23);
             this.btnPlcPrint.TabIndex = 15;
-            this.btnPlcPrint.Text = "PLC打印";
+            this.btnPlcPrint.Text = "打印";
             this.btnPlcPrint.UseVisualStyleBackColor = true;
             this.btnPlcPrint.Click += new System.EventHandler(this.btnPlcPrint_Click);
-            // 
-            // btnOpenPlc
-            // 
-            this.btnOpenPlc.Location = new System.Drawing.Point(377, 206);
-            this.btnOpenPlc.Name = "btnOpenPlc";
-            this.btnOpenPlc.Size = new System.Drawing.Size(75, 23);
-            this.btnOpenPlc.TabIndex = 14;
-            this.btnOpenPlc.Text = "打开plc串口";
-            this.btnOpenPlc.UseVisualStyleBackColor = true;
-            this.btnOpenPlc.Click += new System.EventHandler(this.btnOpenPlc_Click);
             // 
             // tabPage2
             // 
@@ -280,7 +258,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(917, 368);
+            this.tabPage2.Size = new System.Drawing.Size(868, 384);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "喷码机";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -292,7 +270,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 103);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(776, 262);
+            this.panel1.Size = new System.Drawing.Size(727, 278);
             this.panel1.TabIndex = 15;
             // 
             // panelSetting
@@ -302,18 +280,20 @@
             this.panelSetting.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSetting.Location = new System.Drawing.Point(0, 26);
             this.panelSetting.Name = "panelSetting";
-            this.panelSetting.Size = new System.Drawing.Size(776, 236);
+            this.panelSetting.Size = new System.Drawing.Size(727, 252);
             this.panelSetting.TabIndex = 15;
             // 
             // panelTip
             // 
             this.panelTip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTip.Controls.Add(this.btnPmjDelete);
+            this.panelTip.Controls.Add(this.btnFindDevice);
             this.panelTip.Controls.Add(this.btnDownload);
             this.panelTip.Controls.Add(this.cmbFileList);
             this.panelTip.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTip.Location = new System.Drawing.Point(0, 0);
             this.panelTip.Name = "panelTip";
-            this.panelTip.Size = new System.Drawing.Size(776, 26);
+            this.panelTip.Size = new System.Drawing.Size(727, 26);
             this.panelTip.TabIndex = 14;
             // 
             // btnDownload
@@ -341,7 +321,7 @@
             this.panelTest.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTest.Location = new System.Drawing.Point(3, 3);
             this.panelTest.Name = "panelTest";
-            this.panelTest.Size = new System.Drawing.Size(776, 100);
+            this.panelTest.Size = new System.Drawing.Size(727, 100);
             this.panelTest.TabIndex = 5;
             this.panelTest.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTest_Paint);
             // 
@@ -355,9 +335,9 @@
             this.panelRight.Controls.Add(this.btnTimeSetting);
             this.panelRight.Controls.Add(this.btnPicture);
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelRight.Location = new System.Drawing.Point(779, 3);
+            this.panelRight.Location = new System.Drawing.Point(730, 3);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(135, 362);
+            this.panelRight.Size = new System.Drawing.Size(135, 378);
             this.panelRight.TabIndex = 11;
             // 
             // btnBarcode
@@ -433,15 +413,32 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTop.Location = new System.Drawing.Point(0, 25);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(927, 396);
+            this.panelTop.Size = new System.Drawing.Size(878, 412);
             this.panelTop.TabIndex = 10;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(30, 65);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(29, 12);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "日期";
+            // 
+            // tbDate
+            // 
+            this.tbDate.Location = new System.Drawing.Point(65, 61);
+            this.tbDate.Name = "tbDate";
+            this.tbDate.Size = new System.Drawing.Size(202, 21);
+            this.tbDate.TabIndex = 19;
+            this.tbDate.Text = "YY/MM";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(927, 465);
+            this.ClientSize = new System.Drawing.Size(878, 481);
             this.Controls.Add(this.panelTop);
             this.Controls.Add(this.panelBottom);
             this.Controls.Add(this.menuStrip1);
@@ -481,7 +478,6 @@
         private System.Windows.Forms.ToolStripMenuItem 参数ToolStripMenuItem;
         private System.Windows.Forms.TabControl page1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Button btnDownloadFile;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnFindDevice;
@@ -490,7 +486,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboPlcList;
         private System.Windows.Forms.Button btnPlcPrint;
-        private System.Windows.Forms.Button btnOpenPlc;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel panelTest;
         private System.Windows.Forms.Panel panelTip;
@@ -508,6 +503,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox tbDate;
+        private System.Windows.Forms.Label label4;
     }
 }
 

@@ -79,18 +79,14 @@ namespace pmj
         /// <returns></returns>
         public static byte[] GetWriteCommand(int address, byte[] dataList)
         {
-            if (dataList.Length % 2 != 0)
-            {
-                throw new Exception("字节数据必须是2的倍数");
-            }
+            
             var commandid = new byte[] {0x31};
             var addressBytes = Encoding.ASCII.GetBytes((address * 2 + Convert.ToUInt32("1000", 16)).ToString("X4"));
             var lengthBytes = Encoding.ASCII.GetBytes(dataList.Length.ToString("X2"));
             var sb = new StringBuilder();
-            for (var i = 0; i < dataList.Length / 2; i++)
+            for (var i = 0; i < dataList.Length ; i++)
             {
-                sb.Append(dataList[2 * i + 1].ToString("X2"));
-                sb.Append(dataList[2 * i].ToString("X2"));
+                sb.Append(dataList[i].ToString("X2"));
             }
 
             var dataBytes = Encoding.ASCII.GetBytes(sb.ToString());

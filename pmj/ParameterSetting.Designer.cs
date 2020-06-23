@@ -61,16 +61,31 @@
             this.cmbLeaveTime = new System.Windows.Forms.ComboBox();
             this.cmbPulseWidth = new System.Windows.Forms.ComboBox();
             this.cmbParameter2 = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnPlc = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.number610 = new System.Windows.Forms.NumericUpDown();
+            this.number611 = new System.Windows.Forms.NumericUpDown();
+            this.number612 = new System.Windows.Forms.NumericUpDown();
+            this.btnReadPLC = new System.Windows.Forms.Button();
+            this.btnSetPlc = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numberDelay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberColDelay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberParameter1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.number610)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.number611)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.number612)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.btnPlc);
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.btnReadDeviceTime);
             this.panel1.Controls.Add(this.btnGetSystemTime);
@@ -84,7 +99,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(534, 24);
+            this.button2.Location = new System.Drawing.Point(573, 24);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(97, 23);
             this.button2.TabIndex = 4;
@@ -94,7 +109,7 @@
             // 
             // btnReadDeviceTime
             // 
-            this.btnReadDeviceTime.Location = new System.Drawing.Point(440, 24);
+            this.btnReadDeviceTime.Location = new System.Drawing.Point(479, 24);
             this.btnReadDeviceTime.Name = "btnReadDeviceTime";
             this.btnReadDeviceTime.Size = new System.Drawing.Size(88, 23);
             this.btnReadDeviceTime.TabIndex = 3;
@@ -104,7 +119,7 @@
             // 
             // btnGetSystemTime
             // 
-            this.btnGetSystemTime.Location = new System.Drawing.Point(359, 24);
+            this.btnGetSystemTime.Location = new System.Drawing.Point(398, 24);
             this.btnGetSystemTime.Name = "btnGetSystemTime";
             this.btnGetSystemTime.Size = new System.Drawing.Size(75, 23);
             this.btnGetSystemTime.TabIndex = 2;
@@ -247,7 +262,7 @@
             // 
             // btnReadParameter
             // 
-            this.btnReadParameter.Location = new System.Drawing.Point(225, 331);
+            this.btnReadParameter.Location = new System.Drawing.Point(247, 302);
             this.btnReadParameter.Name = "btnReadParameter";
             this.btnReadParameter.Size = new System.Drawing.Size(88, 23);
             this.btnReadParameter.TabIndex = 5;
@@ -257,7 +272,7 @@
             // 
             // btnSettingParameter
             // 
-            this.btnSettingParameter.Location = new System.Drawing.Point(376, 331);
+            this.btnSettingParameter.Location = new System.Drawing.Point(365, 302);
             this.btnSettingParameter.Name = "btnSettingParameter";
             this.btnSettingParameter.Size = new System.Drawing.Size(88, 23);
             this.btnSettingParameter.TabIndex = 14;
@@ -285,6 +300,11 @@
             // numberColDelay
             // 
             this.numberColDelay.Location = new System.Drawing.Point(142, 180);
+            this.numberColDelay.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
             this.numberColDelay.Name = "numberColDelay";
             this.numberColDelay.Size = new System.Drawing.Size(120, 21);
             this.numberColDelay.TabIndex = 16;
@@ -380,10 +400,121 @@
             this.cmbParameter2.Size = new System.Drawing.Size(121, 20);
             this.cmbParameter2.TabIndex = 26;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(224, 25);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "打开喷码机";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btnPlc
+            // 
+            this.btnPlc.Location = new System.Drawing.Point(305, 25);
+            this.btnPlc.Name = "btnPlc";
+            this.btnPlc.Size = new System.Drawing.Size(75, 23);
+            this.btnPlc.TabIndex = 6;
+            this.btnPlc.Text = "打开PLC";
+            this.btnPlc.UseVisualStyleBackColor = true;
+            this.btnPlc.Click += new System.EventHandler(this.btnPlc_Click);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(56, 358);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(71, 12);
+            this.label15.TabIndex = 27;
+            this.label15.Text = "x轴移动位置";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(258, 358);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(77, 12);
+            this.label16.TabIndex = 28;
+            this.label16.Text = "电机移动速度";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(459, 358);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(71, 12);
+            this.label17.TabIndex = 29;
+            this.label17.Text = "y轴移动位置";
+            // 
+            // number610
+            // 
+            this.number610.Location = new System.Drawing.Point(133, 356);
+            this.number610.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.number610.Name = "number610";
+            this.number610.Size = new System.Drawing.Size(120, 21);
+            this.number610.TabIndex = 30;
+            // 
+            // number611
+            // 
+            this.number611.Location = new System.Drawing.Point(332, 356);
+            this.number611.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.number611.Name = "number611";
+            this.number611.Size = new System.Drawing.Size(120, 21);
+            this.number611.TabIndex = 31;
+            // 
+            // number612
+            // 
+            this.number612.Location = new System.Drawing.Point(536, 356);
+            this.number612.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.number612.Name = "number612";
+            this.number612.Size = new System.Drawing.Size(120, 21);
+            this.number612.TabIndex = 32;
+            // 
+            // btnReadPLC
+            // 
+            this.btnReadPLC.Location = new System.Drawing.Point(247, 398);
+            this.btnReadPLC.Name = "btnReadPLC";
+            this.btnReadPLC.Size = new System.Drawing.Size(88, 23);
+            this.btnReadPLC.TabIndex = 33;
+            this.btnReadPLC.Text = "读取PLC参数";
+            this.btnReadPLC.UseVisualStyleBackColor = true;
+            this.btnReadPLC.Click += new System.EventHandler(this.btnReadPLC_Click);
+            // 
+            // btnSetPlc
+            // 
+            this.btnSetPlc.Location = new System.Drawing.Point(365, 398);
+            this.btnSetPlc.Name = "btnSetPlc";
+            this.btnSetPlc.Size = new System.Drawing.Size(88, 23);
+            this.btnSetPlc.TabIndex = 34;
+            this.btnSetPlc.Text = "设置PLC参数";
+            this.btnSetPlc.UseVisualStyleBackColor = true;
+            this.btnSetPlc.Click += new System.EventHandler(this.btnSetPlc_Click);
+            // 
             // ParameterSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnSetPlc);
+            this.Controls.Add(this.btnReadPLC);
+            this.Controls.Add(this.number612);
+            this.Controls.Add(this.number611);
+            this.Controls.Add(this.number610);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.label15);
             this.Controls.Add(this.cmbParameter2);
             this.Controls.Add(this.cmbPulseWidth);
             this.Controls.Add(this.cmbLeaveTime);
@@ -421,6 +552,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numberColDelay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberParameter1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.number610)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.number611)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.number612)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -461,5 +595,15 @@
         private System.Windows.Forms.ComboBox cmbLeaveTime;
         private System.Windows.Forms.ComboBox cmbPulseWidth;
         private System.Windows.Forms.ComboBox cmbParameter2;
+        private System.Windows.Forms.Button btnPlc;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.NumericUpDown number610;
+        private System.Windows.Forms.NumericUpDown number611;
+        private System.Windows.Forms.NumericUpDown number612;
+        private System.Windows.Forms.Button btnReadPLC;
+        private System.Windows.Forms.Button btnSetPlc;
     }
 }

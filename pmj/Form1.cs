@@ -1012,24 +1012,32 @@ namespace pmj
         {
             try
             {
-                OpenPlc();
-                OpenPmj(out string printName);
-                //显示喷码机的名称
-                lbPmjStatus.Text = $"{printName}";
-                //把内容下载到打印机中
-                //if (string.IsNullOrEmpty(tbBankSerial.Text))
-                //{
-                //    MessageBox.Show("请输入银行卡号");
-                //    return;
-                //}
-                _pmjSerialPort.SendBankSerial(tbBankSerial.Text.Trim());
-                var list = new List<int>();
-                list.Add(0);
-                list.Add(1);
-                //
-                PLCPrinter.PrintList(_pmjSerialPort, _plcSerialPort, list, 2000);
-                //保存配置的端口
-                SavePort();
+                this.Invoke(new Action(()=> {
+                    OpenPlc();
+                    OpenPmj(out string printName);
+                    //显示喷码机的名称
+                    lbPmjStatus.Text = $"{printName}";
+                    //把内容下载到打印机中
+                    if (string.IsNullOrEmpty(tbBankSerial.Text))
+                    {
+                        MessageBox.Show("请输入银行卡号");
+                        return;
+                    }
+                    if (string.IsNullOrEmpty(tbDate.Text))
+                    {
+                        MessageBox.Show("请输入日期");
+                        return;
+                    }
+                    _pmjSerialPort.SendBankSerial(tbBankSerial.Text.Trim(), tbDate.Text);
+                    var list = new List<int>();
+                    list.Add(0);
+                    list.Add(1);
+                    //
+                    PLCPrinter.PrintList(_pmjSerialPort, _plcSerialPort, list, 2000);
+                    //保存配置的端口
+                    SavePort();
+                }));
+               
             }
             catch (Exception ex)
             {
@@ -1076,11 +1084,16 @@ namespace pmj
         {
             try
             {
-                if (null == _pmjSerialPort || !_pmjSerialPort.IsOpen())
+               
+                if (string.IsNullOrEmpty(comboBoxPmj.Text))
                 {
-                    throw new Exception("请先打开通讯串口");
+                    return;
                 }
-                var dialog = new FormSetting(this._pmjSerialPort);
+                if (string.IsNullOrEmpty(comboPlcList.Text))
+                {
+                    return;
+                }
+                var dialog = new FormSetting(this._pmjSerialPort,comboBoxPmj.Text,this._plcSerialPort,comboPlcList.Text);
                 dialog.ShowDialog();
             }
             catch(Exception ex)
